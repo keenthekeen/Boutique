@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $book_subject
  * @property int $book_page
  * @property int $book_question
+ * @property string $book_example
  * @property string $person
  * @property string $telephone
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereAmount($value)
@@ -38,6 +39,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereTelephone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereType($value)
  * @mixin \Eloquent
+ * @property string $picture
+ * @property string|null $poster
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Product wherePicture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Product wherePoster($value)
  */
 class Product extends Model {
     /**
@@ -49,4 +54,9 @@ class Product extends Model {
         'has_picture' => 'boolean',
         'has_poster' => 'boolean',
     ];
+    
+    public function amountLeft (): int {
+        // @todo Implement
+        return $this->amount;
+    }
 }

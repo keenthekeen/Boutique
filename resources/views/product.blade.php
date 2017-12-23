@@ -1,0 +1,71 @@
+@extends('layouts.master')
+
+@section('style')
+    @php
+        /** @var $product \App\Product */
+    @endphp
+    <style>
+        .sector {
+            margin-top: 2rem;
+        }
+
+        .sector .row {
+            margin-bottom: 0;
+        }
+    </style>
+@endsection
+
+@section('main')
+    <div class="row">
+        <div class="col s12 m4 l3">
+            <img class="responsive-img" src="{{ $product->picture }}"/>
+        </div>
+        <div class="col s12 m8 l9">
+            <span style="font-size: 2rem">{{ $product->name }}</span> <span style="font-size: 0.95rem">{{ $product->author }}</span><br/>
+            @if ($product->type == 'หนังสือ')
+                หนังสือ{{ $product->book_type }} {{ $product->book_page }} หน้า
+                @if (str_contains($product->book_type, 'โจทย์'))
+                    มีโจทย์ {{ $product->book_question }} ข้อ
+                @endif
+            @else
+                {{ $product->type }}
+            @endif
+
+            @unless (empty($product->facebook_url))
+                <br/><a href="{{ $product->facebook_url }}">Facebook Page</a>
+            @endunless
+            @unless (empty($product->book_example))
+                <br/><a class="waves-effect waves-light btn fullwidth orange" href="{{ $product->book_example }}">ตัวอย่างหนังสือ</a>
+            @endunless
+        </div>
+    </div>
+
+    @unless (empty($product->poster))
+        <img class="responsive-img" src="{{ $product->poster }}"/>
+    @endunless
+
+    {!! $product->description !!}
+
+
+    @if ($product->amountLeft() <= 0)
+        <div class="sector red lighten-5">
+            สินค้าหมด - Out of Stock
+        </div>
+    @elseif (Auth::check())
+        <div class="sector blue lighten-5">
+            <div class="row">
+                <div class="col s12 m8 l9">
+                    ซื้อ {{ $product->name }} ในราคา {{ $product->price }} บาท
+                </div>
+                <div class="col s12 m4 l3">
+                    <a class="waves-effect waves-light btn fullwidth"><i class="material-icons left">add_shopping_cart</i>เพิ่มในตะกร้า</a>
+                </div>
+            </div>
+        </div>
+    @else
+        <div class="sector amber lighten-5">
+            กรุณา<a href="/login">เข้าสู่ระบบ</a>เพื่อสั่งซื้อ
+        </div>
+    @endif
+
+@endsection

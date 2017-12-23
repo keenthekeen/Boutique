@@ -17,23 +17,24 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             
-            $table->boolean('has_picture');
-            $table->boolean('has_poster');
+            $table->string('picture', 200);
+            $table->string('poster', 200)->nullable();
             
             $table->string('author');
-            $table->string('facebook_url', 100);
+            $table->string('facebook_url', 100)->nullable();
             $table->mediumText('description');
             $table->enum('type', ['หนังสือ', 'กระเป๋า', 'สมุด', 'ริสแบนด์', 'เสื้อ', 'แฟ้ม']);
-            $table->decimal('price', 5,2);
+            $table->decimal('price', 3,0);
             $table->integer('amount');
             
-            $table->enum('book_type', ['เนื้อหา', 'โจทย์', 'เนื้อหาและโจทย์']);
-            $table->string('book_subject');
-            $table->integer('book_page');
-            $table->integer('book_question');
+            $table->enum('book_type', ['เนื้อหา', 'โจทย์', 'เนื้อหาและโจทย์'])->nullable();
+            $table->string('book_subject')->nullable();
+            $table->integer('book_page')->nullable();
+            $table->integer('book_question')->nullable();
+            $table->string('book_example', 100)->nullable();
             
-            $table->string('person');
-            $table->string('telephone');
+            $table->string('person')->nullable();
+            $table->string('telephone')->nullable();
         });
     }
 

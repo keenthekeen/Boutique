@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::view('/', 'home')->name('home');
+Route::get('/product/{product}', function (\App\Product $product) {
+    return view('product', ['product' => $product]);
 });
+
+Route::get('login', 'Auth\LoginController@redirectToProvider');
+Route::get('login/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('logout', 'Auth\LoginController@logout');
