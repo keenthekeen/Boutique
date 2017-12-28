@@ -15,6 +15,9 @@ use Illuminate\Notifications\Notifiable;
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Order[] $orders
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Product[] $products
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Promotion[] $promotions
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereAvatar($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail($value)
@@ -40,4 +43,15 @@ class User extends Authenticatable {
         'avatar',
     ];
     
+    public function products() {
+        return $this->hasMany('App\Product');
+    }
+    
+    public function orders() {
+        return $this->hasMany('App\Order');
+    }
+    
+    public function promotions() {
+        return $this->hasMany('App\Promotion');
+    }
 }

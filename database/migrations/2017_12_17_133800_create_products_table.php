@@ -16,25 +16,24 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            
             $table->string('picture', 200);
-            $table->string('poster', 200)->nullable();
-            
             $table->string('author');
-            $table->string('facebook_url', 100)->nullable();
-            $table->mediumText('description');
             $table->enum('type', ['หนังสือ', 'กระเป๋า', 'สมุด', 'ริสแบนด์', 'เสื้อ', 'แฟ้ม']);
             $table->decimal('price', 3,0);
-            $table->integer('amount');
+            
+            $table->json('detail'); // Description, Poster, URL
             
             $table->enum('book_type', ['เนื้อหา', 'โจทย์', 'เนื้อหาและโจทย์'])->nullable();
             $table->string('book_subject')->nullable();
-            $table->integer('book_page')->nullable();
-            $table->integer('book_question')->nullable();
-            $table->string('book_example', 100)->nullable();
+            $table->json('book_detail');
             
-            $table->string('person')->nullable();
-            $table->string('telephone')->nullable();
+            $table->string('user_id');
+            $table->json('owner_detail_1'); // Name, Phone, LINE, Email
+            $table->json('owner_detail_2'); // Name, Phone, LINE, Email
+            $table->json('payment'); // Bank, Account Number, Prompt Pay
+            
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

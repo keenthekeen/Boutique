@@ -18,12 +18,12 @@
             <div class="col s12 m9">
                 <h4>ขอขอบคุณที่ให้ความสนใจ</h4>
                 <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FTriamUdomOPH%2Fposts%2F565968996941246%3A0&width=500" height="570" style="border:none;overflow:hidden;width:100%" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-                <!--p>
+                {{--<p>
                     &ensp;ทางคณะผู้จัดงาน ขอขอบพระคุณทุกท่านที่ให้ความสนใจ และเข้าร่วมกิจกรรม "๗๙ ปีเตรียมอุดมศึกษา นิทรรศการวิชาการ ตามพระราชปณิธานรัชกาลที่ ๙" ในครั้งนี้
                     ทางคณะผู้จัดงานหวังเป็นอย่างยิ่งว่า ทุกท่านจะได้รับความสุข และรู้จักโรงเรียนเตรียมอุดมศึกษาในมุมมองต่างๆมากยิ่งขึ้น!<br /><br />
                     &ensp;แล้วพบกันใหม่ปีหน้า #TriamUdomOpenHouse2017
-                </p-->
-                <sub>คณะกรรมการบริหารงานกิจกรรมพัฒนาผู้เรียน</sub>
+                </p>
+                <sub>คณะกรรมการบริหารงานกิจกรรมพัฒนาผู้เรียน</sub>--}}
             </div>
         </div>
     </div>

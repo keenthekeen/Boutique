@@ -19,3 +19,7 @@ Route::get('/product/{product}', function (\App\Product $product) {
 Route::get('login', 'Auth\LoginController@redirectToProvider');
 Route::get('login/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('logout', 'Auth\LoginController@logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::view('merchant-register', 'merchant-register');
+});
