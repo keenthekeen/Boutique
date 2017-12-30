@@ -37,15 +37,17 @@
 @endsection
 
 @section('main')
-    <div class="sector blue lighten-5">
-        <b>Merchant Menu</b>&emsp;<a class="waves-effect waves-light btn" href="/merchant/register">เพิ่มสินค้า</a><br />
-        @if ($myProducts = Auth::user()->products)
-            สินค้าของฉันที่เพิ่มข้อมูลแล้ว:
-            @foreach($myProducts as  $product)
-                <a href="/merchant/edit/{{ $product->id }}">{{ $product->name }}</a>
-            @endforeach
-        @endif
-    </div>
+    @if (Auth::check())
+        <div class="sector blue lighten-5">
+            <b>Merchant Menu</b>&emsp;<a class="waves-effect waves-light btn" href="/merchant/register">เพิ่มสินค้า</a><br/>
+            @if ($myProducts = Auth::user()->products)
+                สินค้าของฉันที่เพิ่มข้อมูลแล้ว:
+                @foreach($myProducts as  $product)
+                    <a href="/merchant/edit/{{ $product->id }}">{{ $product->name }}</a>
+                @endforeach
+            @endif
+        </div>
+    @endif
 
     <div class="row center-align">
         @foreach(\App\Product::inRandomOrder()->get() as $order => $product)
