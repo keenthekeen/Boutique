@@ -16,10 +16,14 @@ Route::get('/product/{product}', function (\App\Product $product) {
     return view('product', ['product' => $product]);
 });
 
-Route::get('login', 'Auth\LoginController@redirectToProvider');
+Route::get('login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('login/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('logout', 'Auth\LoginController@logout');
 
-Route::middleware(['auth'])->group(function () {
-    Route::view('merchant-register', 'merchant-register');
+Route::prefix('merchant')->middleware(['auth'])->group(function () {
+    Route::view('register', 'merchant-register');
+    Route::get('edit/{product}', function (\App\Product $product) {
+        return view('merchant-register', ['product' => $product]);
+    });
+    Route::post('register', 'MerchantController@registerProduct');
 });

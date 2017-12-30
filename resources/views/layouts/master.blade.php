@@ -5,7 +5,9 @@
         <title>UNDER CONSTRUCTION - TUCMC</title>
         <meta name="robots" content="noindex, nofollow"/>
     @else
-        <title>TUOPH Shop</title>
+        @section('title')
+            <title>TUOPH Shop</title>
+        @show
         <meta name="keyword" content="TU Open House Triamudom นิทรรศการ เตรียมอุดม"/>
     @endif
     <meta charset="UTF-8"/>

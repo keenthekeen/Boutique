@@ -15,7 +15,7 @@ class CreatePromotionsTable extends Migration
     {
         Schema::create('promotions', function (Blueprint $table) {
             $table->increments('id');
-            $table->json('detail');
+            $table->json('detail'); // [{product, amount, subtraction}]
             $table->string('name');
             $table->string('user_id');
             $table->softDeletes();
