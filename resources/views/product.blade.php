@@ -35,7 +35,7 @@
                 <br/><a href="{{ $product->detail['url'] }}">Website</a>
             @endunless
             @unless (empty($product->book_example))
-                <br /><br/><a class="waves-effect waves-light btn fullwidth orange" href="{{ $product->book_example }}">ตัวอย่างหนังสือ</a>
+                <br/><br/><a class="waves-effect waves-light btn fullwidth orange" href="{{ $product->book_example }}">ตัวอย่างหนังสือ</a>
             @endunless
         </div>
     </div>
@@ -55,18 +55,18 @@
         <div class="sector amber lighten-5">
             กรุณา<a href="/login">เข้าสู่ระบบ</a>เพื่อสั่งซื้อ
         </div>
-        @elseif ($items = $product->items AND $items->count() > 0)
+    @elseif ($items = $product->items AND $items->count() > 0)
         <div class="sector blue lighten-5">
             @foreach ($items as $item)
-            <div class="row">
-                <div class="col s12 m8 l9">
-                    ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท
+                <div class="row">
+                    <div class="col s12 m8 l9">
+                        ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท
+                    </div>
+                    <div class="col s12 m4 l3">
+                        <a class="waves-effect waves-light btn fullwidth" href="/cart/add/{{ $item->id }}"><i class="material-icons left">add_shopping_cart</i>เพิ่มในตะกร้า</a>
+                    </div>
                 </div>
-                <div class="col s12 m4 l3">
-                    <a class="waves-effect waves-light btn fullwidth"><i class="material-icons left">add_shopping_cart</i>เพิ่มในตะกร้า</a>
-                </div>
-            </div>
-                @endforeach
+            @endforeach
         </div>
     @else
         <div class="sector red lighten-4">

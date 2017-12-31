@@ -12,7 +12,7 @@
 */
 
 Route::view('/', 'home')->name('home');
-Route::get('/product/{product}', function (\App\Product $product) {
+Route::get('product/{product}', function (\App\Product $product) {
     return view('product', ['product' => $product]);
 });
 
@@ -21,9 +21,19 @@ Route::get('login/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('logout', 'Auth\LoginController@logout');
 
 Route::prefix('merchant')->middleware(['auth'])->group(function () {
+    // Merchant
     Route::view('register', 'merchant-register');
     Route::get('edit/{product}', function (\App\Product $product) {
         return view('merchant-register', ['product' => $product]);
     });
     Route::post('register', 'MerchantController@registerProduct');
+});
+
+Route::prefix('cart')->middleware(['auth'])->group(function () {
+    // Visitor
+    Route::view('/', 'cart.cart');
+    Route::get('add/{item}', 'VisitorController@addToCart');
+    Route::get('remove/{rowId}', 'VisitorController@removeFromCart');
+    Route::get('update/{rowId}/{quantity}', 'VisitorController@updateCart');
+    Route::post('checkout', 'VisitorController@checkout');
 });

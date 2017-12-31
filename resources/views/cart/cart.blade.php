@@ -1,0 +1,88 @@
+@extends('layouts.master')
+
+@section('style')
+    <style>
+        table {
+            margin-bottom: 2rem;
+        }
+
+        td img {
+            max-height: 5rem;
+        }
+    </style>
+@endsection
+
+@section('beforemain')
+    <div class="grey darken-2 white-text" style="padding-top:1rem;padding-bottom:2rem;">
+        <div class="container">
+            <h2 class="left-align"><i class="material-icons medium">shopping_cart</i> ตะกร้าสินค้า</h2>
+        </div>
+    </div>
+@endsection
+
+@section('main')
+    @if (Cart::count() > 0)
+        <table class="striped">
+            <thead>
+            <tr>
+                <th></th>
+                <th>สินค้า</th>
+                <th>ราคา</th>
+                <th>จำนวน</th>
+                <th>ราคารวม</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach(Cart::content() as $row)
+                @php
+                    // Reduce query amount
+                        /** @var \Gloudemans\Shoppingcart\CartItem $row */
+                        /** @var \App\ProductItem $item */
+                        $item = $row->model;
+                        /** @var \App\Product $product */
+                        $product = $item->product;
+                @endphp
+                <tr>
+                    <td><a href="/product/{{ $row->id }}"><img src="{{ $product->picture }}"/></a></td>
+                    <td>{{ $product->type }} {{ $item->name }}</td>
+                    <td>{{ $item->price }}</td>
+                    <td>
+                        <a class="waves-effect waves-yellow btn-flat" href="/cart/update/{{ $row->rowId }}/{{ $row->qty-1 }}"><i class="material-icons">remove</i></a>
+                        {{ $row->qty }}
+                        <a class="waves-effect waves-yellow btn-flat" href="/cart/update/{{ $row->rowId }}/{{ $row->qty+1 }}"><i class="material-icons">add</i></a>
+                    </td>
+                    <td>{{ number_format($row->subtotal()) }} บาท</td>
+                    <td><a class="waves-effect waves-red btn-flat" href="/cart/remove/{{ $row->rowId }}"><i class="material-icons">delete</i></a></td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+
+        <form method="POST" action="/cart/checkout">
+            {{ csrf_field() }}
+            <input type="hidden" name="total" value="{{ Cart::subtotal() }}"/>
+            รวมทั้งสิ้น {{ Cart::subtotal() }} บาท<br/><br/>
+            โปรดเลือกวิธีชำระเงิน
+            <p>
+                <label>
+                    <input name="method" type="radio" value="cashier" checked/>
+                    <span>จ่ายที่แคชเชียร์ (ภายในงาน)</span>
+                </label>
+            </p>
+            {{-- <p>
+                <label>
+                    <input name="method" type="radio" value="card" disabled/>
+                    <span>บัตร VISA/MasterCard (ค่าธรรมเนียม 4%)</span>
+                </label>
+            </p> --}}
+            <button type="submit" class="waves-effect waves-light btn fullwidth blue">สั่งซื้อ</button>
+        </form>
+    @else
+        <div class="fullwidth center-align">
+            <br/><br/>
+            <i class="large material-icons grey-text">brightness_5</i><br/>
+            ยังไม่มีสินค้าในตะกร้า <a href="/">ดูสินค้า</a>
+        </div>
+    @endif
+@endsection

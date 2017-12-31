@@ -5,10 +5,10 @@
         <title>UNDER CONSTRUCTION - TUCMC</title>
         <meta name="robots" content="noindex, nofollow"/>
     @else
-        @section('title')
-            <title>TUOPH Shop</title>
-        @show
-        <meta name="keyword" content="TU Open House Triamudom นิทรรศการ เตรียมอุดม"/>
+    @section('title')
+        <title>TUOPH Shop</title>
+    @show
+    <meta name="keyword" content="TU Open House Triamudom นิทรรศการ เตรียมอุดม"/>
     @endif
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -32,13 +32,27 @@
                     <span class="pink-text text-accent-2">TUOPH</span> Shop
                 @endif
             </a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <ul class="right hide-on-med-and-down">
                 @if (Auth::check())
+                    @if (Cart::count() > 0)
+                        <li><a href="/cart"><i class="material-icons left">shopping_cart</i> ตะกร้า</a></li>
+                    @endif
                     <li><a href="/logout">ออกจากระบบ</a></li>
                 @else
                     <li><a href="/login">เข้าสู่ระบบ</a></li>
                 @endif
             </ul>
+            <ul class="sidenav" id="nav-mobile">
+                @if (Auth::check())
+                    @if (Cart::count() > 0)
+                        <li><a href="/cart"><i class="material-icons">shopping_cart</i> ตะกร้า</a></li>
+                    @endif
+                    <li><a href="/logout">ออกจากระบบ</a></li>
+                @else
+                    <li><a href="/login">เข้าสู่ระบบ</a></li>
+                @endif
+            </ul>
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         </div>
     </div>
 </nav>
@@ -67,6 +81,13 @@
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/js/materialize.min.js" integrity="sha256-4u/8c/K9iSYgglS0o0++LZ82P5V5tll6wyz02zryNxc="
             crossorigin="anonymous"></script>
+    <script>
+        var navElement = document.querySelector('.sidenav');
+        var sideNav = new M.Sidenav(navElement, {});
+        @if (session()->has('notify'))
+        M.toast({html: '{!! session('notify') !!}'});
+        @endif
+    </script>
 @show
 </body>
 </html>
