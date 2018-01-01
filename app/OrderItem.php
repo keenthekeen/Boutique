@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $order_id
  * @property string $product_item_id
  * @property float $price
+ * @property int $quantity
  * @property-read \App\Order $order
  * @property-read \App\ProductItem $productItem
  * @method static \Illuminate\Database\Eloquent\Builder|\App\OrderItem whereId($value)
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class OrderItem extends Model {
     public $timestamps = false;
+    protected $fillable = ['order_id', 'product_item_id', 'price', 'quantity'];
     
     public function order() {
         return $this->belongsTo('App\Order');

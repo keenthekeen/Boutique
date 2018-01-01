@@ -19,6 +19,13 @@ Route::get('product/{product}', function (\App\Product $product) {
 Route::get('login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('login/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('logout', 'Auth\LoginController@logout');
+Route::get('debug/user', function () {
+    if (Auth::check()) {
+        return response()->json(Auth::user());
+    } else {
+        return response('Unauthenticated');
+    }
+});
 
 Route::prefix('merchant')->middleware(['auth'])->group(function () {
     // Merchant

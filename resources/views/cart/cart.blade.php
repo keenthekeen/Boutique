@@ -21,6 +21,13 @@
 @endsection
 
 @section('main')
+    @if (count($errors) > 0)
+        <ul class="collection white-text">
+            <li class="collection-item red darken-1">เกิดข้อผิดพลาดในข้อมูล
+                ({{ implode(', ', $errors->all()) }})
+            </li>
+        </ul>
+    @endif
     @if (Cart::count() > 0)
         <table class="striped">
             <thead>
@@ -52,7 +59,7 @@
                         {{ $row->qty }}
                         <a class="waves-effect waves-yellow btn-flat" href="/cart/update/{{ $row->rowId }}/{{ $row->qty+1 }}"><i class="material-icons">add</i></a>
                     </td>
-                    <td>{{ number_format($row->subtotal()) }} บาท</td>
+                    <td>{{ $row->subtotal() }} บาท</td>
                     <td><a class="waves-effect waves-red btn-flat" href="/cart/remove/{{ $row->rowId }}"><i class="material-icons">delete</i></a></td>
                 </tr>
             @endforeach
@@ -61,8 +68,24 @@
 
         <form method="POST" action="/cart/checkout">
             {{ csrf_field() }}
-            <input type="hidden" name="total" value="{{ Cart::subtotal() }}"/>
-            รวมทั้งสิ้น {{ Cart::subtotal() }} บาท<br/><br/>
+            @php
+                $appliedPromotions = \App\Order::processPromotions(Cart::content());
+                $discountSum = $appliedPromotions->pluck('reduced')->sum();
+            $total = Cart::subtotal() - abs($discountSum);
+            @endphp
+            @if ($appliedPromotions->isNotEmpty())
+                ส่วนลด:
+                <ul class="browser-default">
+                    @foreach($appliedPromotions as $promotion)
+                        <li>
+                            @php Debugbar::debug($promotion); @endphp
+                            {{ $promotion['promotion']->name }} : {{ $promotion['times'] }} ครั้ง - ลดไป {{ abs($promotion['reduced']) }} บาท
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+            <input type="hidden" name="total" value="{{ $total }}"/>
+            รวมทั้งสิ้น <span style="font-size:2rem">{{ $total }} บาท</span><br/><br/>
             โปรดเลือกวิธีชำระเงิน
             <p>
                 <label>
@@ -77,6 +100,7 @@
                 </label>
             </p> --}}
             <button type="submit" class="waves-effect waves-light btn fullwidth blue">สั่งซื้อ</button>
+            <span class="red-text">โปรดตรวจสอบข้อมูลว่าครบถ้วนถูกต้องก่อนดำเนินการต่อ</span>
         </form>
     @else
         <div class="fullwidth center-align">

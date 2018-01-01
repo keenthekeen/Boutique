@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * App\Promotion
  *
  * @property int $id
- * @property mixed $detail
+ * @property array $detail {product, quantity, discount}
  * @property string $name
  * @property string $user_id
  * @property string|null $deleted_at
@@ -32,6 +32,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Promotion extends Model {
     use SoftDeletes;
+    
+    protected $fillable = ['detail', 'name', 'user_id'];
+    
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'detail' => 'array',
+    ];
     
     public function user() {
         return $this->belongsTo('App\User');

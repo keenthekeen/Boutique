@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\ProductItem;
+use Auth;
 use Gloudemans\Shoppingcart\Cart;
 use Illuminate\Http\Request;
 
@@ -28,7 +30,21 @@ class VisitorController extends Controller {
     }
     
     public function checkout (Request $request) {
-    
+        $cartContent = $this->cart->content();
+        $appliedPromotions = Order::processPromotions($cartContent);
+        $discountSum = $appliedPromotions->pluck('reduced')->sum();
+        $total = $this->cart->subtotal() - abs($discountSum);
+        if ($request->input('total') != $total) {
+            return back()->withErrors('Error occurred! Please try again.');
+        }
+        
+        $order = new Order();
+        $order->user_id = Auth::user()->id;
+        $order->type = 'cash';
+        $order->price = $total;
+        $order->promotion = $appliedPromotions;
+        $order->addItems($cartContent);
+        $order->save();
     }
     
 }

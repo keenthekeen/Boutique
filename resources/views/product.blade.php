@@ -44,7 +44,7 @@
         <img class="responsive-img" src="{{ $product->poster }}"/>
     @endunless
 
-    {!! $product->detail['description'] !!}
+    {!! nl2br($product->detail['description']) !!}
 
 
     @if (!$product->inStock())

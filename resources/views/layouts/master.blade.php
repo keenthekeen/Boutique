@@ -61,6 +61,7 @@
 
 <main class="container">
     @yield('main')
+    <br />
 </main>
 
 <footer class="page-footer grey darken-2">
