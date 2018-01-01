@@ -19,13 +19,6 @@ Route::get('product/{product}', function (\App\Product $product) {
 Route::get('login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('login/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('logout', 'Auth\LoginController@logout');
-Route::get('debug/user', function () {
-    if (Auth::check()) {
-        return response()->json(Auth::user());
-    } else {
-        return response('Unauthenticated');
-    }
-});
 
 Route::prefix('merchant')->middleware(['auth'])->group(function () {
     // Merchant
@@ -43,4 +36,26 @@ Route::prefix('cart')->middleware(['auth'])->group(function () {
     Route::get('remove/{rowId}', 'VisitorController@removeFromCart');
     Route::get('update/{rowId}/{quantity}', 'VisitorController@updateCart');
     Route::post('checkout', 'VisitorController@checkout');
+    Route::get('order/{order}', function (\App\Order $order) {
+        if ($order->user_id == Auth::id()) {
+            return view('cart.success', ['order' => $order]);
+        } else {
+            return response()->view('errors.403', [], 403);
+        }
 });
+});
+
+if (config('app.debug')) {
+    Route::prefix('debug')->group(function () {
+        Route::get('user', function () {
+            if (Auth::check()) {
+                return response()->json(Auth::user());
+            } else {
+                return response('Unauthenticated');
+            }
+        });
+        Route::get('view/{view}', function ($view) {
+            return view($view);
+        });
+    });
+}

@@ -14,6 +14,7 @@ use Illuminate\Support\Collection;
  * @property int                                                            $id
  * @property string|null                                                    $user_id
  * @property string                                                         $type
+ * @property string                                                         $status
  * @property float                                                          $price
  * @property string|null                                                    $payment_note
  * @property string|null                                                    $promotion

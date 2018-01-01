@@ -38,15 +38,35 @@
 
 @section('main')
     @if (Auth::check())
-        <div class="sector blue lighten-5">
-            <b>Merchant Menu</b>&emsp;<a class="waves-effect waves-light btn" href="/merchant/register">เพิ่มสินค้า</a><br/>
-            @if ($myProducts = Auth::user()->products)
-                สินค้าของฉันที่เพิ่มข้อมูลแล้ว:
-                @foreach($myProducts as  $product)
-                    <a href="/merchant/edit/{{ $product->id }}">{{ $product->name }}</a>
+        @if (($pendingOrders = Auth::user()->orders()->where('status', 'unpaid')->get()) AND $pendingOrders->isNotEmpty())
+            <div class="sector yellow lighten-5">
+                <b>คำสั่งซื้อคงค้าง</b>&ensp;
+                @foreach($pendingOrders as $order)
+                    <a href="/cart/order/{{ $order->id }}">เลขที่ {{ $order->id }} ({{ $order->price }} บาท)</a>
                 @endforeach
-            @endif
-        </div>
+            </div>
+        @endif
+        @if ($myProducts = Auth::user()->products OR config('app.env') != 'production')
+            <div class="sector purple lighten-5">
+                <b>Merchant Menu</b>&emsp;
+                @if (config('app.env') == 'production')
+                    @if ($myProducts)
+                        สินค้าของฉัน:
+                        @foreach($myProducts as  $product)
+                            <a href="/product/{{ $product->id }}">{{ $product->name }}</a>
+                        @endforeach
+                    @endif
+                @else
+                    <a class="waves-effect waves-light btn" href="/merchant/register">เพิ่มสินค้า</a><br/>
+                    @if ($myProducts)
+                        สินค้าของฉันที่เพิ่มข้อมูลแล้ว:
+                        @foreach($myProducts as  $product)
+                            <a href="/merchant/edit/{{ $product->id }}">{{ $product->name }}</a>
+                        @endforeach
+                    @endif
+                @endif
+            </div>
+        @endif
     @endif
 
     <div class="row center-align">

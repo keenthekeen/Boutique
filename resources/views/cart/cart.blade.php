@@ -66,7 +66,7 @@
             </tbody>
         </table>
 
-        <form method="POST" action="/cart/checkout">
+        <form method="POST" action="/cart/checkout" onsubmit="return confirm('คุณได้ตรวจสอบข้อมูลทั้งหมดว่าถูกต้องแล้วใช่หรือไม่?');">
             {{ csrf_field() }}
             @php
                 $appliedPromotions = \App\Order::processPromotions(Cart::content());
