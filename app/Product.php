@@ -153,7 +153,7 @@ class Product extends Model {
     public function getOldInput($id) {
         if (str_contains($id, '.')) {
             $separatedId = explode('.', $id);
-            $val = $this->{$separatedId[0]};
+            $val = $this->{$separatedId[0]} ?? array();
             foreach ($separatedId as $key => $value) {
                 if ($key > 0) {
                     if (array_key_exists($value, $val)) {
