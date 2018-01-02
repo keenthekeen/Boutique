@@ -42,18 +42,19 @@ Route::prefix('cart')->middleware(['auth'])->group(function () {
         } else {
             return response()->view('errors.403', [], 403);
         }
+    });
 });
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    // Visitor
+    Route::view('cashier', 'admin.cashier');
 });
 
 if (config('app.debug')) {
     Route::prefix('debug')->group(function () {
         Route::get('user', function () {
-            if (Auth::check()) {
-                return response()->json(Auth::user());
-            } else {
-                return response('Unauthenticated');
-            }
-        });
+            return response('User ID: '.Auth::id());
+        })->middleware('auth');
         Route::get('view/{view}', function ($view) {
             return view($view);
         });

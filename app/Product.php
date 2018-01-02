@@ -91,8 +91,23 @@ class Product extends Model {
      * @return bool
      */
     public function inStock(): bool {
-        return true;
+        // @TODO implement this!
+        $stock = 0;
+        $sold = 0;
+        foreach ($this->items as $item) {
+            $stock += $item->amount;
+            $sold += $item->orderItems()->sum('quantity'); // UNPAID included!
+        }
+        
+        return $stock*1.5 > $sold;
     }
+    
+    public function getShortNote() {
+        $separated = explode('/', $this->note);
+        
+        return $separated[0];
+    }
+    
     
     /**
      * Create HTML input for merchant registration form

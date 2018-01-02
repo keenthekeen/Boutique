@@ -8,16 +8,16 @@ use Illuminate\Notifications\Notifiable;
 /**
  * App\User
  *
- * @property string $id
- * @property string $name
- * @property string $email
- * @property string $avatar
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
+ * @property string                                                                                                         $id
+ * @property string                                                                                                         $name
+ * @property string                                                                                                         $email
+ * @property string                                                                                                         $avatar
+ * @property \Carbon\Carbon|null                                                                                            $created_at
+ * @property \Carbon\Carbon|null                                                                                            $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Order[] $orders
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Product[] $products
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Promotion[] $promotions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Order[]                                                     $orders
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Product[]                                                   $products
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Promotion[]                                                 $promotions
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereAvatar($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail($value)
@@ -41,6 +41,10 @@ class User extends Authenticatable {
         'name',
         'email',
         'avatar',
+    ];
+    
+    protected $casts = [
+        'is_admin' => 'boolean',
     ];
     
     public function products() {

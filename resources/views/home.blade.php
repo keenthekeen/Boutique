@@ -38,14 +38,13 @@
 
 @section('main')
     @if (Auth::check())
-        @if (($pendingOrders = Auth::user()->orders()->where('status', 'unpaid')->get()) AND $pendingOrders->isNotEmpty())
-            <div class="sector yellow lighten-5">
-                <b>คำสั่งซื้อคงค้าง</b>&ensp;
-                @foreach($pendingOrders as $order)
-                    <a href="/cart/order/{{ $order->id }}">เลขที่ {{ $order->id }} ({{ $order->price }} บาท)</a>
-                @endforeach
+        @if (Auth::user()->is_admin)
+            <div class="sector red lighten-5">
+                <b>Admin Menu</b>&emsp;
+                <a class="waves-effect waves-light btn purple" href="/admin/cashier">Cashier</a>
             </div>
-        @endif
+            @endif
+
         @if ($myProducts = Auth::user()->products OR config('app.env') != 'production')
             <div class="sector purple lighten-5">
                 <b>Merchant Menu</b>&emsp;
@@ -65,6 +64,15 @@
                         @endforeach
                     @endif
                 @endif
+            </div>
+        @endif
+
+        @if (($pendingOrders = Auth::user()->orders()->where('status', 'unpaid')->get()) AND $pendingOrders->isNotEmpty())
+            <div class="sector yellow lighten-5">
+                <b>คำสั่งซื้อคงค้าง</b>&ensp;
+                @foreach($pendingOrders as $order)
+                    <a href="/cart/order/{{ $order->id }}">เลขที่ {{ $order->id }} ({{ $order->price }} บาท)</a>
+                @endforeach
             </div>
         @endif
     @endif
