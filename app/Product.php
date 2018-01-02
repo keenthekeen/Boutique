@@ -142,7 +142,7 @@ class Product extends Model {
         $html = '<select name="' . Helper::eloquentToInputName($id) . '"' . ($multiple ? ' multiple' : '') . ($required ? ' required' : '') . '>';
         $html .= '<option disabled>เลือก</option>';
         foreach ($options as $title => $value) {
-            $selected = $multiple ? in_array($value, $oldValue) : ($value == $oldValue);
+            $selected = is_array($oldValue) ? in_array($value, $oldValue) : ($value == $oldValue);
             $html .= '<option value="' . $value . '"' . ($selected ? ' selected>' : '>') . (is_numeric($title) ? $value : $title) . '</option>';
         }
         $html .= '</select><label>' . $name . '</label>';
