@@ -191,7 +191,7 @@
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
-                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ส่วนหนึ่งของเนื้อหาหลักของหนังสือ เพื่อเป็นตัวอย่างประกอบการเลือกซื้อ (PDF 1-10 หน้า; ไม่จำเป็น; <a
+                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ส่วนหนึ่งของเนื้อหาหลักของหนังสือ เพื่อเป็นตัวอย่างประกอบการเลือกซื้อ (PDF 1-10 หน้า ขนาดไม่เกิน 10 MB; ไม่จำเป็น; <a
                                     href="/assets/book-example.pdf" target="_blank">ตัวอย่าง</a>)</span>
                     </div>
                 </div>
@@ -223,7 +223,7 @@
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
-                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพตัวสินค้า พื้นหลังขาวหรือใส, ไฟล์ JPG ความละเอียด 1-10 Megapixel ขนาดไม่เกิน 2 MB</span>
+                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพตัวสินค้า พื้นหลังขาวหรือใส, ไฟล์ JPG ความละเอียด 1-10 Megapixel ขนาดไม่เกิน 1.5 MB</span>
                     </div>
                 </div>
             </div>
@@ -252,7 +252,7 @@
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
-                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพโปรโมตสินค้า อาจแสดงสรรพคุณ โปรโมชั่น หรือลักษณะสินค้าก็ได้ (ไม่จำเป็น) ขนาดไม่เกิน 5 MB</span>
+                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพโปรโมตสินค้า อาจแสดงสรรพคุณ โปรโมชั่น หรือลักษณะสินค้าก็ได้ (ไม่จำเป็น) ขนาดไม่เกิน 4 MB</span>
                     </div>
                 </div>
             </div>

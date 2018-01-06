@@ -18,6 +18,7 @@ class MerchantController extends Controller {
     }
     
     public function registerProduct(Request $request) {
+        //return response('File picture uploaded, extension: '.$request->file('picture')->extension().', mime: '.$request->file('picture')->getMimeType());
         $this->validate($request, [
             'name' => 'required|max:50',
             'author' => 'required|max:50',
@@ -25,7 +26,9 @@ class MerchantController extends Controller {
             'price' => 'required|numeric',
             'detail' => 'required|array',
             'detail.url' => 'url|nullable',
-            'picture' => 'nullable|file',
+            'picture' => 'nullable|file|dimensions:min_width=100,min_height=200|mimetypes:image/jpeg|size:2000',
+            'poster' => 'nullable|file|dimensions:min_width=100,min_height=200|mimetypes:image/jpeg|size:5000',
+            'book_example' => 'nullable|file|mimetypes:application/pdf|size:11000',
             'book_type' => 'required_if:type,หนังสือ',
             'book_subject' => 'required_if:type,หนังสือ|array',
             'owner_detail_1' => 'required|array',
@@ -45,11 +48,11 @@ class MerchantController extends Controller {
         }
         foreach (['picture', 'poster', 'book_example'] as $thing) {
             if ($request->hasFile($thing)) {
-                $product->$thing = $request->file($thing)->storePubliclyAs('product', $product->id . '-' . $thing, 'public');
+                $product->$thing = $request->file($thing)->storePubliclyAs('product', $product->id . '-' . $thing.'.'.$request->file($thing)->extension(), 'public');
             }
         }
         $product->save();
         
-        return redirect()->home();
+        return redirect('/product/'.$product->save());
     }
 }
