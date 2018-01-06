@@ -48,6 +48,7 @@ Route::prefix('cart')->middleware(['auth'])->group(function () {
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     // Visitor
     Route::view('cashier', 'admin.cashier')->middleware('cache');
+    Route::get('products', 'AdminController@getProductList')->middleware('cache');
 });
 
 if (config('app.debug')) {
