@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 
 class Handler extends ExceptionHandler {
     /**
@@ -49,6 +50,10 @@ class Handler extends ExceptionHandler {
      * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $exception) {
+        if ($exception instanceof PostTooLargeException) {
+            return response()->view('errors.custom', ['title' => 'Too Large Request', 'description' => 'ไฟล์ที่อัพโหลดขนาดใหญ่เกินไป']);
+        }
+        
         return parent::render($request, $exception);
     }
 }
