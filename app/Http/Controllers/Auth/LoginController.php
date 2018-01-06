@@ -54,7 +54,12 @@ class LoginController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function handleProviderCallback() {
-        $socialUser = Socialite::driver('facebook')->user();
+        try {
+            $socialUser = Socialite::driver('facebook')->user();
+        } catch (\Exception $e) {
+            return response()->view('errors.custom', ['title' => 'Error while logging in', 'description' => 'ไม่สามารถเข้าสู่ระบบได้ กรุณาลองใหม่', 'button' => '<a href="/login" class="waves-effect waves-light btn indigo darken-3 tooltipped center-align" data-tooltip="Back to index"
+       style="width:80%;max-width:350px;margin-top:20px">ลองใหม่</a>']);
+        }
         
         if (!$user = User::find($socialUser->getId())) {
             if (empty($socialUser->getEmail())) {

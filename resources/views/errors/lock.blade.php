@@ -20,5 +20,6 @@
 <br /><br />
 <i class="large material-icons red-text">error</i>
 <h3>Unauthorized</h3>
+<p>ไม่อนุญาตให้เข้าถึง หากคุณมีสิทธิเข้าถึง โปรดเข้าเว็บไซต์จากลิงก์ที่ได้รับอีกครั้ง</p>
 </body>
 </html>
