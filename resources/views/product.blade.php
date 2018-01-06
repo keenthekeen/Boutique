@@ -41,7 +41,7 @@
     </div>
 
     @unless (empty($product->poster))
-        <img class="responsive-img" src="{{ $product->poster }}"/>
+        <img class="responsive-img" src="{{ $product->poster }}"/><br/>
     @endunless
 
     {!! nl2br($product->detail['description']) !!}

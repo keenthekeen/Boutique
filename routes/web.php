@@ -12,6 +12,7 @@
 */
 
 Route::view('/', 'home')->name('home')->middleware('cache');
+Route::redirect('home', '/');
 Route::get('product/{product}', function (\App\Product $product) {
     return view('product', ['product' => $product]);
 })->middleware('cache');
@@ -45,8 +46,7 @@ Route::prefix('cart')->middleware(['auth'])->group(function () {
     });
 });
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-    // Visitor
+Route::prefix('admin')->middleware('admin')->group(function () {
     Route::view('cashier', 'admin.cashier')->middleware('cache');
     Route::get('products', 'AdminController@getProductList')->middleware('cache');
 });
@@ -54,7 +54,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 if (config('app.debug')) {
     Route::prefix('debug')->group(function () {
         Route::get('user', function () {
-            return response('User ID: '.Auth::id());
+            return response('User ID: ' . Auth::id());
         })->middleware('auth');
         Route::get('view/{view}', function ($view) {
             return view($view);

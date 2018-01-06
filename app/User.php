@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string                                                                                                         $name
  * @property string                                                                                                         $email
  * @property string                                                                                                         $avatar
+ * @property bool                                                                                                         $is_admin
  * @property \Carbon\Carbon|null                                                                                            $created_at
  * @property \Carbon\Carbon|null                                                                                            $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications

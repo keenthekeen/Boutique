@@ -4,8 +4,7 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-class Kernel extends HttpKernel
-{
+class Kernel extends HttpKernel {
     /**
      * The application's global HTTP middleware stack.
      *
@@ -20,7 +19,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class
     ];
-
+    
     /**
      * The application's route middleware groups.
      *
@@ -37,13 +36,13 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\Lock::class
         ],
-
+        
         'api' => [
             'throttle:60,1',
             'bindings',
         ],
     ];
-
+    
     /**
      * The application's route middleware.
      *
@@ -60,5 +59,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         
         'cache' => \App\Http\Middleware\ETagMiddleware::class,
+        'admin' => \App\Http\Middleware\Admin::class,
     ];
 }
