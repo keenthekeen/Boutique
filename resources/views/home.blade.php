@@ -78,7 +78,7 @@
     @endif
 
     <div class="row center-align">
-        @foreach(\App\Product::inRandomOrder()->get() as $order => $product)
+        @foreach(\App\Product::inRandomOrder()->with('items')->get() as $order => $product)
             <a href="/product/{{ $product->id }}">
                 <div class="col s12 m6 l3 hoverable">
                     <img class="responsive-img" src="{{ $product->picture }}"/>

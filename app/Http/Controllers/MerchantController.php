@@ -18,7 +18,6 @@ class MerchantController extends Controller {
     }
     
     public function registerProduct(Request $request) {
-        //return response('File picture uploaded, extension: '.$request->file('picture')->extension().', mime: '.$request->file('picture')->getMimeType());
         $this->validate($request, [
             'name' => 'required|max:50',
             'author' => 'required|max:50',

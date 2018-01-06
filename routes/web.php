@@ -11,10 +11,10 @@
 |
 */
 
-Route::view('/', 'home')->name('home');
+Route::view('/', 'home')->name('home')->middleware('cache');
 Route::get('product/{product}', function (\App\Product $product) {
     return view('product', ['product' => $product]);
-});
+})->middleware('cache');
 
 Route::get('login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('login/callback', 'Auth\LoginController@handleProviderCallback');
@@ -47,7 +47,7 @@ Route::prefix('cart')->middleware(['auth'])->group(function () {
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     // Visitor
-    Route::view('cashier', 'admin.cashier');
+    Route::view('cashier', 'admin.cashier')->middleware('cache');
 });
 
 if (config('app.debug')) {

@@ -35,7 +35,11 @@ class ProductItem extends Model implements Buyable {
         return $this->hasMany('App\OrderItem');
     }
     
-    // Implements Buyable
+    public function colorCode() {
+        return Helper::materialColor($this->id);
+    }
+    
+    // Implements Cart's Buyable
     
     /**
      * Get the identifier of the Buyable item.
