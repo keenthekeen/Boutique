@@ -94,7 +94,7 @@
                     @if ($product->inStock())
                         <span class="price">{{ $product->price }} บาท</span>
                     @else
-                        <span class="red-text">หมด</span>
+                        <span class="red-text">หมด ({{ $product->price }} บาท)</span>
                     @endif
                 </div>
             </a>

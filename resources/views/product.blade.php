@@ -12,16 +12,21 @@
         .sector .row {
             margin-bottom: 0;
         }
+
+        #basic-info a.btn {
+            margin-top: 0.8rem
+        }
     </style>
 @endsection
 
 @section('main')
-    <div class="row">
+    <div class="row" id="basic-info">
         <div class="col s12 m4 l3">
             <img class="responsive-img" src="{{ $product->picture }}"/>
         </div>
         <div class="col s12 m8 l9">
             <span style="font-size: 2rem">{{ $product->name }}</span> <span style="font-size: 0.95rem">{{ $product->author }}</span><br/>
+            <label style="margin-top:0.8rem">ข้อมูลสินค้า</label><br />
             @if ($product->type == 'หนังสือ')
                 หนังสือ{{ $product->book_type }} {{ $product->detail['page'] }} หน้า
                 @if (str_contains($product->book_type, 'โจทย์'))
@@ -30,18 +35,19 @@
             @else
                 {{ $product->type }}
             @endif
+            <br />
 
             @unless (empty($product->detail['url']))
-                <br/><a href="{{ $product->detail['url'] }}">Website</a>
+                <br/><a class="waves-effect waves-light btn fullwidth teal" href="{{ $product->detail['url'] }}">เว็บไซต์ผู้จัดทำ</a>
             @endunless
             @unless (empty($product->book_example))
-                <br/><br/><a class="waves-effect waves-light btn fullwidth orange" href="{{ $product->book_example }}">ตัวอย่างหนังสือ</a>
+                <br/><a class="waves-effect waves-light btn fullwidth orange" href="{{ $product->book_example }}">ตัวอย่างหนังสือ</a>
             @endunless
         </div>
     </div>
 
     @unless (empty($product->poster))
-        <img class="responsive-img" src="{{ $product->poster }}"/><br/>
+        <img class="responsive-img" src="{{ $product->poster }}" style="margin-bottom: 1rem"/><br/>
     @endunless
 
     {!! nl2br($product->detail['description']) !!}
