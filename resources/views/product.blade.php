@@ -63,7 +63,7 @@
                         ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท
                     </div>
                     <div class="col s12 m4 l3">
-                        <a class="waves-effect waves-light btn fullwidth" href="/cart/add/{{ $item->id }}"><i class="material-icons left">add_shopping_cart</i>เพิ่มในตะกร้า</a>
+                        <a class="waves-effect waves-light btn fullwidth disabled" href="/cart/add/{{ $item->id }}"><i class="material-icons left">add_shopping_cart</i>เพิ่มในตะกร้า</a>
                     </div>
                 </div>
             @endforeach

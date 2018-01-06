@@ -71,7 +71,7 @@
             @php
                 $appliedPromotions = \App\Order::processPromotions(Cart::content());
                 $discountSum = $appliedPromotions->pluck('reduced')->sum();
-            $total = Cart::subtotal() - abs($discountSum);
+                $total = Cart::subtotal() - abs($discountSum);
             @endphp
             @if ($appliedPromotions->isNotEmpty())
                 ส่วนลด:

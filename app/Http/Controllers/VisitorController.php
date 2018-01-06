@@ -55,6 +55,8 @@ class VisitorController extends Controller {
         $order->addItems($cartContent);
         $order->save();
         
+        $this->cart->destroy();
+        
         return redirect('/cart/order/' . $order->id);
     }
     
