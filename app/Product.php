@@ -135,7 +135,7 @@ class Product extends Model {
      * @return string
      */
     public function createOption(string $id, string $name, array $options, $required = false, $multiple = false): string {
-        $oldValue = $this->$id;
+        $oldValue = $this->getOldInput($id);
         if (substr($id, -1, 1) == '.') {
             $oldValue = $this->{substr($id, 0, strlen($id) - 1)};
         }
