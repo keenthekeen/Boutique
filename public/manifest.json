@@ -1,0 +1,8 @@
+{
+  "name": "TUOPH Shop",
+  "short_name": "TUOPH Shop",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#616161",
+  "description": "ร้านของที่ระลึก งานนิทรรศการวิชาการ ต.อ."
+}

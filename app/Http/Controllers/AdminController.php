@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Product;
 
 class AdminController extends Controller {
-    public function getProductList () {
+    public function getProductList() {
         $products = Product::with('items')->select('id', 'name', 'author', 'type', 'picture')->orderBy('name')->get()->map(function (Product $product) {
-            // Mutate required
+            $product->name = $product->type . ' ' . $product->name;
+            // Mutate required attribute
             $product->picture = $product->picture;
+            
             return $product;
         });
         

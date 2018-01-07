@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
     <link href="/css/app.css" rel="stylesheet"/>
+    <link rel="manifest" href="/manifest.json"/>
     @yield('style')
 </head>
 <body>
@@ -27,7 +28,7 @@
         <div class="container">
             <a href="/" class="brand-logo">
                 @if (config('app.env') == 'staging')
-                    <b class="red-text">UNDER CONSTRUCTION</b>
+                    <b class="red-text">TUCMC Internal</b>
                 @else
                     <span class="pink-text text-accent-2">TUOPH</span> Shop
                 @endif
@@ -61,7 +62,7 @@
 
 <main class="container">
     @yield('main')
-    <br />
+    <br/>
 </main>
 
 <footer class="page-footer grey darken-2">
@@ -92,7 +93,11 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88470919-8"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'UA-88470919-8');

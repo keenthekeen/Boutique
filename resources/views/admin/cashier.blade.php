@@ -50,8 +50,10 @@
             <span id="iQuantity">1</span>
             <a class="waves-effect btn-flat lighten-3 cyan" onclick="$('#iQuantity').text($('#iQuantity').text()-(-1))"><i class="material-icons">add</i></a>
         </p>
-        <a class="waves-effect btn indigo fullwidth">เพิ่ม</a>
+        <a class="waves-effect btn indigo fullwidth" id="addButton">เพิ่ม</a>
     </div>
+
+    <table id="items-table"></table>
 
     <div id="loading">
         <div class="progress">
@@ -66,6 +68,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         var productList;
+        var cart = [];
         $(document).ready(function () {
             fetch('/admin/products', {
                 credentials: 'same-origin'
@@ -77,30 +80,79 @@
                 $("#loading").slideUp();
 
                 $("input[type=radio][name=type]").change(function () {
-                    var products = productList[$(this).val()];
+                    var products = 'books';
+                    if ($(this).val()) {
+                        products = productList[$(this).val()];
+                    }
                     var options = '';
                     for (var i in products) {
-                        options += '<option value="'+products[i].id+'" data-order="'+i+'">'+products[i].name+'</option>';
+                        options += '<option value="' + products[i].id + '" data-order="' + i + '">' + products[i].name + '</option>';
                     }
-                    $("#iProduct").html(options);
+                    $("#iProduct").html(options).change();
                 }).trigger('change');
 
                 $("#iProduct").change(function () {
+                    if (isNaN($(this).children('option:selected').data('order'))) {
+                        $("#iItem").html('');
+                        return;
+                    }
                     var items = productList[$('input[type=radio][name=type]').val()][$(this).children('option:selected').data('order')].items;
                     var options = '';
                     if (items.length > 1) {
+                        $("#iItem").attr('disabled', false);
                         for (var i in items) {
-                            options += '<option value="' + items[i].id + '">' + items[i].name + '</option>';
+                            options += '<option value="' + items[i].id + '" data-price="' + items[i].price + '">' + items[i].name + ' (' + items[i].price + '  บาท)</option>';
                         }
                     } else if (items.length === 1) {
-                        options = '<option value="' + items[0].id + '" selected disabled>' + items[0].name + '</option>';
+                        $("#iItem").attr('disabled', true);
+                        options = '<option value="' + items[0].id + '" data-price="' + items[0].price + '" selected>' + items[0].name + ' (' + items[0].price + ' บาท)</option>';
                     } else {
-                        options = '<option value="X" selected disabled>ไม่มีสินค้า</option>';
+                        $("#iItem").attr('disabled', true);
+                        options = '<option value="X" selected disabled>--- ไม่มีสินค้า ---</option>';
                     }
                     $("#iItem").html(options);
                 }).trigger('change');
             });
         });
+
+        $("#addButton").click(function () {
+            var item = $("#iItem").find("option:selected");
+            if (isNaN(item.val()) || item.val() <= 0) {
+                $(this).removeClass('indigo').addClass('red');
+                setTimeout(function () {
+                    $("#addButton").addClass('indigo').removeClass('red');
+                }, 1500);
+                return;
+            }
+
+            var isFoundInCart = false;
+            cart.map(function (it) {
+                if (it.id === item.val()) {
+                    isFoundInCart = true;
+                    it.quantity = it.quantity - (-$("#iQuantity").text());
+                }
+                return it;
+            }.bind(item));
+            if (!isFoundInCart) {
+                cart.push({name: item.text(), price: item.data("price"), id: item.val(), quantity: $("#iQuantity").text()});
+            }
+            renderTable();
+        });
+
+        function renderTable() {
+            var content = '<tr><th>ชื่อ</th><th>จำนวน</th><th>ราคา</th><th></th></tr>';
+            for (var i in cart) {
+                content += '<tr><td>' + cart[i].name + '</td><td>' + cart[i].quantity + '</td><td>' + (cart[i].price * cart[i].quantity) + '</td><td><a onclick="removeItem(' + cart[i].id + ')">X</a></td></tr>';
+            }
+            $("#items-table").html(content);
+        }
+
+        function removeItem(id) {
+            cart = cart.filter(function (it) {
+                return it.id.toString() !== id.toString();
+            }.bind(id));
+            renderTable();
+        }
     </script>
 @endsection
 

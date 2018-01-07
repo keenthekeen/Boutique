@@ -78,14 +78,14 @@
     @endif
 
     <div class="row center-align">
-        @foreach(\App\Product::inRandomOrder()->with('items')->get() as $order => $product)
+        @foreach(\App\Product::with('items')->get() as $order => $product)
             <a href="/product/{{ $product->id }}">
                 <div class="col s12 m6 l3 hoverable">
                     <img class="responsive-img" src="{{ $product->picture }}"/>
                     <h5>{{ $product->name }}</h5>
                     <span class="author">{{ $product->author }}</span><br/>
                     @if ($product->type == 'หนังสือ')
-                        หนังสือ{{ $product->book_type }} วิชา {{ implode(' ', $product->book_subject) }}
+                        หนังสือ{{ $product->book_type }} วิชา{{ implode(' ', $product->book_subject) }}
                     @else
                         {{ $product->type }}
                     @endif
