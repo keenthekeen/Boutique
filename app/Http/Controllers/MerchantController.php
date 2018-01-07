@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use Auth;
 use Illuminate\Http\Request;
+use Log;
 
 class MerchantController extends Controller {
     /**
@@ -36,7 +37,7 @@ class MerchantController extends Controller {
         ]);
         if ($request->has('id')) {
             $product = Product::find($request->input('id'));
-            if ($product->user_id != Auth::id()) {
+            if ($product->user_id != Auth::id() AND !Auth::user()->is_admin) {
                 abort(403);
             }
         } else {
@@ -54,6 +55,7 @@ class MerchantController extends Controller {
             }
         }
         $product->save();
+        Log::info('User '.Auth::id().' has edited product '.$product->id.': '.$product->name);
         
         return redirect('/product/'.$product->id);
     }

@@ -25,7 +25,7 @@ Route::prefix('merchant')->middleware(['auth'])->group(function () {
     // Merchant
     Route::view('register', 'merchant-register');
     Route::get('edit/{product}', function (\App\Product $product) {
-        if ($product->user_id != Auth::id()) {
+        if ($product->user_id != Auth::id() AND !Auth::user()->is_admin) {
             abort(403);
         }
         
