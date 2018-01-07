@@ -70,7 +70,7 @@ class LoginController extends Controller {
             $user = User::create([
                 'id' => $socialUser->getId(),
                 'name' => $socialUser->getName(),
-                'email' => $socialUser->getEmail(),
+                'email' => $email,
                 'avatar' => $socialUser->getAvatar()
             ]);
         }
