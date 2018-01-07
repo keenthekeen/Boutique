@@ -52,6 +52,6 @@ class MerchantController extends Controller {
         }
         $product->save();
         
-        return redirect('/product/'.$product->save());
+        return redirect('/product/'.$product->id);
     }
 }

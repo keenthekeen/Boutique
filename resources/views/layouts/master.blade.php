@@ -2,7 +2,7 @@
 <html>
 <head>
     @if (config('app.env') == 'staging')
-        <title>UNDER CONSTRUCTION - TUCMC</title>
+        <title>Internal Use - TUCMC</title>
         <meta name="robots" content="noindex, nofollow"/>
     @else
     @section('title')

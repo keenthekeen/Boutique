@@ -45,10 +45,10 @@
         </p>
         <p>
             <label>จำนวน</label>&emsp;
-            <a class="waves-effect btn-flat lighten-3 light-blue" style="padding: 0 1rem" onclick="$('.iQuantity').text('1')"><i class="material-icons">fast_rewind</i></a>
-            <a class="waves-effect btn-flat lighten-3 blue" onclick="$('.iQuantity').text($('.iQuantity').text()-1)"><i class="material-icons">remove</i></a>
+            <a class="waves-effect btn-flat lighten-3 light-blue" style="padding: 0 1rem" onclick="$('#iQuantity').text('1')"><i class="material-icons">fast_rewind</i></a>
+            <a class="waves-effect btn-flat lighten-3 blue" onclick="$('#iQuantity').text(Math.abs($('#iQuantity').text()-1))"><i class="material-icons">remove</i></a>
             <span id="iQuantity">1</span>
-            <a class="waves-effect btn-flat lighten-3 cyan" onclick="$('.iQuantity').text($('.iQuantity').text()+1)"><i class="material-icons">add</i></a>
+            <a class="waves-effect btn-flat lighten-3 cyan" onclick="$('#iQuantity').text($('#iQuantity').text()-(-1))"><i class="material-icons">add</i></a>
         </p>
         <a class="waves-effect btn indigo fullwidth">เพิ่ม</a>
     </div>
@@ -76,16 +76,29 @@
                 $(".hide").removeClass("hide");
                 $("#loading").slideUp();
 
-                $("input:radio[name=type]:checked").change(function () {
+                $("input[type=radio][name=type]").change(function () {
                     var products = productList[$(this).val()];
-                    console.log(products);
                     var options = '';
-                    for (var i = 0; i < products.length; i++) {
-                        options.concat('<option value="'+products[i].id+'">'+products[i].name+'</option>');
+                    for (var i in products) {
+                        options += '<option value="'+products[i].id+'" data-order="'+i+'">'+products[i].name+'</option>';
                     }
-                    console.log(options);
                     $("#iProduct").html(options);
-                }).change();
+                }).trigger('change');
+
+                $("#iProduct").change(function () {
+                    var items = productList[$('input[type=radio][name=type]').val()][$(this).children('option:selected').data('order')].items;
+                    var options = '';
+                    if (items.length > 1) {
+                        for (var i in items) {
+                            options += '<option value="' + items[i].id + '">' + items[i].name + '</option>';
+                        }
+                    } else if (items.length === 1) {
+                        options = '<option value="' + items[0].id + '" selected disabled>' + items[0].name + '</option>';
+                    } else {
+                        options = '<option value="X" selected disabled>ไม่มีสินค้า</option>';
+                    }
+                    $("#iItem").html(options);
+                }).trigger('change');
             });
         });
     </script>

@@ -36,7 +36,8 @@ class ETagMiddleware {
             }
             
             // Set Cache Header
-            $response->setCache(['etag' => $etag, 'max_age' => 86400, 'private' => true]);
+            $response->setEtag($etag);
+            // $response->setCache(['etag' => $etag, 'max_age' => 86400, 'private' => true]);
         }
         
         // Send response
