@@ -81,15 +81,15 @@
         @foreach(\App\Product::inRandomOrder()->with('items')->get() as $order => $product)
             <a href="/product/{{ $product->id }}">
                 <div class="col s12 m6 l3 hoverable">
-                    <img class="responsive-img" src="{{ $product->picture }}"/>
-                    <h5>{{ $product->name }}</h5>
-                    <span class="author">{{ $product->author }}</span><br/>
+                    <img class="responsive-img" src="{{ $product->picture }}"/><br />
                     @if ($product->type == 'หนังสือ')
-                        หนังสือ{{ $product->book_type }} {{ $product->detail['page'] }} หน้า
+                        หนังสือ{{ $product->book_type }} วิชา {{ implode(' ', $product->book_subject) }}
                     @else
                         {{ $product->type }}
                     @endif
                     <br/>
+                    <h5>{{ $product->name }}</h5>
+                    <span class="author">{{ $product->author }}</span><br/>
 
                     @if ($product->inStock())
                         <span class="price">{{ $product->price }} บาท</span>
