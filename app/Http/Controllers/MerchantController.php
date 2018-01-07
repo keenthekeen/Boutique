@@ -36,6 +36,9 @@ class MerchantController extends Controller {
         ]);
         if ($request->has('id')) {
             $product = Product::find($request->input('id'));
+            if ($product->user_id != Auth::id()) {
+                abort(403);
+            }
         } else {
             $product = new Product();
             $product->user_id = Auth::user()->id;
