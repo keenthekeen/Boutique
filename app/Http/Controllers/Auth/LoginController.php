@@ -63,8 +63,9 @@ class LoginController extends Controller {
         }
         
         if (!$user = User::find($socialUser->getId())) {
-            if (empty($socialUser->getEmail())) {
-                return response()->view('errors.custom', ['title' => 'ไม่สามารถเข้าสู่ระบบได้', 'description' => 'ไม่ได้รับอีเมลของผู้ใช้จาก Facebook']);
+            if (empty($email = $socialUser->getEmail())) {
+                $email = $socialUser->getId() . '@facebook.com';
+                // return response()->view('errors.custom', ['title' => 'ไม่สามารถเข้าสู่ระบบได้', 'description' => 'ไม่ได้รับอีเมลของผู้ใช้จาก Facebook']);
             }
             $user = User::create([
                 'id' => $socialUser->getId(),
