@@ -80,7 +80,7 @@
     <div class="row center-align">
         @foreach(\App\Product::with('items')->get() as $order => $product)
             <a href="/product/{{ $product->id }}">
-                <div class="col s12 m6 l3 hoverable">
+                <div class="col s6 m6 l3 hoverable">
                     <img class="responsive-img" src="{{ $product->picture }}"/>
                     <h5>{{ $product->name }}</h5>
                     <span class="author">{{ $product->author }}</span><br/>

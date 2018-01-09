@@ -34,22 +34,24 @@
                 @endif
             </a>
             <ul class="right hide-on-med-and-down">
+                <li><a href="/">หน้าแรก</a></li>
                 @if (Auth::check())
                     @if (Cart::count() > 0)
                         <li><a href="/cart"><i class="material-icons left">shopping_cart</i> ตะกร้า</a></li>
                     @endif
                     <li><a href="/logout">ออกจากระบบ</a></li>
-                @else
+                @elseif (env('NORMAL_LOGIN', false))
                     <li><a href="/login">เข้าสู่ระบบ</a></li>
                 @endif
             </ul>
             <ul class="sidenav" id="nav-mobile">
+                <li><a href="/">ดูสินค้าทั้งหมด</a></li>
                 @if (Auth::check())
                     @if (Cart::count() > 0)
                         <li><a href="/cart"><i class="material-icons">shopping_cart</i> ตะกร้า</a></li>
                     @endif
                     <li><a href="/logout">ออกจากระบบ</a></li>
-                @else
+                @elseif (env('NORMAL_LOGIN', false))
                     <li><a href="/login">เข้าสู่ระบบ</a></li>
                 @endif
             </ul>
