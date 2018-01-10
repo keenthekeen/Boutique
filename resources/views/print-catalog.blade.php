@@ -2,6 +2,10 @@
 
 @section('style')
     <style>
+        nav {
+            display: none
+        }
+
         .col {
             border-radius: 0.2em;
             font-size: 16px;
@@ -26,20 +30,10 @@
             color: blue;
         }
 
-        @media screen and (min-width: 993px) {
-            .container {
-                width: 80%;
-            }
+        .container {
+            width: 100%;
         }
     </style>
-@endsection
-
-@section('beforemain')
-    <div class="grey darken-2 white-text" style="padding-top:1rem;padding-bottom:2rem;">
-        <div class="container">
-            <h2 class="left-align">สินค้าที่ระลึก</h2>
-        </div>
-    </div>
 @endsection
 
 @section('main')

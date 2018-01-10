@@ -87,7 +87,7 @@
     $isMobile = str_contains(Request::userAgent(), ['Android', 'Mobile Safari']);
     $rowMember = $isMobile ? 2 : 4;
     $rowCut = 0;
-    $products = App\Product::select('id', 'picture', 'name', 'author', 'type', 'book_type', 'book_subject', 'price')->with('items')->get();
+    $products = App\Product::select('id', 'picture', 'name', 'author', 'type', 'book_type', 'book_subject', 'price')->with('items')->inRandomOrder()->get();
     $bookOrder = 0;
     $nonbookOrder = 0;
     $isBookActive = rand(0, 1);
