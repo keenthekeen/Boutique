@@ -86,33 +86,78 @@
     @php
     $isMobile = str_contains(Request::userAgent(), ['Android', 'Mobile Safari']);
     $rowMember = $isMobile ? 2 : 4;
+    $rowCut = 0;
+    $products = App\Product::select('id', 'picture', 'name', 'author', 'type', 'book_type', 'book_subject', 'price')->with('items')->get();
+    $bookOrder = 0;
+    $nonbookOrder = 0;
+    $isBookActive = rand(0, 1);
     @endphp
 
-    <div class="row center-align">
-        @foreach(\App\Product::select('id', 'picture', 'name', 'author', 'type', 'book_type', 'book_subject', 'price')->with('items')->get() as $order => $product)
-            <a href="/product/{{ $product->id }}">
-                <div class="col s6 m6 {{ $isMobile ? 'l6' : 'l3' }} hoverable">
-                    <img class="responsive-img" src="{{ $product->picture }}"/>
-                    <h5>{{ $product->name }}</h5>
-                    <span class="author">{{ $product->author }}</span><br/>
-                    @if ($product->type == 'หนังสือ')
-                        หนังสือ{{ $product->book_type }} วิชา{{ implode(' ', $product->book_subject) }}
-                    @else
-                        {{ $product->type }}
-                    @endif
-                    <br/>
+    {{-- <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s6"><a {!! $isBookActive ? 'class="active"' : '' !!} href="#book-tab">หนังสือ</a></li>
+                <li class="tab col s6"><a {!! $isBookActive ? '' : 'class="active"' !!} href="#nonbook-tab">ของที่ระลึก</a></li>
+            </ul>
+        </div>
+        <div id="book-tab" class="col s12">--}}
+            <div class="row center-align">
+                @foreach($products->where('type', 'หนังสือ') as $product)
+                    <a href="/product/{{ $product->id }}">
+                        <div class="col s6 m6 {{ $isMobile ? 'l6' : 'l3' }} hoverable">
+                            <img class="responsive-img" src="{{ $product->picture }}"/>
+                            <h5>{{ $product->name }}</h5>
+                            <span class="author">{{ $product->author }}</span><br/>
+                            @if ($product->type == 'หนังสือ')
+                                หนังสือ{{ $product->book_type }} วิชา{{ implode(' ', $product->book_subject) }}
+                            @else
+                                {{ $product->type }}
+                            @endif
+                            <br/>
 
-                    @if ($product->inStock())
-                        <span class="price">{{ $product->price }} บาท</span>
-                    @else
-                        <span class="red-text">หมด ({{ $product->price }} บาท)</span>
-                    @endif
-                </div>
-            </a>
-            @if ($order > 2 AND ($order % $rowMember == 3))
-    </div>
-    <div class="row center-align">
-        @endif
-        @endforeach
-    </div>
+                            @if ($product->inStock())
+                                <span class="price">{{ $product->price }} บาท</span>
+                            @else
+                                <span class="red-text">หมด ({{ $product->price }} บาท)</span>
+                            @endif
+                        </div>
+                    </a>
+                    @if (++$bookOrder > 2 AND ($bookOrder % $rowMember == $rowCut))
+            </div>
+            <div class="row center-align">
+                @endif
+                @endforeach
+            </div>
+        {{-- </div>
+        <div id="nonbook-tab" class="col s12"> --}}
+            <div class="row center-align">
+                @foreach($products->where('type', '!=', 'หนังสือ') as $product)
+                    <a href="/product/{{ $product->id }}">
+                        <div class="col s6 m6 {{ $isMobile ? 'l6' : 'l3' }} hoverable">
+                            <img class="responsive-img" src="{{ $product->picture }}"/>
+                            <h5>{{ $product->name }}</h5>
+                            <span class="author">{{ $product->author }}</span><br/>
+                            @if ($product->type == 'หนังสือ')
+                                หนังสือ{{ $product->book_type }} วิชา{{ implode(' ', $product->book_subject) }}
+                            @else
+                                {{ $product->type }}
+                            @endif
+                            <br/>
+
+                            @if ($product->inStock())
+                                <span class="price">{{ $product->price }} บาท</span>
+                            @else
+                                <span class="red-text">หมด ({{ $product->price }} บาท)</span>
+                            @endif
+                        </div>
+                    </a>
+                    @if (++$nonbookOrder > 2 AND ($nonbookOrder % $rowMember == $rowCut))
+            </div>
+            <div class="row center-align">
+                @endif
+                @endforeach
+            </div>
+        </div>
+    {{-- </div> --}}
+
 @endsection
