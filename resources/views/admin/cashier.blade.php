@@ -57,7 +57,7 @@
 
     <table id="items-table"></table>
 
-    <a class="btn waves-effect indigo fullwidth" style="display: none;" onclick="processCart()" id="process-btn">PROCESS</a><br/>
+    <a class="btn waves-effect teal fullwidth" style="display: none;" onclick="processCart()" id="process-btn">PROCESS</a><br/>
 
     <div id="summary"></div>
 

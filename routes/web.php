@@ -12,6 +12,7 @@
 */
 
 Route::view('/', 'home')->name('home')->middleware('cache');
+Route::view('print', 'print-catalog');
 Route::redirect('home', '/');
 Route::get('product/{product}', function (\App\Product $product) {
     return view('product', ['product' => $product]);
@@ -53,6 +54,7 @@ Route::prefix('cart')->middleware(['auth'])->group(function () {
 Route::prefix('admin')->middleware('admin')->group(function () {
     Route::view('cashier', 'admin.cashier')->middleware('cache');
     Route::get('products', 'AdminController@getProductList')->middleware('cache');
+    Route::post('cashier', 'AdminController@processCashier');
 });
 
 if (config('app.debug')) {
