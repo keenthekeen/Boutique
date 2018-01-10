@@ -93,7 +93,7 @@
                 $(".type-radio").change(function () {
                     var products = 'books';
                     if ($(this).val()) {
-                       products = productList[$(this).val()];
+                        products = productList[$(this).val()];
                         var options = '';
                         for (var i in products) {
                             options += '<option value="' + products[i].id + '" data-order="' + i + '">' + products[i].name + '</option>';
@@ -177,6 +177,9 @@
         }
 
         function processCart(proceed) {
+            if (proceed && !confirm('แน่ใจหรือ?')) {
+                return;
+            }
             $.ajax({
                 type: "POST",
                 url: '/admin/cashier',
@@ -186,7 +189,7 @@
                     //renderTable();
 
                     if (data.status == 'checked') {
-                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว "+data.total+" บาท</h4>รหัสคำสั่งซื้อ "+data.order_id+" เมื่อ "+data.order_time);
+                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว " + data.total + " บาท</h4>รหัสคำสั่งซื้อ " + data.order_id + " เมื่อ " + data.order_time);
                         /*setTimeout(function() {
                             cart = [];
                             renderTable();

@@ -13,7 +13,7 @@
 @endsection --}}
 
 @section('beforemain')
-    <meta http-equiv="refresh" content="5" />
+    <meta http-equiv="refresh" content="5"/>
     <div class="grey darken-2 white-text" style="padding-top:1rem;padding-bottom:2rem;">
         <div class="container">
             <h2 class="left-align">จุดรับสินค้า</h2>
@@ -32,15 +32,17 @@
     @if (count($list) > 0)
         <form method="POST">
             {{ csrf_field() }}
-        @foreach ($list as $id => $items)
-            <div class="sector">
-                <h4>Order {{ $id }} <span style="font-size: 0.8em">({{ $items['total'] }} บาท)</span></h4>
-                @foreach ($items['items'] as $item)
-                    - <b>{{ $item['name'] }}</b> x {{ $item['quantity'] }}<br />
-                @endforeach
-                <button type="submit" name="order" value="{{ $id }}" class="btn orange waves-effect">Mark as delivered</button>
-            </div>
-        @endforeach
+            @foreach ($list as $id => $items)
+                <div class="sector">
+                    <h4>Order {{ $id }} <span style="font-size: 0.8em">({{ $items['total'] }} บาท)</span></h4>
+                    @foreach ($items['items'] as $item)
+                        - <b>{{ $item['name'] }}</b> x {{ $item['quantity'] }}<br/>
+                    @endforeach
+                    <button type="submit" name="order" value="{{ $id }}" class="btn orange waves-effect" onclick="return confirm('แน่ใจหรือที่จะทำเครื่องหมายการสั่งซื้อ {{ $id }} ว่าส่งแล้ว?')">Mark
+                        as delivered
+                    </button>
+                </div>
+            @endforeach
         </form>
     @else
         <div class="fullwidth center-align">
