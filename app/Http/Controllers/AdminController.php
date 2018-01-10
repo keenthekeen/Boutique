@@ -54,4 +54,15 @@ class AdminController extends Controller {
             return response()->json(['cart' => $request->input('cart'), 'promotions' => $appliedPromotions, 'discount' => $discountSum, 'sum' => $totalValue, 'total' => $total]);
         }
     }
-}
+
+    public function getUndeliver () {
+        $undelivers = Order::where('status', 'paid')->get();
+
+        $pending = []
+
+        foreach ($undelivers as $undeliver) {
+            $pending[$undeliver->id] = $undeliver->items()->productItem()->name;
+        }
+
+        dd($pending);
+    }
