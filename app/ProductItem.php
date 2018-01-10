@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  */
 class ProductItem extends Model implements Buyable {
+    protected $guarded = ['updated_at'];
     public function product() {
         return $this->belongsTo('App\Product');
     }

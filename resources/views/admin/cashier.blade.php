@@ -13,6 +13,8 @@
         #iQuantity {
             margin: 0 2rem;
         }
+
+        .not-type {display: none}
     </style>
 @endsection
 
@@ -31,29 +33,33 @@
                 <span>ไม่ใช่หนังสือ</span>
             </label>
         </p>
-        <p>
+        <p class="not-type">
             <label>สินค้า</label>
             <select class="browser-default" id="iProduct">
                 <option value="" disabled selected>กรุณาเลือกประเภทสินค้า</option>
             </select>
         </p>
-        <p>
+        <p class="not-type">
             <label>แบบ</label>
             <select class="browser-default" id="iItem">
                 <option value="" disabled selected>กรุณาเลือกสินค้า</option>
             </select>
         </p>
-        <p>
+        <p class="not-type">
             <label>จำนวน</label>&emsp;
             <a class="waves-effect btn-flat lighten-3 light-blue" style="padding: 0 1rem" onclick="$('#iQuantity').text('1')"><i class="material-icons">fast_rewind</i></a>
             <a class="waves-effect btn-flat lighten-3 blue" onclick="$('#iQuantity').text(Math.abs($('#iQuantity').text()-1))"><i class="material-icons">remove</i></a>
             <span id="iQuantity">1</span>
             <a class="waves-effect btn-flat lighten-3 cyan" onclick="$('#iQuantity').text($('#iQuantity').text()-(-1))"><i class="material-icons">add</i></a>
         </p>
-        <a class="waves-effect btn indigo fullwidth" id="addButton">เพิ่ม</a>
+        <a class="waves-effect btn indigo fullwidth not-type" id="addButton">เพิ่ม</a>
     </div>
 
     <table id="items-table"></table>
+
+    <a class="btn waves-effect indigo fullwidth" style="display: none;" onclick="processCart()" id="process-btn">PROCESS</a><br/>
+
+    <div id="summary"></div>
 
     <div id="loading">
         <div class="progress">
@@ -76,20 +82,26 @@
                 return response.json();
             }).then(function (data) {
                 productList = data;
+                $("input[type=radio][name=type]").prop("checked", false);
                 $(".hide").removeClass("hide");
+                $(".not-type").hide();
                 $("#loading").slideUp();
 
                 $("input[type=radio][name=type]").change(function () {
                     var products = 'books';
                     if ($(this).val()) {
                         products = productList[$(this).val()];
+                        var options = '';
+                        for (var i in products) {
+                            options += '<option value="' + products[i].id + '" data-order="' + i + '">' + products[i].name + '</option>';
+                        }
+                        $("#iProduct").html(options).change();
+                        $(".not-type").slideDown();
+                    } else {
+                        $("#iProduct").html('<option selected>เลือกประเภทสินค้า</option>').change();
+                        $(".not-type").slideUp();
                     }
-                    var options = '';
-                    for (var i in products) {
-                        options += '<option value="' + products[i].id + '" data-order="' + i + '">' + products[i].name + '</option>';
-                    }
-                    $("#iProduct").html(options).change();
-                }).trigger('change');
+                });
 
                 $("#iProduct").change(function () {
                     if (isNaN($(this).children('option:selected').data('order'))) {
@@ -145,6 +157,12 @@
                 content += '<tr><td>' + cart[i].name + '</td><td>' + cart[i].quantity + '</td><td>' + (cart[i].price * cart[i].quantity) + '</td><td><a onclick="removeItem(' + cart[i].id + ')">X</a></td></tr>';
             }
             $("#items-table").html(content);
+            if (cart.length > 0) {
+                $("#process-btn").slideDown();
+            } else {
+                $("#process-btn").slideUp();
+                $("#summary").html('');
+            }
         }
 
         function removeItem(id) {
@@ -152,6 +170,18 @@
                 return it.id.toString() !== id.toString();
             }.bind(id));
             renderTable();
+        }
+
+        function processCart() {
+            $.ajax({
+                type: "POST",
+                url: '/admin/cashier',
+                data: {cart: cart},
+                success: function (data) {
+                    $("#summary").html(data);
+                },
+                dataType: 'html'
+            });
         }
     </script>
 @endsection
