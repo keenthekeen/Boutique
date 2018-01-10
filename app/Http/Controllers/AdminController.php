@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderItem;
 use App\Product;
+use App\ProductItem;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
 
@@ -70,15 +72,30 @@ class AdminController extends Controller {
             ]));
         }
     }
-
-    public function getUndeliver () {
-        $undelivers = Order::where('status', 'paid')->get();
-
-        $pending = []
-
+    
+    public function getUndeliver() {
+        $undelivers = Order::with('items')->where('status', 'paid')->get();
+        
+        $pending = [];
+        
         foreach ($undelivers as $undeliver) {
-            $pending[$undeliver->id] = $undeliver->items()->productItem()->name;
+            $pending[$undeliver->id] = ['items' => $undeliver->items->map(function (OrderItem $item) {
+                return ['name' => $item->productItem->name, 'quantity' => $item->quantity];
+            })->all(),
+                'total' => $undeliver->price
+            ];
         }
-
-        dd($pending);
+        
+        return response()->view('admin.delivery', ['list' => $pending]);
     }
+    
+    public function deliverOrder (Request $request) {
+        $this->validate($request, ['order' => 'required']);
+        /** @var Order $order */
+        $order = Order::findOrFail($request->input('order'));
+        $order->status = 'delivered';
+        $order->save();
+        
+        return redirect('/admin/delivery');
+    }
+}

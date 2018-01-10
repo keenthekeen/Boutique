@@ -27,11 +27,11 @@
         <p>
             <label>ประเภท</label>&emsp;
             <label>
-                <input name="type" type="radio" value="books"/>
+                <input class="type-radio" name="type" type="radio" value="books"/>
                 <span>หนังสือ</span>
             </label>&ensp;
             <label>
-                <input name="type" type="radio" value="non-books"/>
+                <input class="type-radio" name="type" type="radio" value="non-books"/>
                 <span>ไม่ใช่หนังสือ</span>
             </label>
         </p>
@@ -77,6 +77,7 @@
     <script>
         var productList;
         var cart = [];
+        var selectedType;
         $(document).ready(function () {
             fetch('/admin/products', {
                 credentials: 'same-origin'
@@ -89,14 +90,15 @@
                 $(".not-type").hide();
                 $("#loading").slideUp();
 
-                $("input[type=radio][name=type]").change(function () {
+                $(".type-radio").change(function () {
                     var products = 'books';
                     if ($(this).val()) {
-                        products = productList[$(this).val()];
+                       products = productList[$(this).val()];
                         var options = '';
                         for (var i in products) {
                             options += '<option value="' + products[i].id + '" data-order="' + i + '">' + products[i].name + '</option>';
                         }
+                        selectedType = $(this).val();
                         $("#iProduct").html(options).change();
                         $(".not-type").slideDown();
                     } else {
@@ -110,7 +112,7 @@
                         $("#iItem").html('');
                         return;
                     }
-                    var items = productList[$('input[type=radio][name=type]').val()][$(this).children('option:selected').data('order')].items;
+                    var items = productList[selectedType][$(this).children('option:selected').data('order')].items;
                     var options = '';
                     if (items.length > 1) {
                         $("#iItem").attr('disabled', false);
@@ -125,7 +127,7 @@
                         options = '<option value="X" selected disabled>--- ไม่มีสินค้า ---</option>';
                     }
                     $("#iItem").html(options);
-                }).trigger('change');
+                });
             });
         });
 
