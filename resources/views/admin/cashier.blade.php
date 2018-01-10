@@ -14,7 +14,9 @@
             margin: 0 2rem;
         }
 
-        .not-type {display: none}
+        .not-type {
+            display: none
+        }
     </style>
 @endsection
 
@@ -57,7 +59,7 @@
 
     <table id="items-table"></table>
 
-    <a class="btn waves-effect teal fullwidth" style="display: none;" onclick="processCart()" id="process-btn">PROCESS</a><br/>
+    <a class="btn waves-effect teal fullwidth" style="display: none;" onclick="processCart(false)" id="process-btn">PROCESS</a><br/><br/>
 
     <div id="summary"></div>
 
@@ -161,8 +163,8 @@
                 $("#process-btn").slideDown();
             } else {
                 $("#process-btn").slideUp();
-                $("#summary").html('');
             }
+            $("#summary").html('');
         }
 
         function removeItem(id) {
@@ -172,15 +174,26 @@
             renderTable();
         }
 
-        function processCart() {
+        function processCart(proceed) {
             $.ajax({
                 type: "POST",
                 url: '/admin/cashier',
-                data: {cart: cart},
+                data: {cart: cart, _token: "{{ csrf_token() }}", proceed: proceed},
                 success: function (data) {
-                    $("#summary").html(data);
+                    //cart = data.cart;
+                    //renderTable();
+
+                    if (data.status == 'checked') {
+                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว "+data.total+" บาท</h4>รหัสคำสั่งซื้อ "+data.order_id+" เมื่อ "+data.order_time);
+                        /*setTimeout(function() {
+                            cart = [];
+                            renderTable();
+                        }.bind(cart), 5000);*/
+                    } else {
+                        $("#summary").html("ลดราคาไป " + data.discount + " บาท<br /><h4>ราคารวม " + data.total + " บาท</h4><br /><a class=\"btn waves-effect green fullwidth\" onclick=\"processCart(true)\">PROCEED</a><br/><br/>");
+                    }
                 },
-                dataType: 'html'
+                dataType: 'json'
             });
         }
     </script>

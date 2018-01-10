@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\Product;
-use Auth;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
 
@@ -21,37 +20,54 @@ class AdminController extends Controller {
         return response()->json(['books' => $products->where('type', 'หนังสือ'), 'non-books' => $products->where('type', '!=', 'หนังสือ')]);
     }
     
-    public function processCashier (Request $request) {
+    public function processCashier(Request $request) {
         $cartContent = collect();
         foreach ($request->input('cart') as $cart) {
             $cartItem = new CartItem($cart['id'], $cart['name'], $cart['price']);
             $cartItem->setQuantity($cart['quantity']);
+            $cartItem->associate('\App\ProductItem');
             $cartContent->push($cartItem);
         }
         
         $totalValue = $cartContent->sum(function (CartItem $item) {
-            return $item->subtotal();
+            return $item->qty * $item->price;
         });
         $appliedPromotions = Order::processPromotions($cartContent);
         $discountSum = $appliedPromotions->pluck('reduced')->sum();
         $total = $totalValue - abs($discountSum);
         
-        if ($request->input('proceed') == '1') {
+        if ($request->input('proceed') == 'true') {
             $order = new Order();
             $order->type = 'cash';
             $order->status = 'paid';
             $order->price = $total;
             $order->promotion = $appliedPromotions->map(function ($i) {
                 $i['promotion'] = $i['promotion']->id;
-        
+                
                 return $i;
             });
             $order->addItems($cartContent);
             $order->save();
-    
-            return redirect('/cart/order/' . $order->id);
+            
+            return response(json_encode([
+                'status' => 'checked',
+                'order_id' => $order->id,
+                'order_time' => $order->created_at->toIso8601String(),
+                'cart' => $request->input('cart'),
+                'promotions' => $appliedPromotions,
+                'discount' => $discountSum,
+                'sum' => $totalValue,
+                'total' => $total
+            ]));
         } else {
-            return response()->json(['cart' => $request->input('cart'), 'promotions' => $appliedPromotions, 'discount' => $discountSum, 'sum' => $totalValue, 'total' => $total]);
+            return response(json_encode([
+                'status' => 'calculated',
+                'cart' => $request->input('cart'),
+                'promotions' => $appliedPromotions,
+                'discount' => $discountSum,
+                'sum' => $totalValue,
+                'total' => $total
+            ]));
         }
     }
 }
