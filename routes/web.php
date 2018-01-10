@@ -29,7 +29,7 @@ Route::prefix('merchant')->middleware(['auth'])->group(function () {
         if ($product->user_id != Auth::id() AND !Auth::user()->is_admin) {
             abort(403);
         }
-        
+
         return view('merchant-register', ['product' => $product]);
     });
     Route::post('register', 'MerchantController@registerProduct');
@@ -55,6 +55,8 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::view('cashier', 'admin.cashier')->middleware('cache');
     Route::get('products', 'AdminController@getProductList')->middleware('cache');
     Route::post('cashier', 'AdminController@processCashier');
+    Route::get('delivery', 'AdminController@getUndeliver');
+    Route::get('delivery', 'AdminController@deliverOrder');
 });
 
 if (config('app.debug')) {
