@@ -47,7 +47,8 @@
         @if (Auth::user()->is_admin)
             <div class="sector red lighten-5">
                 <b>Admin Menu</b>&emsp;
-                <a class="waves-effect waves-light btn purple" href="/admin/cashier">Cashier</a>
+                <a class="waves-effect waves-light btn purple" href="/admin/cashier">Cashier</a>&emsp;
+                <a class="waves-effect waves-light btn purple" href="/admin/delivery">Pickup</a>
             </div>
             @endif
 

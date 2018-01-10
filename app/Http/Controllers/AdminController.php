@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\OrderItem;
 use App\Product;
-use App\ProductItem;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller {
     public function getProductList() {
-        $products = Product::with('items')->select('id', 'name', 'author', 'type', 'picture')->orderBy('name')->get()->map(function (Product $product) {
+        $products = Product::with('items')->select('id', 'name', 'author', 'type', 'picture')->orderBy('type')->orderBy('name')->get()->map(function (Product $product) {
             $product->name = $product->type . ' ' . $product->name;
             // Mutate required attribute
             $product->picture = $product->picture;
@@ -48,6 +47,7 @@ class AdminController extends Controller {
                 
                 return $i;
             });
+            $order->payment_note = 'CASH-U' . \Auth::id();
             $order->addItems($cartContent);
             $order->save();
             
@@ -79,9 +79,10 @@ class AdminController extends Controller {
         $pending = [];
         
         foreach ($undelivers as $undeliver) {
-            $pending[$undeliver->id] = ['items' => $undeliver->items->map(function (OrderItem $item) {
-                return ['name' => $item->productItem->name, 'quantity' => $item->quantity];
-            })->all(),
+            $pending[$undeliver->id] = [
+                'items' => $undeliver->items->map(function (OrderItem $item) {
+                    return ['name' => $item->productItem->name, 'quantity' => $item->quantity];
+                })->all(),
                 'total' => $undeliver->price
             ];
         }
@@ -89,7 +90,7 @@ class AdminController extends Controller {
         return response()->view('admin.delivery', ['list' => $pending]);
     }
     
-    public function deliverOrder (Request $request) {
+    public function deliverOrder(Request $request) {
         $this->validate($request, ['order' => 'required']);
         /** @var Order $order */
         $order = Order::findOrFail($request->input('order'));

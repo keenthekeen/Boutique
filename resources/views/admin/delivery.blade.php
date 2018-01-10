@@ -36,7 +36,7 @@
             <div class="sector">
                 <h4>Order {{ $id }} <span style="font-size: 0.8em">({{ $items['total'] }} บาท)</span></h4>
                 @foreach ($items['items'] as $item)
-                    <b>{{ $item['name'] }}</b> x {{ $item['quantity'] }}
+                    - <b>{{ $item['name'] }}</b> x {{ $item['quantity'] }}<br />
                 @endforeach
                 <button type="submit" name="order" value="{{ $id }}" class="btn orange waves-effect">Mark as delivered</button>
             </div>
