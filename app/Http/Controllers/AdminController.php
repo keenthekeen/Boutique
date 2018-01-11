@@ -82,7 +82,7 @@ class AdminController extends Controller {
             $pending[$undeliver->id] = [
                 'items' => $undeliver->items->map(function (OrderItem $item) {
                     $pI = $item->productItem;
-                    return ['id' => $pI->product_id, 'name' => $pI->name, 'quantity' => $pI->quantity];
+                    return ['id' => $pI->product_id, 'name' => $pI->name, 'quantity' => $item->quantity];
                 })->all(),
                 'total' => $undeliver->price
             ];
