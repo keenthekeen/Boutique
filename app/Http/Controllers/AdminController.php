@@ -81,7 +81,8 @@ class AdminController extends Controller {
         foreach ($undelivers as $undeliver) {
             $pending[$undeliver->id] = [
                 'items' => $undeliver->items->map(function (OrderItem $item) {
-                    return ['name' => $item->productItem->name, 'quantity' => $item->quantity];
+                    $pI = $item->productItem;
+                    return ['id' => $pI->product_id, 'name' => $pI->name, 'quantity' => $pI->quantity];
                 })->all(),
                 'total' => $undeliver->price
             ];
