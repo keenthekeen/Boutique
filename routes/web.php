@@ -57,6 +57,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::post('cashier', 'AdminController@processCashier');
     Route::get('delivery', 'AdminController@getUndeliver');
     Route::post('delivery', 'AdminController@deliverOrder');
+    Route::view('inventory', 'admin.inventory');
 });
 
 if (config('app.debug')) {

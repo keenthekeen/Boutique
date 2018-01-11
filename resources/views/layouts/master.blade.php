@@ -67,20 +67,22 @@
     <br/>
 </main>
 
-<footer class="page-footer grey darken-2">
-    <div class="footer-copyright">
-        <div class="container">
-            @if (config('app.env') == 'staging')
-                Under Construction --- <b class="red-text">DO NOT PUBLISH</b>
-            @else
-                ร้านจำหน่ายของที่ระลึก งานนิทรรศการวิชาการ โรงเรียนเตรียมอุดมศึกษา
-            @endif
-            @if (Auth::check())
-                | เข้าสู่ระบบโดย {{ Auth::user()->name }}
-            @endif
+@section('footer')
+    <footer class="page-footer grey darken-2">
+        <div class="footer-copyright">
+            <div class="container">
+                @if (config('app.env') == 'staging')
+                    Under Construction --- <b class="red-text">DO NOT PUBLISH</b>
+                @else
+                    ร้านจำหน่ายของที่ระลึก งานนิทรรศการวิชาการ โรงเรียนเตรียมอุดมศึกษา
+                @endif
+                @if (Auth::check())
+                    | เข้าสู่ระบบโดย {{ Auth::user()->name }}
+                @endif
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
+@show
 
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/js/materialize.min.js" integrity="sha256-4u/8c/K9iSYgglS0o0++LZ82P5V5tll6wyz02zryNxc="

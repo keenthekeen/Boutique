@@ -52,3 +52,13 @@
         </div>
     @endif
 @endsection
+
+@section('footer')
+    <footer class="page-footer grey darken-2">
+        <div class="footer-copyright">
+            <div class="container">
+                Last updated {{ date('Y-m-d H:i:s') }}
+            </div>
+        </div>
+    </footer>
+@endsection
