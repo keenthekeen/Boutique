@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\OrderItem;
 use App\Product;
+use Carbon\Carbon;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
 
@@ -73,18 +74,25 @@ class AdminController extends Controller {
         }
     }
     
-    public function getUndeliver() {
-        $undelivers = Order::with('items')->where('status', 'paid')->get();
+    public function getUndeliver(Request $request) {
+        $undelivers = Order::with('items')->where('status', 'paid');
+        /*if ($request->has('all')) {
+            $undelivers = $undelivers->whereTime('updated_at', '>=', Carbon::now()->subHours(4)->toIso8601String());
+        }*/
+        $undelivers = $undelivers->get();
         
         $pending = [];
         
         foreach ($undelivers as $undeliver) {
+            $orderSum = 0;
             $pending[$undeliver->id] = [
-                'items' => $undeliver->items->map(function (OrderItem $item) {
+                'items' => $undeliver->items->map(function (OrderItem $item) use ($orderSum) {
                     $pI = $item->productItem;
-                    return ['id' => $pI->product_id, 'name' => $pI->name, 'quantity' => $item->quantity];
+                    $orderSum += $item->price;
+                    return ['id' => $pI->product_id, 'name' => $pI->name, 'quantity' => $item->quantity, 'price' => $item->price];
                 })->all(),
-                'total' => $undeliver->price
+                'total' => $undeliver->price,
+                'isPriceMatch' => $undeliver->price == $orderSum
             ];
         }
         

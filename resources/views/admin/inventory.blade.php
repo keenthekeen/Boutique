@@ -4,7 +4,7 @@
     <meta http-equiv="refresh" content="60"/>
     <div class="grey darken-2 white-text" style="padding-top:1rem;padding-bottom:2rem;">
         <div class="container">
-            <h2 class="left-align">จุดรับสินค้า</h2>
+            <h2 class="left-align">Inventory</h2>
         </div>
     </div>
 @endsection

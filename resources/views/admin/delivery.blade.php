@@ -30,13 +30,14 @@
         </ul>
     @endif
     @if (count($list) > 0)
+        <a href="#footer" class="btn blue waves-effect ">ลงไปล่างสุด</a><br />
         <form method="POST">
             {{ csrf_field() }}
             @foreach ($list as $id => $items)
                 <div class="sector">
                     <h4>Order {{ $id }} <span style="font-size: 0.8em">({{ $items['total'] }} บาท)</span></h4>
                     @foreach ($items['items'] as $item)
-                        - {{ $item['id'] }}: <b>{{ $item['name'] }}</b> x {{ $item['quantity'] }}<br/>
+                        - {{ $item['id'] }}: <b>{{ $item['name'] }}</b> x {{ $item['quantity'] }} <span class="{{ $items['isPriceMatch'] ? 'grey-text' : 'red-text' }}">({{ $item['price'] }} บาท)</span><br/>
                     @endforeach
                     <button type="submit" name="order" value="{{ $id }}" class="btn orange waves-effect fullwidth" onclick="return confirm('แน่ใจหรือที่จะทำเครื่องหมายการสั่งซื้อ {{ $id }} ว่าส่งแล้ว?')">Mark
                         as delivered
@@ -54,7 +55,7 @@
 @endsection
 
 @section('footer')
-    <footer class="page-footer grey darken-2">
+    <footer class="page-footer grey darken-2" id="footer">
         <div class="footer-copyright">
             <div class="container">
                 Last updated {{ date('Y-m-d H:i:s') }}
