@@ -189,7 +189,7 @@
                     //renderTable();
 
                     if (data.status == 'checked') {
-                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว " + data.total + " บาท</h4>รหัสคำสั่งซื้อ " + data.order_id + " เมื่อ " + data.order_time);
+                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว " + data.total + " บาท</h4>รหัสคำสั่งซื้อ " + data.order_id + " เมื่อ " + data.order_time + '<br /><a class="btn waves-effect pink lighten-3" onclick="clearCart()"><i class="material-icons">clear</i> Clear</a>');
                         /*setTimeout(function() {
                             cart = [];
                             renderTable();
@@ -200,6 +200,11 @@
                 },
                 dataType: 'json'
             });
+        }
+
+        function clearCart() {
+            cart = [];
+            renderTable();
         }
     </script>
 @endsection

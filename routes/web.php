@@ -58,7 +58,9 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('delivery', 'AdminController@getUndeliver');
     Route::post('delivery', 'AdminController@deliverOrder');
     Route::view('inventory', 'admin.inventory');
-    Route::view('find-order', 'admin.find-order');
+    Route::any('find-order', function () {
+        return view('admin.find-order');
+    });
 });
 
 if (config('app.debug')) {
