@@ -30,18 +30,14 @@
     </form>
     @if (Request::has('search'))
         @if ($order = \App\Order::find(Request::input('search')))
-            <form method="POST" action="/admin/delivery">
+            <form method="POST">
                 {{ csrf_field() }}
                 <div class="sector">
                     <h4>Order {{ $order->id }} <span style="font-size: 0.8em">({{ $order->price }} บาท)</span></h4>
+                    <p>Status: {{ $order->status }}</p>
                     @foreach ($order->items as $item)
                         - {{ $item->id }}: <b>{{ $item->name }}</b> x {{ $item->quantity }} <span class="grey-text">({{ $item->price }} บาท)</span><br/>
                     @endforeach
-                    <button type="submit" name="order" value="{{ $id }}" class="btn orange waves-effect fullwidth"
-                            onclick="return confirm('แน่ใจหรือที่จะทำเครื่องหมายการสั่งซื้อ {{ $id }} ว่าส่งแล้ว?')">
-                        Mark
-                        as delivered
-                    </button>
                 </div>
             </form>
         @else

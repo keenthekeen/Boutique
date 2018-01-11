@@ -84,11 +84,11 @@ class AdminController extends Controller {
         $pending = [];
         
         foreach ($undelivers as $undeliver) {
-            $orderSum = 0;
+            $items = $undeliver->items;
+            $orderSum = $items->sum('price');
             $pending[$undeliver->id] = [
-                'items' => $undeliver->items->map(function (OrderItem $item) use ($orderSum) {
+                'items' => $items->map(function (OrderItem $item) use ($orderSum) {
                     $pI = $item->productItem;
-                    $orderSum += $item->price;
                     return ['id' => $pI->product_id, 'name' => $pI->name, 'quantity' => $item->quantity, 'price' => $item->price];
                 })->all(),
                 'total' => $undeliver->price,
