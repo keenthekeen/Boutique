@@ -28,18 +28,18 @@
             <th>คงเหลือ</th>
             <th>Action</th>
         </tr>
+        @foreach (\App\ProductItem::orderBy('name')->get() as $productItem)
+            <tr>
+                <td><a href="/product/{{ $productItem->product_id }}">{{ $productItem->product_id }}</a></td>
+                <td>{{ $productItem->id }}</td>
+                <td>{{ $productItem->name }}</td>
+                <td>{{ $productItem->amount }}</td>
+                <td>{{ $sold = $productItem->orderItems()->sum('quantity') }}</td>
+                <td class="{{ (($left = $productItem->amount - $sold) > 0) ? 'blue' : 'red' }}">{{ $left }}</td>
+                <td></td>
+            </tr>
+        @endforeach
     </table>
-    @foreach (\App\ProductItem::orderBy('name')->get() as $productItem)
-        <tr>
-            <td><a href="/product/{{ $productItem->product_id }}">{{ $productItem->product_id }}</a></td>
-            <td>{{ $productItem->id }}</td>
-            <td>{{ $productItem->name }}</td>
-            <td>{{ $productItem->amount }}</td>
-            <td>{{ $sold = $productItem->orderItems()->sum('quantity') }}</td>
-            <td class="{{ (($left = $productItem->amount - $sold) > 0) ? 'blue' : 'red' }}">{{ $left }}</td>
-            <td></td>
-        </tr>
-    @endforeach
     <br/><br/>
     <h4>ยอดขายรวม {{ number_format(\App\Order::where('status', '!=', 'unpaid')->sum('price')) }} บาท</h4>
     <br/>
