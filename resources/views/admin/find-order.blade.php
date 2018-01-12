@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('beforemain')
-    <meta http-equiv="refresh" content="5"/>
     <div class="grey darken-2 white-text" style="padding-top:1rem;padding-bottom:2rem;">
         <div class="container">
             <h2 class="left-align">ค้นหาการสั่งซื้อ</h2>
@@ -21,23 +20,27 @@
         {{ csrf_field() }}
         <div class="row">
             <div class="col s6">
-                <input id="i6a84e" name="search" type="text" class="validate" required data-length="4"/><label for="i6a84e">Order ID</label>
+                <input id="i6a84e" name="order" type="text" class="validate" required data-length="4"/><label for="i6a84e">Order ID</label>
             </div>
             <div class="col s6">
                 <button type="submit" class="btn waves-effect purple">Find</button>
             </div>
         </div>
     </form>
-    @if (Request::has('search'))
-        @if ($order = \App\Order::find(Request::input('search')))
+    @if (Request::has('order'))
+        @if ($order = \App\Order::find(Request::input('order')))
             <form method="POST">
                 {{ csrf_field() }}
+                <input type="hidden" name="order" value="{{ $order->id }}" />
                 <div class="sector">
                     <h4>Order {{ $order->id }} <span style="font-size: 0.8em">({{ $order->price }} บาท)</span></h4>
                     <p>Status: {{ $order->status }}</p>
                     @foreach ($order->items as $item)
                         - {{ $item->id }}: <b>{{ $item->name }}</b> x {{ $item->quantity }} <span class="grey-text">({{ $item->price }} บาท)</span><br/>
                     @endforeach
+                    <button type="submit" class="btn waves-effect" name="status" value="unpaid">Mark as unpaid</button>&emsp;
+                    <button type="submit" class="btn waves-effect" name="status" value="paid">Mark as paid</button>&emsp;
+                    <button type="submit" class="btn waves-effect" name="status" value="delivered">Mark as delivered</button>
                 </div>
             </form>
         @else

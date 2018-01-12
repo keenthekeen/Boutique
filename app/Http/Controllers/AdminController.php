@@ -49,8 +49,33 @@ class AdminController extends Controller {
                 return $i;
             });
             $order->payment_note = 'CASH-U' . \Auth::id();
-            $order->addItems($cartContent);
-            $order->save();
+            try {
+                $order->addItems($cartContent);
+                $order->save();
+            } catch (\Exception $e) {
+                $order->items()->delete();
+                try {
+                    $order->delete();
+                } catch (\Exception $e) {
+                    return response(json_encode([
+                        'status' => 'calculated',
+                        'cart' => $request->input('cart'),
+                        'promotions' => $appliedPromotions,
+                        'discount' => 0,
+                        'sum' => 0,
+                        'total' => $e->getMessage()
+                    ]));
+                }
+    
+                return response(json_encode([
+                    'status' => 'calculated',
+                    'cart' => $request->input('cart'),
+                    'promotions' => $appliedPromotions,
+                    'discount' => 0,
+                    'sum' => 0,
+                    'total' => $e->getMessage()
+                ]));
+            }
             
             return response(json_encode([
                 'status' => 'checked',
