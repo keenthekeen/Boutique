@@ -32,6 +32,12 @@
             <form method="POST">
                 {{ csrf_field() }}
                 <input type="hidden" name="order" value="{{ $order->id }}" />
+                @php
+                if (Request::has('status')) {
+                    $order->status = Request::input('status');
+                    $order->save();
+                }
+                @endphp
                 <div class="sector">
                     <h4>Order {{ $order->id }} <span style="font-size: 0.8em">({{ $order->price }} บาท)</span></h4>
                     <p>Status: {{ $order->status }}</p>

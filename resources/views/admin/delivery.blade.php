@@ -30,7 +30,7 @@
         </ul>
     @endif
     @if (count($list) > 0)
-        <a href="#footer" class="btn blue waves-effect ">ลงไปล่างสุด</a><br />
+        <a href="#footer" class="btn blue waves-effect ">ลงไปล่างสุด</a> (แสดงเฉพาะรายการใน 1 ชั่วโมงล่าสุด)<br />
         <form method="POST">
             {{ csrf_field() }}
             @foreach ($list as $id => $items)
