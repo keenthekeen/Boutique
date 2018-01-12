@@ -31,12 +31,12 @@
         @if ($order = \App\Order::find(Request::input('order')))
             <form method="POST">
                 {{ csrf_field() }}
-                <input type="hidden" name="order" value="{{ $order->id }}" />
+                <input type="hidden" name="order" value="{{ $order->id }}"/>
                 @php
-                if (Request::has('status')) {
-                    $order->status = Request::input('status');
-                    $order->save();
-                }
+                    if (Request::has('status')) {
+                        $order->status = Request::input('status');
+                        $order->save();
+                    }
                 @endphp
                 <div class="sector">
                     <h4>Order {{ $order->id }} <span style="font-size: 0.8em">({{ $order->price }} บาท)</span></h4>
@@ -46,7 +46,7 @@
                     @endforeach
                     <button type="submit" class="btn waves-effect red" name="status" value="unpaid">Mark as unpaid</button>&emsp;
                     <button type="submit" class="btn waves-effect" name="status" value="paid">Mark as paid</button>&emsp;
-                    <button type="submit" class="btn waves-effect orange" name="status" value="delivered">Mark as delivered</button>
+                    <button type="submit" class="btn waves-effect orange" name="status" value="delivered" id="deliver-btn">Mark as delivered (\)</button>
                 </div>
             </form>
         @else
@@ -63,4 +63,18 @@
             </div>
         </div>
     </footer>
+@endsection
+
+@section('script')
+    @parent
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    $(function () {
+        $(document).keyup(function( event ) {
+            if (event.which == 220) {
+                $("#deliver-btn").click();
+            }
+        });
+    });
+    </script>
 @endsection
