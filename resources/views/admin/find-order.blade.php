@@ -48,7 +48,7 @@
                     <h4>Order {{ $order->id }} <span style="font-size: 0.8em">({{ $order->price }} บาท)</span></h4>
                     <p>Status: <span class="{{ $statusColor }}">{{ $order->status }}</span></p>
                     @foreach ($order->items as $item)
-                        - {{ $item->id }}: <b>{{ $item->name }}</b> x {{ $item->quantity }} <span class="grey-text">({{ $item->price }} บาท)</span><br/>
+                        - {{ $item->id }}: <b>{{ $item->productItem->name }}</b> x {{ $item->quantity }} <span class="grey-text lighten-2">({{ $item->price }} บาท)</span><br/>
                     @endforeach
                     <button type="submit" class="btn waves-effect red" name="status" value="unpaid">Mark as unpaid</button>&emsp;
                     <button type="submit" class="btn waves-effect" name="status" value="paid">Mark as paid</button>&emsp;
