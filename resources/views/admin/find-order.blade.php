@@ -37,10 +37,16 @@
                         $order->status = Request::input('status');
                         $order->save();
                     }
+                    $statusColor = 'black-text';
+                switch ($order->status) {
+                    case 'unpaid' : $statusColor = 'red-text';break;
+                    case 'paid' : $statusColor = 'blue-text';break;
+                    case 'delivered': $statusColor = 'green-text';
+                }
                 @endphp
                 <div class="sector">
                     <h4>Order {{ $order->id }} <span style="font-size: 0.8em">({{ $order->price }} บาท)</span></h4>
-                    <p>Status: {{ $order->status }}</p>
+                    <p>Status: <span class="{{ $statusColor }}">{{ $order->status }}</span></p>
                     @foreach ($order->items as $item)
                         - {{ $item->id }}: <b>{{ $item->name }}</b> x {{ $item->quantity }} <span class="grey-text">({{ $item->price }} บาท)</span><br/>
                     @endforeach
@@ -69,12 +75,12 @@
     @parent
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-    $(function () {
-        $(document).keyup(function( event ) {
-            if (event.which == 220) {
-                $("#deliver-btn").click();
-            }
+        $(function () {
+            $(document).keyup(function (event) {
+                if (event.which == 220) {
+                    $("#deliver-btn").click();
+                }
+            });
         });
-    });
     </script>
 @endsection
