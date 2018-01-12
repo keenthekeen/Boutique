@@ -102,7 +102,7 @@ class AdminController extends Controller {
     public function getUndeliver(Request $request) {
         $undelivers = Order::with('items')->where('status', 'paid');
         if ($request->has('all')) {
-            $undelivers = $undelivers->whereTime('updated_at', '>=', Carbon::now()->subHours(1)->toIso8601String());
+            $undelivers = $undelivers->whereRaw('date >= DATE_SUB(NOW(),INTERVAL 1 HOUR)');
         }
         $undelivers = $undelivers->get();
         
