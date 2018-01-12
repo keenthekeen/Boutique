@@ -101,9 +101,9 @@ class AdminController extends Controller {
     
     public function getUndeliver(Request $request) {
         $undelivers = Order::with('items')->where('status', 'paid');
-        /*if ($request->has('all')) {
+        if ($request->has('all')) {
             $undelivers = $undelivers->whereTime('updated_at', '>=', Carbon::now()->subHours(4)->toIso8601String());
-        }*/
+        }
         $undelivers = $undelivers->get();
         
         $pending = [];
