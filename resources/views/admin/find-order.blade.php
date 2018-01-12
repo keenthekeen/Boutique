@@ -20,7 +20,7 @@
         {{ csrf_field() }}
         <div class="row">
             <div class="col s6">
-                <input id="i6a84e" name="order" type="text" class="validate" required data-length="4"/><label for="i6a84e">Order ID</label>
+                <input id="i6a84e" name="order" type="text" class="validate" required data-length="4" autofocus/><label for="i6a84e">Order ID</label>
             </div>
             <div class="col s6">
                 <button type="submit" class="btn waves-effect purple">Find</button>
@@ -44,9 +44,9 @@
                     @foreach ($order->items as $item)
                         - {{ $item->id }}: <b>{{ $item->name }}</b> x {{ $item->quantity }} <span class="grey-text">({{ $item->price }} บาท)</span><br/>
                     @endforeach
-                    <button type="submit" class="btn waves-effect" name="status" value="unpaid">Mark as unpaid</button>&emsp;
+                    <button type="submit" class="btn waves-effect red" name="status" value="unpaid">Mark as unpaid</button>&emsp;
                     <button type="submit" class="btn waves-effect" name="status" value="paid">Mark as paid</button>&emsp;
-                    <button type="submit" class="btn waves-effect" name="status" value="delivered">Mark as delivered</button>
+                    <button type="submit" class="btn waves-effect orange" name="status" value="delivered">Mark as delivered</button>
                 </div>
             </form>
         @else
