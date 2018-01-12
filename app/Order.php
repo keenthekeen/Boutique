@@ -71,7 +71,7 @@ class Order extends Model {
         $orderItems = [];
         foreach ($items as $item) {
             /** @var CartItem $item */
-            $orderItems [] = OrderItem::create(['order_id' => $this->id, 'product_item_id' => $item->id, 'price' => $item->subtotal(), 'quantity' => $item->qty]);
+            $orderItems [] = OrderItem::create(['order_id' => $this->id, 'product_item_id' => $item->id, 'price' => (float)$item->subtotal(), 'quantity' => $item->qty]);
         }
         
         return $orderItems;
