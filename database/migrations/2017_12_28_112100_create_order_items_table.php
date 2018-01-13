@@ -17,6 +17,7 @@ class CreateOrderItemsTable extends Migration {
             $table->string('product_item_id');
             $table->integer('quantity');
             $table->decimal('price', 5, 2);
+            $table->softDeletes();
         });
     }
     
