@@ -122,7 +122,9 @@
             </ul>
         </div>
         <div id="book-tab" class="col s12">--}}
-    <div class="row center-align">
+    <p>ข้ามไปยัง <a href="#first-books">หนังสือ</a> | <a href="#first-nonbooks">ไม่ใช่หนังสือ</a></p>
+
+    <div class="row center-align" id="first-books">
         @foreach($products->where('type', 'หนังสือ') as $product)
             <a href="/product/{{ $product->id }}">
                 <div class="col s6 m6 {{ $isMobile ? 'l6' : 'l3' }} hoverable">
@@ -151,7 +153,7 @@
     </div>
     {{-- </div>
     <div id="nonbook-tab" class="col s12"> --}}
-    <div class="row center-align">
+    <div class="row center-align" id="first-nonbooks">
         @foreach($products->where('type', '!=', 'หนังสือ') as $product)
             <a href="/product/{{ $product->id }}">
                 <div class="col s6 m6 {{ $isMobile ? 'l6' : 'l3' }} hoverable">
@@ -168,7 +170,7 @@
                     @if ($product->inStock())
                         <span class="price">{{ $product->price }} บาท</span>
                     @else
-                        <span class="red-text">หมด ({{ $product->price }} บาท)</span>
+                        <span class="red-text" title="{{ $product->price }} บาท">หมด</span>
                     @endif
                 </div>
             </a>

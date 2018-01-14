@@ -37,18 +37,24 @@
                 {{ csrf_field() }}
                 <input type="hidden" name="order" value="{{ $order->id }}"/>
                 @php
-                    if (Request::has('status')) {
-                        $order->status = Request::input('status');
-                        $order->save();
+                    $items = $order->items;
+                        if (Request::has('status')) {
+                            $order->status = Request::input('status');
+                            $order->save();
+                        }
+                        if (Request::has('correct_price')) {
+                            $order->price = $items->sum('price');
+                            $order->payment_note .= ' (Price corrected '.\Carbon\Carbon::now()->toDateTimeString().')';
+                            $order->save();
+                        }
+                        $statusColor = 'black-text';
+                    switch ($order->status) {
+                        case 'unpaid' : $statusColor = 'red-text';break;
+                        case 'paid' : $statusColor = 'blue-text';break;
+                        case 'delivered': $statusColor = 'green-text';
                     }
-                    $statusColor = 'black-text';
-                switch ($order->status) {
-                    case 'unpaid' : $statusColor = 'red-text';break;
-                    case 'paid' : $statusColor = 'blue-text';break;
-                    case 'delivered': $statusColor = 'green-text';
-                }
-                $items = $order->items;
-                $isPriceMatch = $items->sum('price') == $order->price;
+                    $items = $order->items;
+                    $isPriceMatch = $items->sum('price') == $order->price;
                 @endphp
                 <div class="sector">
                     <h4>Order {{ $order->id }} <span style="font-size: 0.8em" title="Item price sum: {{ $items->sum('price') }}">({{ $order->price }} บาท)</span></h4>
@@ -60,7 +66,12 @@
                     <button type="submit" class="btn waves-effect red" name="status" value="unpaid">Mark as unpaid</button>&emsp;
                     <button type="submit" class="btn waves-effect" name="status" value="paid">Mark as paid</button>&emsp;
                     <button type="submit" class="btn waves-effect orange" name="status" value="delivered" id="deliver-btn">Mark as delivered (\)</button>
+                    @unless($isPriceMatch)
+                        <button type="submit" class="btn waves-effect purple" name="correct_price" value="do">Correct order price</button>
+                    @endunless
                     <p style="font-size: 0.8rem">Created at {{ $order->created_at }}, Updated at {{ $order->updated_at }}</p>
+                    <p style="font-size: 0.8rem">Note: {{ $order->payment_note }}</p>
+
                 </div>
             </form>
         @else
