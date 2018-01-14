@@ -112,6 +112,7 @@ class AdminController extends Controller {
             $items = $undeliver->items;
             $orderSum = $items->sum('price');
             $pending[$undeliver->id] = [
+                'time' => ($undeliver->created_at ?? Carbon::create())->toDateTimeString(),
                 'items' => $items->map(function (OrderItem $item) use ($orderSum) {
                     $pI = $item->productItem;
                     return ['id' => $pI->product_id, 'name' => $pI->name, 'quantity' => $item->quantity, 'price' => $item->price];

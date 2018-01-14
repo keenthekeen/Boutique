@@ -23,25 +23,22 @@
             <th>Product ID</th>
             <th>Item ID</th>
             <th>ชื่อ</th>
-            <th>รับ</th>
-            <th>ขาย</th>
-            <th>คงเหลือ</th>
-            <th>Action</th>
+            <th>ราคา</th>
+            <th>ขายไป</th>
         </tr>
         @foreach (\App\ProductItem::orderBy('name')->get() as $productItem)
             <tr>
                 <td><a href="/product/{{ $productItem->product_id }}">{{ $productItem->product_id }}</a></td>
                 <td>{{ $productItem->id }}</td>
                 <td>{{ $productItem->name }}</td>
-                <td>{{ $productItem->amount }}</td>
-                <td>{{ $sold = $productItem->orderItems()->sum('quantity') }}</td>
-                <td class="{{ (($left = $productItem->amount - $sold) > 0) ? 'blue' : 'red' }}">{{ $left }}</td>
-                <td></td>
+                <td>{{ $productItem->price }}</td>
+                <td class="{{ (($left = $productItem->amount - ($sold = $productItem->orderItems()->sum('quantity'))) > 0) ? 'blue' : 'red' }} lighten-3" title="รับมา {{ $productItem->amount }} / เหลือ {{ $left }}">{{ $sold }}</td>
             </tr>
         @endforeach
     </table>
     <br/><br/>
     <h4>ยอดขายรวม {{ number_format(\App\Order::where('status', '!=', 'unpaid')->sum('price')) }} บาท</h4>
+    <p class="red-text">คำเตือน: ปริมาณการขายอาจมีข้อผิดพลาด</p>
     <br/>
 @endsection
 

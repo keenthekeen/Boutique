@@ -43,16 +43,19 @@
                     case 'paid' : $statusColor = 'blue-text';break;
                     case 'delivered': $statusColor = 'green-text';
                 }
+                $items = $order->items;
+                $isPriceMatch = $items->sum('price') == $order->price;
                 @endphp
                 <div class="sector">
                     <h4>Order {{ $order->id }} <span style="font-size: 0.8em">({{ $order->price }} บาท)</span></h4>
                     <p>Status: <span class="{{ $statusColor }}">{{ $order->status }}</span></p>
-                    @foreach ($order->items as $item)
-                        - {{ $item->id }}: <b>{{ $item->productItem->name }}</b> x {{ $item->quantity }} <span class="grey-text lighten-2">({{ $item->price }} บาท)</span><br/>
+                    @foreach ($items as $item)
+                        - <b title="OrderItem ID {{ $item->id }}, ProductItem ID {{ $item->product_item_id }}">{{ $item->productItem->name }}</b> x {{ $item->quantity }} <span class="{{ $items['isPriceMatch'] ? 'grey-text' : 'red-text' }}">({{ $item->price }} บาท)</span><br/>
                     @endforeach
                     <button type="submit" class="btn waves-effect red" name="status" value="unpaid">Mark as unpaid</button>&emsp;
                     <button type="submit" class="btn waves-effect" name="status" value="paid">Mark as paid</button>&emsp;
                     <button type="submit" class="btn waves-effect orange" name="status" value="delivered" id="deliver-btn">Mark as delivered (\)</button>
+                    <p style="font-size: 0.8rem">Created at {{ $order->created_at }}, Updated at {{ $order->updated_at }}</p>
                 </div>
             </form>
         @else

@@ -35,7 +35,11 @@
             {{ csrf_field() }}
             @foreach ($list as $id => $items)
                 <div class="sector">
-                    <h4><a href="/admin/find-order?order={{ $id }}">Order {{ $id }}</a> <span style="font-size: 0.8em">({{ $items['total'] }} บาท)</span></h4>
+                    <h4>
+                        <a href="/admin/find-order?order={{ $id }}">Order {{ $id }}</a>
+                        <span style="font-size: 0.8em">({{ $items['total'] }} บาท)</span>
+                        <span style="font-size: 0.6em">{{ $items['time'] }}</span>
+                    </h4>
                     @foreach ($items['items'] as $item)
                         - {{ $item['id'] }}: <b>{{ $item['name'] }}</b> x {{ $item['quantity'] }} <span class="{{ $items['isPriceMatch'] ? 'grey-text' : 'red-text' }}">({{ $item['price'] }}
                             บาท)</span><br/>
