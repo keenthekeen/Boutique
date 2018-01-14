@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    <title>หน้าหลัก - TUOPH Shop</title>
+@endsection
+
 @section('style')
     <style>
         .col {
@@ -54,44 +58,53 @@
             </div>
         @endif
 
-        @if ($myProducts = Auth::user()->products OR config('app.env') != 'production')
-            <div class="sector purple lighten-5">
-                <b>Merchant Menu</b>&emsp;
-                @if (config('app.env') == 'production')
-                    @if ($myProducts)
-                        สินค้าของฉัน:
-                        @foreach($myProducts as  $product)
-                            <a href="/product/{{ $product->id }}">{{ $product->name }}</a>
-                        @endforeach
+        @if (!env('SHOP_CLOSED', false))
+            @if ($myProducts = Auth::user()->products OR config('app.env') != 'production')
+                <div class="sector purple lighten-5">
+                    <b>Merchant Menu</b>&emsp;
+                    @if (config('app.env') == 'production')
+                        @if ($myProducts)
+                            สินค้าของฉัน:
+                            @foreach($myProducts as  $product)
+                                <a href="/product/{{ $product->id }}">{{ $product->name }}</a>
+                            @endforeach
+                        @endif
+                    @else
+                        <a class="waves-effect waves-light btn" href="/merchant/register">เพิ่มสินค้า</a><br/>
+                        @if ($myProducts)
+                            สินค้าของฉันที่เพิ่มข้อมูลแล้ว:
+                            @foreach($myProducts as  $product)
+                                <a href="/merchant/edit/{{ $product->id }}">{{ $product->name }}</a>
+                            @endforeach
+                        @endif
                     @endif
-                @else
-                    <a class="waves-effect waves-light btn" href="/merchant/register">เพิ่มสินค้า</a><br/>
-                    @if ($myProducts)
-                        สินค้าของฉันที่เพิ่มข้อมูลแล้ว:
-                        @foreach($myProducts as  $product)
-                            <a href="/merchant/edit/{{ $product->id }}">{{ $product->name }}</a>
-                        @endforeach
-                    @endif
-                @endif
-            </div>
-        @endif
+                </div>
+            @endif
 
-        @if (($pendingOrders = Auth::user()->orders()->where('status', 'unpaid')->get()) AND $pendingOrders->isNotEmpty())
-            <div class="sector yellow lighten-5">
-                <b>คำสั่งซื้อคงค้าง</b>&ensp;
-                @foreach($pendingOrders as $order)
-                    <a href="/cart/order/{{ $order->id }}">เลขที่ {{ $order->id }} ({{ $order->price }} บาท)</a>
-                @endforeach
-            </div>
+            @if (($pendingOrders = Auth::user()->orders()->where('status', 'unpaid')->get()) AND $pendingOrders->isNotEmpty())
+                <div class="sector yellow lighten-5">
+                    <b>คำสั่งซื้อคงค้าง</b>&ensp;
+                    @foreach($pendingOrders as $order)
+                        <a href="/cart/order/{{ $order->id }}">เลขที่ {{ $order->id }} ({{ $order->price }} บาท)</a>
+                    @endforeach
+                </div>
+            @endif
         @endif
     @endif
 
+    @if (env('SHOP_CLOSED', false))
+        <div class="sector blue lighten-2">
+            <b>ขอขอบคุณที่ให้ความสนใจ</b><br />
+            คณะกรรมการจัดงานฯ ขอขอบพระคุณผู้เข้าร่วมงานที่ให้ความสนใจเยี่ยมชมบูธของที่ระลึกเป็นจำนวนมาก อย่างไรก็ตามทางเราไม่ได้ให้บริการจัดส่งสินค้าหลังจากงานนิทรรศการฯ ทั้งนี้ ท่านสามารถดูสินค้าที่มีขายภายในงาน และติดต่อไปยังผู้จัดทำสินค้าโดยตรง โดยคลิกที่ปุ่ม "เว็บไซต์ผู้จัดทำ"
+        </div>
+    @endif
+
     @php
-        $isMobile = str_contains(Request::userAgent(), ['Android', 'Mobile Safari']);
+        $isMobile = str_contains(Request::userAgent(), ['Android', 'Mobile Safari']) AND !Request::has('desktop');
         $rowMember = $isMobile ? 2 : 4;
         $rowCut = 0;
-        $products = App\Product::select('id', 'picture', 'name', 'author', 'type', 'book_type', 'book_subject', 'price')->with('items');
-        if (Request::has("sort")) {
+        $products = App\Product::select('id', 'picture', 'name', 'author', 'type', 'detail', 'book_type', 'book_subject', 'price')->with('items')->orderBy('type');
+        if (Request::has("sort") OR env('SHOP_CLOSED', false)) {
         $products = $products->orderBy("name")->get();
         } else {
         $products = $products->inRandomOrder()->get();
@@ -117,7 +130,7 @@
                     <h5>{{ $product->name }}</h5>
                     <span class="author">{{ $product->author }}</span><br/>
                     @if ($product->type == 'หนังสือ')
-                        หนังสือ{{ $product->book_type }} วิชา{{ implode(' ', $product->book_subject) }}
+                        <span title="{{ $product->detail['page'] }} หน้า มีโจทย์ {{ $product->detail['question'] }} ข้อ">หนังสือ{{ $product->book_type }} วิชา{{ implode(' ', $product->book_subject) }}</span>
                     @else
                         {{ $product->type }}
                     @endif
@@ -126,7 +139,7 @@
                     @if ($product->inStock())
                         <span class="price">{{ $product->price }} บาท</span>
                     @else
-                        <span class="red-text">หมด ({{ $product->price }} บาท)</span>
+                        <span class="red-text" title="{{ $product->price }} บาท">หมด</span>
                     @endif
                 </div>
             </a>

@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    <title>Inventory - TUOPH Shop</title>
+@endsection
+
 @section('beforemain')
     <meta http-equiv="refresh" content="60"/>
     <div class="grey darken-2 white-text" style="padding-top:1rem;padding-bottom:2rem;">

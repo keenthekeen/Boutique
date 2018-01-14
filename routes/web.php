@@ -22,34 +22,36 @@ Route::get('login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('login/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('logout', 'Auth\LoginController@logout');
 
-Route::prefix('merchant')->middleware(['auth'])->group(function () {
-    // Merchant
-    Route::view('register', 'merchant-register');
-    Route::get('edit/{product}', function (\App\Product $product) {
-        if ($product->user_id != Auth::id() AND !Auth::user()->is_admin) {
-            abort(403);
-        }
-        
-        return view('merchant-register', ['product' => $product]);
+if (!env('SHOP_CLOSED', false)) {
+    Route::prefix('merchant')->middleware(['auth'])->group(function () {
+        // Merchant
+        Route::view('register', 'merchant-register');
+        Route::get('edit/{product}', function (\App\Product $product) {
+            if ($product->user_id != Auth::id() AND !Auth::user()->is_admin) {
+                abort(403);
+            }
+            
+            return view('merchant-register', ['product' => $product]);
+        });
+        Route::post('register', 'MerchantController@registerProduct');
     });
-    Route::post('register', 'MerchantController@registerProduct');
-});
-
-Route::prefix('cart')->middleware(['auth'])->group(function () {
-    // Visitor
-    Route::view('/', 'cart.cart');
-    Route::get('add/{item}', 'VisitorController@addToCart');
-    Route::get('remove/{rowId}', 'VisitorController@removeFromCart');
-    Route::get('update/{rowId}/{quantity}', 'VisitorController@updateCart');
-    Route::post('checkout', 'VisitorController@checkout');
-    Route::get('order/{order}', function (\App\Order $order) {
-        if ($order->user_id == Auth::id()) {
-            return view('cart.success', ['order' => $order]);
-        } else {
-            return response()->view('errors.403', [], 403);
-        }
+    
+    Route::prefix('cart')->middleware(['auth'])->group(function () {
+        // Visitor
+        Route::view('/', 'cart.cart');
+        Route::get('add/{item}', 'VisitorController@addToCart');
+        Route::get('remove/{rowId}', 'VisitorController@removeFromCart');
+        Route::get('update/{rowId}/{quantity}', 'VisitorController@updateCart');
+        Route::post('checkout', 'VisitorController@checkout');
+        Route::get('order/{order}', function (\App\Order $order) {
+            if ($order->user_id == Auth::id()) {
+                return view('cart.success', ['order' => $order]);
+            } else {
+                return response()->view('errors.403', [], 403);
+            }
+        });
     });
-});
+}
 
 Route::prefix('admin')->middleware('admin')->group(function () {
     Route::view('cashier', 'admin.cashier')->middleware('cache');

@@ -28,7 +28,7 @@
             <span style="font-size: 2rem">{{ $product->name }}</span> <span style="font-size: 0.95rem">{{ $product->author }}</span><br/>
             <label style="margin-top:0.8rem">ข้อมูลสินค้า</label><br />
             @if ($product->type == 'หนังสือ')
-                หนังสือ{{ $product->book_type }} {{ $product->detail['page'] }} หน้า
+                หนังสือ{{ $product->book_type }} วิชา{{ implode(' ', $product->book_subject) }} {{ $product->detail['page'] }} หน้า
                 @if (str_contains($product->book_type, 'โจทย์'))
                     มีโจทย์ {{ $product->detail['question'] }} ข้อ
                 @endif

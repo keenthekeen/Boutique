@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    <title>Find order - TUOPH Shop</title>
+@endsection
+
 @section('beforemain')
     <div class="grey darken-2 white-text" style="padding-top:1rem;padding-bottom:2rem;">
         <div class="container">
@@ -47,10 +51,11 @@
                 $isPriceMatch = $items->sum('price') == $order->price;
                 @endphp
                 <div class="sector">
-                    <h4>Order {{ $order->id }} <span style="font-size: 0.8em">({{ $order->price }} บาท)</span></h4>
+                    <h4>Order {{ $order->id }} <span style="font-size: 0.8em" title="Item price sum: {{ $items->sum('price') }}">({{ $order->price }} บาท)</span></h4>
                     <p>Status: <span class="{{ $statusColor }}">{{ $order->status }}</span></p>
                     @foreach ($items as $item)
-                        - <b title="OrderItem ID {{ $item->id }}, ProductItem ID {{ $item->product_item_id }}">{{ $item->productItem->name }}</b> x {{ $item->quantity }} <span class="{{ $items['isPriceMatch'] ? 'grey-text' : 'red-text' }}">({{ $item->price }} บาท)</span><br/>
+                        - <b title="OrderItem ID {{ $item->id }}, ProductItem ID {{ $item->product_item_id }}">{{ $item->productItem->name }}</b> x {{ $item->quantity }} <span
+                                class="{{ $isPriceMatch ? 'grey-text' : 'red-text' }}">({{ $item->price }} บาท)</span><br/>
                     @endforeach
                     <button type="submit" class="btn waves-effect red" name="status" value="unpaid">Mark as unpaid</button>&emsp;
                     <button type="submit" class="btn waves-effect" name="status" value="paid">Mark as paid</button>&emsp;

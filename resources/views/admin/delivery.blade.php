@@ -1,16 +1,8 @@
 @extends('layouts.master')
 
-{{-- @section('style')
-    <style>
-        table {
-            margin-bottom: 2rem;
-        }
-
-        td img {
-            max-height: 5rem;
-        }
-    </style>
-@endsection --}}
+@section('title')
+    <title>Pick up - TUOPH Shop</title>
+@endsection
 
 @section('beforemain')
     <meta http-equiv="refresh" content="5"/>
