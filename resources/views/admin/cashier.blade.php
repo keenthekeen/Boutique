@@ -185,11 +185,8 @@
                 url: '/admin/cashier',
                 data: {cart: cart, _token: "{{ csrf_token() }}", proceed: proceed},
                 success: function (data) {
-                    //cart = data.cart;
-                    //renderTable();
-
                     if (data.status == 'checked') {
-                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว " + data.total + " บาท</h4>รหัสคำสั่งซื้อ " + data.order_id + " เมื่อ " + data.order_time + '<br /><a class="btn waves-effect pink lighten-3" onclick="clearCart()"><i class="material-icons">clear</i> Clear</a>');
+                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว " + data.total + ' บาท</h4>รหัสคำสั่งซื้อ <a href="/admin/find-order?order=' + data.order_id + '">' + data.order_id + "</a> เมื่อ " + data.order_time + '<br /><a class="btn waves-effect pink lighten-3" onclick="clearCart()"><i class="material-icons">clear</i> Clear</a>');
                         /*setTimeout(function() {
                             cart = [];
                             renderTable();

@@ -20,7 +20,7 @@
             </li>
         </ul>
     @endif
-    <form method="POST">
+    <form method="POST" action="/admin/find-order">
         {{ csrf_field() }}
         <div class="row">
             <div class="col s6">
@@ -43,8 +43,10 @@
                             $order->save();
                         }
                         if (Request::has('correct_price')) {
-                            $order->price = $items->sum('price');
-                            $order->payment_note .= ' (Price corrected '.\Carbon\Carbon::now()->toDateTimeString().')';
+                        $price = $items->sum('price');
+                            $corrected = $price - $order->price;
+                            $order->price = $price;
+                            $order->payment_note .= ' (Price corrected by '.$corrected.' at '.\Carbon\Carbon::now()->toDateTimeString().')';
                             $order->save();
                         }
                         $statusColor = 'black-text';
@@ -57,11 +59,14 @@
                     $isPriceMatch = $items->sum('price') == $order->price;
                 @endphp
                 <div class="sector">
-                    <h4>Order {{ $order->id }} <span style="font-size: 0.8em" title="Item price sum: {{ $items->sum('price') }}">({{ $order->price }} บาท)</span></h4>
+                    <h4>
+                        <a href="/admin/find-order?order={{ $id }}">Order {{ $id }}</a>
+                        <span style="font-size: 0.8em" class="{{ $isPriceMatch ? '' : 'red-text' }}" title="Item price sum: {{ $items->sum('price') }}">({{ $order->price }} บาท)</span>
+                    </h4>
                     <p>Status: <span class="{{ $statusColor }}">{{ $order->status }}</span></p>
                     @foreach ($items as $item)
-                        - <b title="OrderItem ID {{ $item->id }}, ProductItem ID {{ $item->product_item_id }}">{{ $item->productItem->name }}</b> x {{ $item->quantity }} <span
-                                class="{{ $isPriceMatch ? 'grey-text' : 'red-text' }}">({{ $item->price }} บาท)</span><br/>
+                        - <b title="OrderItem ID {{ $item->id }}, ProductItem ID {{ $item->product_item_id }}">{{ ($productItem = $item->productItem)->name }}</b> x {{ $item->quantity }} <span
+                                class="{{ (($productItem->price * $item->quantity) == $item->price) ? 'grey-text' : 'red-text' }}">({{ $item->price }} บาท)</span><br/>
                     @endforeach
                     <button type="submit" class="btn waves-effect red" name="status" value="unpaid">Mark as unpaid</button>&emsp;
                     <button type="submit" class="btn waves-effect" name="status" value="paid">Mark as paid</button>&emsp;
