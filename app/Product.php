@@ -151,23 +151,25 @@ class Product extends Model {
     }
     
     public function getOldInput($id) {
+        return old($id, $this->getAttributeAsString($id));
+    }
+    
+    public function getAttributeAsString ($id) {
         if (str_contains($id, '.')) {
             $separatedId = explode('.', $id);
             $val = $this->{$separatedId[0]} ?? array();
             foreach ($separatedId as $key => $value) {
                 if ($key > 0) {
                     if (array_key_exists($value, $val)) {
-                        $val = $val[$value];
+                        return $val[$value];
                     } else {
-                        return old($id);
+                        return '';
                     }
                 }
             }
-            
-            return old($id, $val);
         }
-        
-        return old($id, $this->$id ?? '');
+    
+        return $this->$id ?? '';
     }
     
     /**

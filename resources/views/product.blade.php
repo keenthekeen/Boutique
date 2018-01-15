@@ -26,7 +26,7 @@
         </div>
         <div class="col s12 m8 l9">
             <span style="font-size: 2rem">{{ $product->name }}</span> <span style="font-size: 0.95rem">{{ $product->author }}</span><br/>
-            <label style="margin-top:0.8rem">ข้อมูลสินค้า</label><br />
+            <label style="margin-top:0.8rem">ข้อมูลสินค้า</label><br/>
             @if ($product->type == 'หนังสือ')
                 หนังสือ{{ $product->book_type }} วิชา{{ implode(' ', $product->book_subject) }} {{ $product->detail['page'] }} หน้า
                 @if (str_contains($product->book_type, 'โจทย์'))
@@ -35,7 +35,7 @@
             @else
                 {{ $product->type }}
             @endif
-            <br />
+            <br/>
 
             @unless (empty($product->detail['url']))
                 <br/><a class="waves-effect waves-light btn fullwidth teal" href="{{ $product->detail['url'] }}">เว็บไซต์ผู้จัดทำ</a>
@@ -77,6 +77,24 @@
     @else
         <div class="sector red lighten-4">
             ยังไม่มีสินค้า
+        </div>
+    @endif
+
+    @if (Auth::check() AND Auth::user()->is_admin)
+        <div class="sector purple lighten-3">
+            <h4>ข้อมูลผู้ฝากขาย</h4>
+            <h5>{{ $product->getAttributeAsString('owner_detail_1.name') }}</h5>
+            ห้อง {{ $product->getAttributeAsString('owner_detail_1.room') }} | LINE: {{ $product->getAttributeAsString('owner_detail_1.line') }} |
+            โทรศัพท์: {{ $product->getAttributeAsString('owner_detail_1.phone') }}
+            <h5>{{ $product->getAttributeAsString('owner_detail_2.name') }}</h5>
+            ห้อง {{ $product->getAttributeAsString('owner_detail_2.room') }} | LINE: {{ $product->getAttributeAsString('owner_detail_2.line') }} |
+            โทรศัพท์: {{ $product->getAttributeAsString('owner_detail_2.phone') }}
+            <br/>
+            <h4>การรับเงิน</h4>
+            ธนาคาร {{ $product->getAttributeAsString('payment.bank') }} เลขที่บัญชี {{ $product->getAttributeAsString('payment.number') }} ชื่อ {{ $product->getAttributeAsString('payment.name') }}
+            @unless (empty($product->getAttributeAsString('payment.promptpay')))
+                | พร้อมเพย์ {{ $product->getAttributeAsString('payment.promptpay') }}
+            @endunless
         </div>
     @endif
 
