@@ -3,6 +3,7 @@
 @section('style')
     @php
         /** @var $product \App\Product */
+    $isAdmin = Auth::check() AND Auth::user()->is_admin;
     @endphp
     <style>
         .sector {
@@ -67,7 +68,7 @@
                 <div class="row">
                     <div class="col s12 m8 l9">
                         ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท
-                        @if ($isAdmin = Auth::check() AND Auth::user()->is_admin)
+                        @if ($isAdmin)
                             <span class="purple-text"
                                   title="รับมา {{ $item->amount }} / เหลือ {{ $item->amount - ($sold = $item->orderItems()->sum('quantity')) }}"> ขายไป {{ $sold }}</span>
                         @endif
