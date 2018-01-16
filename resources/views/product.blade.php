@@ -67,6 +67,10 @@
                 <div class="row">
                     <div class="col s12 m8 l9">
                         ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท
+                        @if ($isAdmin = Auth::check() AND Auth::user()->is_admin)
+                            <span class="purple-text"
+                                  title="รับมา {{ $productItem->amount }} / เหลือ {{ $productItem->amount - ($sold = $productItem->orderItems()->sum('quantity')) }}"> ขายไป {{ $sold }}</span>
+                        @endif
                     </div>
                     <div class="col s12 m4 l3">
                         <a class="waves-effect waves-light btn fullwidth disabled" href="/cart/add/{{ $item->id }}"><i class="material-icons left">add_shopping_cart</i>เพิ่มในตะกร้า</a>
@@ -80,8 +84,9 @@
         </div>
     @endif
 
-    @if (Auth::check() AND Auth::user()->is_admin)
-        <div class="sector purple lighten-3">
+    @if ($isAdmin)
+        <div class="sector purple lighten-4">
+            <b>Administrator</b>
             <h4>ข้อมูลผู้ฝากขาย</h4>
             <h5>{{ $product->getAttributeAsString('owner_detail_1.name') }}</h5>
             ห้อง {{ $product->getAttributeAsString('owner_detail_1.room') }} | LINE: {{ $product->getAttributeAsString('owner_detail_1.line') }} |
@@ -92,7 +97,7 @@
             <br/>
             <h4>การรับเงิน</h4>
             ธนาคาร {{ $product->getAttributeAsString('payment.bank') }} เลขที่บัญชี {{ $product->getAttributeAsString('payment.number') }} ชื่อ {{ $product->getAttributeAsString('payment.name') }}
-            @unless (empty($product->getAttributeAsString('payment.promptpay')))
+            @unless (empty(str_replace('-', '', $product->getAttributeAsString('payment.promptpay'))))
                 | พร้อมเพย์ {{ $product->getAttributeAsString('payment.promptpay') }}
             @endunless
         </div>
