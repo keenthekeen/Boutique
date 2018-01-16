@@ -69,7 +69,7 @@
                         ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท
                         @if ($isAdmin = Auth::check() AND Auth::user()->is_admin)
                             <span class="purple-text"
-                                  title="รับมา {{ $productItem->amount }} / เหลือ {{ $productItem->amount - ($sold = $productItem->orderItems()->sum('quantity')) }}"> ขายไป {{ $sold }}</span>
+                                  title="รับมา {{ $item->amount }} / เหลือ {{ $item->amount - ($sold = $item->orderItems()->sum('quantity')) }}"> ขายไป {{ $sold }}</span>
                         @endif
                     </div>
                     <div class="col s12 m4 l3">
