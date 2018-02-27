@@ -13,8 +13,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#616161"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/css/materialize.min.css" integrity="sha256-8gLlCqPk1HxrExaXv1sMh46mbQSYvcu11zsAANydnhU="
-          crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css" integrity="sha256-M1RAYWK/tnlEgevvMLr8tbW9WpzWS8earbGXlxgiBaI=" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
     <link href="/css/app.css" rel="stylesheet"/>
@@ -85,8 +84,7 @@
 @show
 
 @section('script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/js/materialize.min.js" integrity="sha256-4u/8c/K9iSYgglS0o0++LZ82P5V5tll6wyz02zryNxc="
-            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js" integrity="sha256-Jq79Dv9shjRhvRMzr71WgDr8gbZxm0AYmeJxx5jLdCU=" crossorigin="anonymous"></script>
     <script>
         var navElement = document.querySelector('.sidenav');
         var sideNav = new M.Sidenav(navElement, {});
