@@ -85,3 +85,8 @@ p.th {
     padding: 15px 25px 15px 15px;
     width: 100%
 }
+
+.collapsible-header img {
+    max-height: 2rem;
+    margin-right: 1rem;
+}

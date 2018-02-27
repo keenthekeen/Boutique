@@ -146,3 +146,10 @@
     </div>
 
 @endsection
+
+@section('script')
+    @parent
+    <script>
+        var collapsible = M.Collapsible.init(document.querySelector('.collapsible'), {});
+    </script>
+@endsection
