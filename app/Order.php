@@ -78,7 +78,7 @@ class Order extends Model {
     }
     
     public function amountForTransfer() {
-        return $this->price + substr($this->created_at, -2);
+        return number_format($this->price + substr($this->created_at, -2));
     }
     
     /**

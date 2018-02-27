@@ -4,6 +4,17 @@
     <title>คำสั่งซื้อ {{ $order->id }} - {{ config('app.name') }}</title>
 @endsection
 
+@section('style')
+    <style>
+        .collapsible-body img {
+            max-width: 20rem;
+        }
+        table {
+            margin-bottom: 3rem;
+        }
+    </style>
+    @endsection
+
 @section('main')
     @php
         /** @var $order \App\Order */
@@ -12,7 +23,7 @@
         <br/><br/>
         @if ($order->status == 'unpaid')
             <i class="large material-icons yellow-text">attach_money</i><br/>
-            โปรดชำระเงิน
+            โปรดชำระเงินตามรายละเอียดดังนี้
         @elseif ($order->status == 'paid')
             <i class="large material-icons green-text">place</i><br/>
             โปรดนำข้อมูลต่อไปนี้แจ้งที่จุด<b>รับของ</b>
@@ -25,7 +36,6 @@
         @if ($order->status != 'unpaid')
             <span style="font-size: 1.7rem">ราคารวม {{ number_format($order->price) }} บาท</span><br/>
         @endif
-        <p style="font-size:0.9rem"><a href="https://openhouse.triamudom.ac.th" target="_blank">ไปยังเว็บไซต์งานนิทรศการฯ</a> เพื่อดูแผนผังงานและข้อมูลอื่นๆ</p>
     </div>
 
     <div>
@@ -45,6 +55,7 @@
                 <div class="collapsible-header"><i class="material-icons">attach_money</i> ชำระด้วยเงินสด</div>
                 <div class="collapsible-body">
                     <p>โปรดชำระเงินสดที่จุดชำระเงิน จำนวน {{ $order->price }} บาท โดยแจ้งรหัสคำสั่งซื้อ {{ $order->id }}</p>
+                    <p style="font-size:0.9rem"><a href="https://openhouse.triamudom.ac.th" target="_blank">ไปยังเว็บไซต์งานนิทรศการฯ</a> เพื่อดูแผนผังงานและข้อมูลอื่นๆ</p>
                 </div>
             </li>
             <li>
@@ -73,7 +84,7 @@
                             <th>ข้อความถึงผู้รับ</th>
                             <td><i>BTQ-{{ $order->id }}-{{ substr($order->created_at, -2) }}</i></td>
                         </tr>
-                    </table>
+                    </table><br />
                     <ul class="browser-default">
                         <li>สามารถเติมเงินในแอพได้ผ่านทาง 7-Eleven, ตู้ True Money Kiosk, โอนจากบัญชีธนาคาร และอื่นๆ <a href="http://www.truemoney.com/wallet/">ดูข้อมูลจากเว็บไซต์ True Money</a></li>
                         <li>เบอร์โทรศัพท์ดังกล่าวใช้สำหรับรับโอนเงินเท่านั้น ไม่ใช่สำหรับติดต่อสอบถาม</li>
@@ -136,8 +147,7 @@
                 <div class="collapsible-header"><img src="/assets/linepay.jpg"/> LINE Pay</div>
                 <div class="collapsible-body">
                     <p class="center-align"><img src="/assets/pay-line.jpg"/></p>
-                    <p>โปรดโอนเงินจาก LINE Pay โดยโอนไปที่ LINE ID keen1234 จำนวน {{ $order->price }} บาท เมื่อโอนแล้วให้ส่งข้อความไปในแชทระบุรหัสว่า "BTQ-{{ $order->id }}
-                        -{{ substr($order->created_at, -2) }}"</p>
+                    <p>โปรดโอนเงินจาก LINE Pay โดยโอนไปที่ LINE ID keen1234 จำนวน {{ $order->price }} บาท เมื่อโอนแล้วให้ส่งข้อความไปในแชทระบุรหัสว่า "BTQ-{{ $order->id }}-{{ substr($order->created_at, -2) }}"</p>
 
                     <p>สามารถเติมเงินในแอพได้ที่สถานีรถไฟฟ้า BTS, McDonald's หรือหักบัญชีธนาคาร | บัญชี LINE ดังกล่าวสำหรับรับโอนเงินเท่านั้น ไม่ใช่ติดต่อสอบถาม</p>
                 </div>
