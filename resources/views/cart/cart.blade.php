@@ -88,7 +88,7 @@
             รวมทั้งสิ้น <span style="font-size:2rem">{{ $total }} บาท</span><br/><br/>
 
             <button type="submit" class="waves-effect waves-light btn fullwidth blue">ชำระเงิน</button>
-            <span class="red-text">โปรดตรวจสอบข้อมูลว่าครบถ้วนถูกต้องก่อนดำเนินการต่อ</span>
+            <span class="red-text">โปรดตรวจสอบข้อมูลว่าครบถ้วนถูกต้องก่อนดำเนินการต่อ หลังจากชำระเงินแล้วจะต้องมารับสินค้าที่จุดรับ ไม่มีบริการจัดส่งทางไปรษณีย์</span>
         </form>
     @else
         <div class="fullwidth center-align">
