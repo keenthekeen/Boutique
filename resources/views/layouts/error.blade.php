@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>@yield('code') @yield('title') - TUOPH Shop</title>
+    <title>@yield('code') @yield('title') - {{ config('app.name') }}</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#616161"/>

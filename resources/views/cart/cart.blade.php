@@ -86,20 +86,8 @@
             @endif
             <input type="hidden" name="total" value="{{ $total }}"/>
             รวมทั้งสิ้น <span style="font-size:2rem">{{ $total }} บาท</span><br/><br/>
-            โปรดเลือกวิธีชำระเงิน
-            <p>
-                <label>
-                    <input name="method" type="radio" value="cashier" checked/>
-                    <span>จ่ายที่แคชเชียร์ (ภายในงาน)</span>
-                </label>
-            </p>
-            {{-- <p>
-                <label>
-                    <input name="method" type="radio" value="card" disabled/>
-                    <span>บัตร VISA/MasterCard (ค่าธรรมเนียม 4%)</span>
-                </label>
-            </p> --}}
-            <button type="submit" class="waves-effect waves-light btn fullwidth blue">สั่งซื้อ</button>
+
+            <button type="submit" class="waves-effect waves-light btn fullwidth blue">ชำระเงิน</button>
             <span class="red-text">โปรดตรวจสอบข้อมูลว่าครบถ้วนถูกต้องก่อนดำเนินการต่อ</span>
         </form>
     @else

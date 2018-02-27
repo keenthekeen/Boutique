@@ -77,6 +77,10 @@ class Order extends Model {
         return $orderItems;
     }
     
+    public function amountForTransfer() {
+        return $this->price + substr($this->created_at, -2);
+    }
+    
     /**
      * Calculate price, promotions applied
      * @param Collection $cart

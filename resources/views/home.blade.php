@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>หน้าหลัก - TUOPH Shop</title>
+    <title>หน้าหลัก - {{ config('app.name') }}</title>
 @endsection
 
 @section('style')

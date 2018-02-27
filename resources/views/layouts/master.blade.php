@@ -6,7 +6,7 @@
         <meta name="robots" content="noindex, nofollow"/>
     @else
     @section('title')
-        <title>TUOPH Shop</title>
+        <title>{{ config('app.name') }}</title>
     @show
     <meta name="keyword" content="TU Open House Triamudom นิทรรศการ เตรียมอุดม"/>
     @endif

@@ -45,7 +45,7 @@ if (!env('SHOP_CLOSED', false)) {
         Route::post('checkout', 'VisitorController@checkout');
         Route::get('order/{order}', function (\App\Order $order) {
             if ($order->user_id == Auth::id()) {
-                return view('cart.success', ['order' => $order]);
+                return view('cart.view', ['order' => $order]);
             } else {
                 return response()->view('errors.403', [], 403);
             }

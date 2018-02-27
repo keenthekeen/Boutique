@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>Merchant Registration - TUOPH</title>
+    <title>Merchant Registration - {{ config('app.name') }}</title>
 @endsection
 
 @section('style')
