@@ -7,6 +7,7 @@ use App\User;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Log;
 use Socialite;
 
 class LoginController extends Controller {
@@ -53,7 +54,7 @@ class LoginController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback() {
+    public function handleProviderCallback(Request $request) {
         try {
             $socialUser = Socialite::driver('facebook')->user();
         } catch (\Exception $e) {
@@ -80,6 +81,7 @@ class LoginController extends Controller {
             ]);
         }
         Auth::login($user);
+        Log::info('User '.$socialUser->getId(). ' ('.$socialUser->getName().') logged in from '.$request->ip());
         
         return redirect()->intended();
     }

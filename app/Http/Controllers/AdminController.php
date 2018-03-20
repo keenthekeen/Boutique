@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\OrderItem;
 use App\Product;
+use Auth;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
@@ -48,7 +49,10 @@ class AdminController extends Controller {
                 
                 return $i;
             });
-            $order->payment_note = 'CASH-U' . \Auth::id();
+            $order->payment_note = [
+                'method' => 'CASH',
+                'cashier' => Auth::id()
+            ];
             try {
                 $order->addItems($cartContent);
                 $order->save();

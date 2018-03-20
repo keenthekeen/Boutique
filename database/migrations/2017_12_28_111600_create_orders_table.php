@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration {
             $table->enum('type', ['pos', 'cash', 'card']);
             $table->enum('status', ['unpaid', 'paid', 'delivered']);
             $table->decimal('price', 6, 2);
-            $table->string('payment_note')->nullable();
+            $table->json('payment_note');
             $table->string('promotion')->nullable();
             
             $table->softDeletes();

@@ -18,6 +18,9 @@ Route::get('product/{product}', function (\App\Product $product) {
     return view('product', ['product' => $product]);
 })->middleware('cache');
 
+// Project - specific data
+Route::redirect('contact', 'https://www.facebook.com/TriamUdomOPH/');
+
 Route::get('login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('login/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('logout', 'Auth\LoginController@logout');
@@ -49,7 +52,8 @@ if (!env('SHOP_CLOSED', false)) {
             } else {
                 return response()->view('errors.403', [], 403);
             }
-        });
+        })->name('cart.order');
+        Route::post('pay', 'VisitorController@pay');
     });
 }
 

@@ -46,7 +46,8 @@
                         $price = $items->sum('price');
                             $corrected = $price - $order->price;
                             $order->price = $price;
-                            $order->payment_note .= ' (Price corrected by '.$corrected.' at '.\Carbon\Carbon::now()->toDateTimeString().')';
+                            $order->payment_note ['price_correct'] = $corrected;
+                            $order->payment_note ['price_correct_at'] = \Carbon\Carbon::now()->toDateTimeString();
                             $order->save();
                         }
                         $statusColor = 'black-text';

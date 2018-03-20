@@ -60,4 +60,34 @@ class VisitorController extends Controller {
         return redirect('/cart/order/' . $order->id);
     }
     
+    public function pay (Request $request) {
+        $this->validate($request, [
+            'order_id' => 'required',
+            'payment_method' => 'required|in:promptpay,truemoney,truekiosk,line'
+        ]);
+        $order = Order::find($request->input('order_id'));
+        if ($order->user_id != $request->user()->id OR $order->status != 'unpaid') {
+            return response()->view('errors.403');
+        }
+        if (in_array($request->input('payment_method'), ['promptpay', 'truekiosk'])) {
+            $this->validate($request, [
+                'date' => 'required|string|max:30',
+                'time' => 'required|string|max:30',
+                'amount' => 'required_if:payment_method,truekiosk|max:100000'
+            ]);
+            $payment_note = [
+                'date' => $request->date,
+                'time' => $request->time,
+                'amount' => $request->input('amount', $order->amountForTransfer())
+            ];
+        }
+        $payment_note['method'] = strtoupper($request->payment_method);
+        $payment_note['status'] = 'unverified';
+        $payment_note['reported_time'] = date(DATE_ISO8601);
+        $order->payment_note = $payment_note;
+        $order->save();
+        
+        return redirect()->route('cart.order', ['order' => $order->id]);
+    }
+    
 }

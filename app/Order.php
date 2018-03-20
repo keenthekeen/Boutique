@@ -16,8 +16,8 @@ use Illuminate\Support\Collection;
  * @property string                                                         $type
  * @property string                                                         $status
  * @property float                                                          $price
- * @property string|null                                                    $payment_note
- * @property string|null                                                    $promotion
+ * @property array|null                                                    $payment_note
+ * @property array|null                                                    $promotion
  * @property string|null                                                    $deleted_at
  * @property \Carbon\Carbon|null                                            $created_at
  * @property \Carbon\Carbon|null                                            $updated_at
@@ -48,7 +48,8 @@ class Order extends Model {
      * @var array
      */
     protected $casts = [
-        'promotion' => 'array'
+        'promotion' => 'array',
+        'payment_note' => 'array',
     ];
     
     public function items() {
