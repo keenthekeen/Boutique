@@ -92,14 +92,15 @@ class Product extends Model {
      */
     public function inStock(): bool {
         // @TODO implement this!
-        $stock = 0;
+        /*$stock = 0;
         $sold = 0;
         foreach ($this->items as $item) {
             $stock += $item->amount;
             $sold += $item->orderItems()->sum('quantity'); // UNPAID included!
         }
         
-        return $stock*1.5 > $sold;
+        return $stock*1.5 > $sold;*/
+        return true;
     }
     
     public function getShortNote() {

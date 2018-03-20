@@ -5,7 +5,9 @@
 @endsection
 
 @section('beforemain')
-    <meta http-equiv="refresh" content="5"/>
+    @unless (Request::has('norefresh') OR $mode == 'all')
+        <meta http-equiv="refresh" content="5"/>
+    @endunless
     <div class="grey darken-2 white-text" style="padding-top:1rem;padding-bottom:2rem;">
         <div class="container">
             <h2 class="left-align">จุดรับสินค้า</h2>
@@ -21,8 +23,26 @@
             </li>
         </ul>
     @endif
+
+    <div class="row">
+        <div class="col s6">
+            @if ($mode == 'all')
+                กำลังดูทั้งหมด
+            @else
+                <a href="/admin/delivery/all" class="btn waves-effect teal fullwidth">ดูทั้งหมด</a>
+            @endif
+        </div>
+        <div class="col s6">
+            @if ($mode == 'latest')
+                กำลังดู 1 ชั่วโมงล่าสุด
+            @else
+                <a href="/admin/delivery/latest" class="btn waves-effect cyan fullwidth">ดู 1 ชั่วโมงล่าสุด</a>
+            @endif
+        </div>
+    </div>
+
     @if (count($list) > 0)
-        <a href="#footer" class="btn blue waves-effect ">ลงไปล่างสุด</a> (แสดงเฉพาะรายการใน 1 ชั่วโมงล่าสุด)<br/>
+        <a href="#footer" class="btn blue waves-effect fullwidth">ลงไปล่างสุด</a><br/>
         <form method="POST">
             {{ csrf_field() }}
             @foreach ($list as $id => $items)
@@ -42,12 +62,13 @@
                     </button>
                 </div>
             @endforeach
+            {!! $links !!}
         </form>
     @else
         <div class="fullwidth center-align">
             <br/><br/>
             <i class="large material-icons grey-text">brightness_5</i><br/>
-            ยังไม่มีการสั่งซื้อรอจ่าย
+            ยังไม่มีรายการรอรับสินค้า
         </div>
     @endif
 @endsection

@@ -99,12 +99,14 @@ class AdminController extends Controller {
         }
     }
     
-    public function getUndeliver(Request $request) {
+    public function viewDeliver(Request $request, $mode = 'all') {
         $undelivers = Order::with('items')->where('status', 'paid');
-        if (!$request->has('all')) {
-            $undelivers = $undelivers->whereRaw('updated_at >= DATE_SUB(NOW(),INTERVAL 1 HOUR)');
+        if ($mode == 'latest') {
+            $undelivers = $undelivers->whereRaw('updated_at >= DATE_SUB(NOW(),INTERVAL 1 HOUR)')->get();
+        } else {
+            $undelivers = $undelivers->paginate(30);
+            $links = $undelivers->links();
         }
-        $undelivers = $undelivers->get();
         
         $pending = [];
         
@@ -122,7 +124,7 @@ class AdminController extends Controller {
             ];
         }
         
-        return response()->view('admin.delivery', ['list' => $pending]);
+        return response()->view('admin.delivery', ['list' => $pending, 'mode' => $mode, 'links' => $links ?? '']);
     }
     
     public function deliverOrder(Request $request) {

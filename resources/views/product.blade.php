@@ -39,7 +39,7 @@
             <br/>
 
             @unless (empty($product->detail['url']))
-                <br/><a class="waves-effect waves-light btn fullwidth teal" href="{{ $product->detail['url'] }}">เว็บไซต์ผู้จัดทำ</a>
+                <br/><a class="waves-effect waves-light btn fullwidth teal" href="{{ $product->detail['url'] }}" target="_blank">เว็บไซต์ผู้จัดทำ</a>
             @endunless
             @unless (empty($product->book_example))
                 <br/><a class="waves-effect waves-light btn fullwidth orange" href="{{ $product->book_example }}">ตัวอย่างหนังสือ</a>
