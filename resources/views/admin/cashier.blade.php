@@ -79,7 +79,7 @@
         var cart = [];
         var selectedType;
         var checker = "DEFAULT";
-        var loadTime = Date().getTime();
+        var loadTime = (new Date()).getTime();
         $(document).ready(function () {
             fetch('/admin/products', {
                 credentials: 'same-origin'
@@ -200,7 +200,7 @@
 
         function clearCart() {
             // If page has been loaded from more than 1 hour ago, refresh
-            if (Date().getTime() - loadTime > 3600000) {
+            if ((new Date()).getTime() - loadTime > 3600000) {
                 window.location.reload();
             } else {
                 cart = [];
