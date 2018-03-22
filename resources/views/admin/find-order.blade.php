@@ -92,7 +92,7 @@
                         <button type="submit" class="btn waves-effect" name="status" value="paid">Paid by cash</button>&emsp;
                     @elseif ($order->status == 'paid')
                         <button type="submit" class="btn waves-effect orange" name="status" value="delivered" id="deliver-btn">Mark as delivered (\)</button>
-                        @else
+                    @else
                         <button type="submit" class="btn waves-effect" name="status" value="paid">Mark as Paid</button>
                     @endif
                     @unless($isPriceMatch)
@@ -110,8 +110,8 @@
                                 &emsp;
                                 <button type="submit" class="btn waves-effect red" name="payment_verify" value="cancel">Cancel</button>&emsp;
                                 @endif
-                            @if ($key == 'cashier' AND is_numeric($value))
-                                <img src="https://graph.facebook.com/{{ $value }}/picture?type=small" style="height: 1.5rem" />
+                                @if ($key == 'cashier' AND is_numeric($value))
+                                    <a href="https://facebook.com/{{ $value }}" target="_blank"><img src="https://graph.facebook.com/{{ $value }}/picture?type=small" style="height: 1.5rem"/></a>
                                 @endif
                                 <br/>
                             @endforeach
@@ -119,6 +119,12 @@
                     @else
                         <p style="font-size: 0.8rem">Note: {{ $order->getOriginal('payment_note') }}</p>
                     @endif
+                    @unless (empty($order->user_id))
+                        <div class="sector">
+                            <img src="https://graph.facebook.com/{{ $order->user_id }}/picture?type=square" style="height: 1.5rem"/>
+                            Order initiated by user <a href="https://facebook.com/{{ $order->user_id }}" target="_blank">{{ $order->user->name }}</a>
+                        </div>
+                    @endunless
                 </div>
             </form>
         @else
