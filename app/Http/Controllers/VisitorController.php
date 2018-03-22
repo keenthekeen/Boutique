@@ -9,6 +9,7 @@ use Auth;
 use Gloudemans\Shoppingcart\Cart;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
+use OmiseUsedTokenException;
 
 class VisitorController extends Controller {
     protected $cart;
@@ -101,7 +102,11 @@ class VisitorController extends Controller {
         if ($order->user_id != $request->user()->id OR $order->status != 'unpaid') {
             return response()->view('errors.403');
         }
-        $charge = OmiseCharge::chargeCard($order->price, $request->input('omise_token'), $order->id);
+        try {
+            $charge = OmiseCharge::chargeCard($order->price, $request->input('omise_token'), $order->id);
+        } catch (OmiseUsedTokenException $e) {
+            return redirect()->route('cart.paycheck', ['order' => $order->id]);
+        }
         $order->payment_note = $charge->export();
         $order->status = 'pending';
         if ($charge->isSuccess()) {

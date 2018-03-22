@@ -55,7 +55,7 @@ if (!env('SHOP_CLOSED', false) AND !(Auth::check() AND Auth::user()->is_admin)) 
         })->name('cart.order');
         Route::post('pay', 'VisitorController@pay');
         Route::post('pay/card', 'VisitorController@payByCard');
-        Route::get('pay/{order}/check', 'VisitorController@checkCardPayment')->name('cart.paycomplete');
+        Route::get('pay/{order}/check', 'VisitorController@checkCardPayment')->name('cart.paycheck');
     });
 }
 
