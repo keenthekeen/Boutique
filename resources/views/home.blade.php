@@ -81,7 +81,7 @@
                 </div>
             @endif
 
-            @if (($pendingOrders = Auth::user()->orders()->where('status', 'unpaid')->get()) AND $pendingOrders->isNotEmpty())
+            @if (($pendingOrders = Auth::user()->orders()->where('status', '!=', 'delivered')->get()) AND $pendingOrders->isNotEmpty())
                 <div class="sector yellow lighten-5">
                     <b>คำสั่งซื้อคงค้าง</b>&ensp;
                     @foreach($pendingOrders as $order)
@@ -94,8 +94,9 @@
 
     @if (env('SHOP_CLOSED', false))
         <div class="sector blue lighten-3">
-            <b>ขอขอบคุณที่ให้ความสนใจ</b><br />
-            คณะกรรมการจัดงานฯ ขอขอบพระคุณผู้เข้าร่วมงานที่ให้ความสนใจเยี่ยมชมบูธของที่ระลึกเป็นจำนวนมาก อย่างไรก็ตามทางเราไม่ได้ให้บริการจัดส่งสินค้าหลังจากงานนิทรรศการฯ ทั้งนี้ ท่านสามารถดูสินค้าที่มีขายภายในงาน และติดต่อไปยังผู้จัดทำสินค้าโดยตรง โดยคลิกที่ปุ่ม "เว็บไซต์ผู้จัดทำ"
+            <b>ขอขอบคุณที่ให้ความสนใจ</b><br/>
+            คณะกรรมการจัดงานฯ ขอขอบพระคุณผู้เข้าร่วมงานที่ให้ความสนใจเยี่ยมชมบูธของที่ระลึกเป็นจำนวนมาก อย่างไรก็ตามทางเราไม่ได้ให้บริการจัดส่งสินค้าหลังจากงานนิทรรศการฯ ทั้งนี้
+            ท่านสามารถดูสินค้าที่มีขายภายในงาน และติดต่อไปยังผู้จัดทำสินค้าโดยตรง โดยคลิกที่ปุ่ม "เว็บไซต์ผู้จัดทำ"
         </div>
     @endif
 
@@ -132,7 +133,8 @@
                     <h5>{{ $product->name }}</h5>
                     <span class="author">{{ $product->author }}</span><br/>
                     @if ($product->type == 'หนังสือ')
-                        <span title="{{ $product->detail['page'] }} หน้า มีโจทย์ {{ $product->detail['question'] }} ข้อ">หนังสือ{{ $product->book_type }} วิชา{{ implode(' ', $product->book_subject) }}</span>
+                        <span title="{{ $product->detail['page'] }} หน้า มีโจทย์ {{ $product->detail['question'] }} ข้อ">หนังสือ{{ $product->book_type }}
+                            วิชา{{ implode(' ', $product->book_subject) }}</span>
                     @else
                         {{ $product->type }}
                     @endif

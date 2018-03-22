@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>Inventory - TUOPH Shop</title>
+    <title>Inventory - {{ config('app.name') }}</title>
 @endsection
 
 @section('beforemain')

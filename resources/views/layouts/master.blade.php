@@ -64,6 +64,7 @@
                         <li><a href="/admin/delivery">Pickup</a></li>
                         <li><a href="/admin/inventory">Inventory</a></li>
                         <li><a href="/admin/find-order">Find order</a></li>
+                        <li><a href="/admin/paycheck">Payment Verify</a></li>
                         <li>
                             <div class="divider"></div>
                         </li>
@@ -74,12 +75,13 @@
                 @endif
             </ul>
 
-            @if (Auth::user()->is_admin)
+            @if (Auth::check() AND Auth::user()->is_admin)
                 <ul id="dropdown-admin" class="dropdown-content">
                     <li><a href="/admin/cashier">Cashier</a></li>
                     <li><a href="/admin/delivery">Pickup</a></li>
                     <li><a href="/admin/inventory">Inventory</a></li>
                     <li><a href="/admin/find-order">Find order</a></li>
+                    <li><a href="/admin/paycheck">Payment Verify</a></li>
                 </ul>
             @endif
 

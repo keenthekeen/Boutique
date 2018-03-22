@@ -40,6 +40,21 @@ class AdminController extends Controller {
         $total = $totalValue - abs($discountSum);
         
         if ($request->input('proceed') == 'true') {
+            if ($request->has('checker') AND !empty($request->input('checker')) AND $request->input('checker') != 'DEFAULT') {
+                $previousOrders = Order::where('status', 'paid')->whereRaw('updated_at >= DATE_SUB(NOW(),INTERVAL 1 HOUR)')->get();
+                foreach ($previousOrders as $pOrder) {
+                    if (is_array($pOrder->payment_note) AND !empty($pOrder->payment_note['checker']) AND $pOrder->payment_note['checker'] === $request->input('checker')) {
+                        return response(json_encode([
+                            'status' => 'calculated',
+                            'cart' => $request->input('cart'),
+                            'promotions' => $appliedPromotions,
+                            'discount' => 0,
+                            'sum' => 0,
+                            'total' => 'Order existed: '.$pOrder->id
+                        ]));
+                    }
+                }
+            }
             $order = new Order();
             $order->type = 'cash';
             $order->status = 'paid';
@@ -51,7 +66,10 @@ class AdminController extends Controller {
             });
             $order->payment_note = [
                 'method' => 'CASH',
-                'cashier' => Auth::id()
+                'customer_type' => 'walkin',
+                'cashier' => Auth::id(),
+                'paid_time' => date(DATE_ISO8601),
+                'checker' => $request->input('checker')
             ];
             try {
                 $order->addItems($cartContent);
@@ -92,13 +110,15 @@ class AdminController extends Controller {
                 'total' => $total
             ]));
         } else {
+            // Calculate price but don't save
             return response(json_encode([
                 'status' => 'calculated',
                 'cart' => $request->input('cart'),
                 'promotions' => $appliedPromotions,
                 'discount' => $discountSum,
                 'sum' => $totalValue,
-                'total' => $total
+                'total' => $total,
+                'checker' => md5($total.microtime().Auth::id())
             ]));
         }
     }

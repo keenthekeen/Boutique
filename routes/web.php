@@ -54,6 +54,8 @@ if (!env('SHOP_CLOSED', false)) {
             }
         })->name('cart.order');
         Route::post('pay', 'VisitorController@pay');
+        Route::post('pay/card', 'VisitorController@payByCard');
+        Route::get('pay/{order}/check', 'VisitorController@checkCardPayment')->name('cart.paycomplete');
     });
 }
 
@@ -67,6 +69,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::any('find-order', function () {
         return view('admin.find-order');
     });
+    Route::view('paycheck', 'admin.paycheck');
 });
 
 if (config('app.debug')) {

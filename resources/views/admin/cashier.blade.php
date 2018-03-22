@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>Cashier - TUOPH</title>
+    <title>Cashier - {{ config('app.name') }}</title>
 @endsection
 
 @section('style')
@@ -78,6 +78,8 @@
         var productList;
         var cart = [];
         var selectedType;
+        var checker = "DEFAULT";
+        var loadTime = Date().getTime();
         $(document).ready(function () {
             fetch('/admin/products', {
                 credentials: 'same-origin'
@@ -183,16 +185,13 @@
             $.ajax({
                 type: "POST",
                 url: '/admin/cashier',
-                data: {cart: cart, _token: "{{ csrf_token() }}", proceed: proceed},
+                data: {cart: cart, _token: "{{ csrf_token() }}", proceed: proceed, checker: checker},
                 success: function (data) {
                     if (data.status == 'checked') {
-                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว " + data.total + ' บาท</h4>รหัสคำสั่งซื้อ <a href="/admin/find-order?order=' + data.order_id + '">' + data.order_id + "</a> เมื่อ " + data.order_time + '<br /><a class="btn waves-effect pink lighten-3" onclick="clearCart()"><i class="material-icons">clear</i> Clear</a>');
-                        /*setTimeout(function() {
-                            cart = [];
-                            renderTable();
-                        }.bind(cart), 5000);*/
+                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว " + data.total + ' บาท</h4>รหัสคำสั่งซื้อ <a target="_blank" href="/admin/find-order?order=' + data.order_id + '">' + data.order_id + "</a> เมื่อ " + data.order_time + '<br /><a class="btn waves-effect pink lighten-3" onclick="clearCart()"><i class="material-icons">clear</i> Clear</a>');
                     } else {
                         $("#summary").html("ลดราคาไป " + data.discount + " บาท<br /><h4>ราคารวม " + data.total + " บาท</h4><br /><a class=\"btn waves-effect green fullwidth\" onclick=\"processCart(true)\">PROCEED</a><br/><br/>");
+                        checker = data.checker;
                     }
                 },
                 dataType: 'json'
@@ -200,8 +199,13 @@
         }
 
         function clearCart() {
-            cart = [];
-            renderTable();
+            // If page has been loaded from more than 1 hour ago, refresh
+            if (Date().getTime() - loadTime > 3600000) {
+                window.location.reload();
+            } else {
+                cart = [];
+                renderTable();
+            }
         }
     </script>
 @endsection

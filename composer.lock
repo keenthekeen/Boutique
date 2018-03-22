@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "92fec009340480a297958bc0384f6b24",
+    "content-hash": "a0be2ba57fdcd4416b4378008b4e31de",
     "packages": [
         {
             "name": "caouecs/laravel-lang",
@@ -1327,6 +1327,51 @@
                 "php"
             ],
             "time": "2018-02-28T20:30:58+00:00"
+        },
+        {
+            "name": "omise/omise-php",
+            "version": "v2.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/omise/omise-php.git",
+                "reference": "707ac8614ea30a8bde1338f89dcff16129051ffd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/omise/omise-php/zipball/707ac8614ea30a8bde1338f89dcff16129051ffd",
+                "reference": "707ac8614ea30a8bde1338f89dcff16129051ffd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/omise/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "omise",
+                    "email": "apps@omise.co"
+                }
+            ],
+            "description": "Omise API PHP Lib",
+            "homepage": "https://github.com/omise/omise-php.git",
+            "keywords": [
+                "creditcard",
+                "omise",
+                "payment"
+            ],
+            "time": "2018-03-21T09:41:52+00:00"
         },
         {
             "name": "paragonie/random_compat",
