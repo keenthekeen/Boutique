@@ -7,6 +7,7 @@ use App\Order;
 use App\ProductItem;
 use Auth;
 use Gloudemans\Shoppingcart\Cart;
+use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
 
 class VisitorController extends Controller {
@@ -38,7 +39,9 @@ class VisitorController extends Controller {
         $cartContent = $this->cart->content();
         $appliedPromotions = Order::processPromotions($cartContent);
         $discountSum = $appliedPromotions->pluck('reduced')->sum();
-        $total = $this->cart->subtotal() - abs($discountSum);
+        $total = $cartContent->sum(function (CartItem $item) {
+            return $item->qty * $item->price;
+        }) - abs($discountSum);
         if ($request->input('total') != $total) {
             return back()->withErrors('Error occurred! Please try again.');
         }

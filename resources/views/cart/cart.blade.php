@@ -71,7 +71,9 @@
             @php
                 $appliedPromotions = \App\Order::processPromotions(Cart::content());
                 $discountSum = $appliedPromotions->pluck('reduced')->sum();
-                $total = Cart::subtotal() - abs($discountSum);
+                $total = Cart::content()->sum(function (Gloudemans\Shoppingcart\CartItem $item) {
+            return $item->qty * $item->price;
+        }) - abs($discountSum);
             @endphp
             @if ($appliedPromotions->isNotEmpty())
                 ส่วนลด:
