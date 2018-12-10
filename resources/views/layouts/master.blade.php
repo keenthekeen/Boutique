@@ -13,8 +13,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#616161"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css" integrity="sha256-M1RAYWK/tnlEgevvMLr8tbW9WpzWS8earbGXlxgiBaI="
-          crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" integrity="sha256-OweaP/Ic6rsV+lysfyS4h+LM6sRwuO3euTYfr6M124g=" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
     <link href="/css/app.css" rel="stylesheet"/>
@@ -115,12 +114,12 @@
 @show
 
 @section('script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js" integrity="sha256-Jq79Dv9shjRhvRMzr71WgDr8gbZxm0AYmeJxx5jLdCU="
-            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" integrity="sha256-U/cHDMTIHCeMcvehBv1xQ052bPSbJtbuiw4QA9cTKz0=" crossorigin="anonymous"></script>
     <script>
-        var navElement = document.querySelector('.sidenav');
-        var sideNav = new M.Sidenav(navElement, {});
-        var dropIns = M.Dropdown.init(document.querySelector('.dropdown-trigger'), {});
+        document.addEventListener('DOMContentLoaded', function() {
+            var sideNav = M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
+            var dropIns = M.Dropdown.init(document.querySelector('.dropdown-trigger'), {});
+        });
         @if (session()->has('notify'))
         M.toast({html: '{!! session('notify') !!}'});
         @endif
