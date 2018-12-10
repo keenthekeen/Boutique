@@ -129,7 +129,7 @@
         @foreach($products->where('type', 'หนังสือ') as $product)
             <a href="/product/{{ $product->id }}">
                 <div class="col s6 m6 {{ $isMobile ? 'l6' : 'l3' }} hoverable">
-                    <img class="responsive-img" src="{{ $product->picture }}"/>
+                    <img style="padding-top: 1vw;" class="responsive-img" src="{{ $product->picture }}"/>
                     <h5>{{ $product->name }}</h5>
                     <span class="author">{{ $product->author }}</span><br/>
                     @if ($product->type == 'หนังสือ')
@@ -159,7 +159,7 @@
         @foreach($products->where('type', '!=', 'หนังสือ') as $product)
             <a href="/product/{{ $product->id }}">
                 <div class="col s6 m6 {{ $isMobile ? 'l6' : 'l3' }} hoverable">
-                    <img class="responsive-img" src="{{ $product->picture }}"/>
+                    <img style="padding-top: 1vw;" class="responsive-img" src="{{ $product->picture }}"/>
                     <h5>{{ $product->name }}</h5>
                     <span class="author">{{ $product->author }}</span><br/>
                     @if ($product->type == 'หนังสือ')
