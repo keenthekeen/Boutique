@@ -25,7 +25,7 @@ Route::get('login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('login/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('logout', 'Auth\LoginController@logout');
 
-if (!env('SHOP_CLOSED', false) AND Gate::denies('admin-action')) {
+if (!env('SHOP_CLOSED', false) OR Gate::allows('admin-action')) {
     Route::prefix('merchant')->middleware(['auth'])->group(function () {
         // Merchant
         Route::view('register', 'merchant-register');
