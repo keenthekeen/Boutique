@@ -67,7 +67,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 m6">
-                    {!! $product->createInput('owner_detail_1.name', 'ชื่อ', true) !!}
+                    {!! $product->createInput('owner_detail_1.name', 'ชื่อ-นามสกุล', true) !!}
                     <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาษาไทย คำนำหน้าติดกับชื่อ</span>
                 </div>
                 <div class="input-field col s12 m6">
@@ -79,7 +79,7 @@
                     {!! $product->createInput('owner_detail_1.line', 'LINE ID') !!}
                 </div>
                 <div class="input-field col s6">
-                    {!! $product->createInput('owner_detail_1.phone', 'โทรศัพท์มือถือ', true, 10) !!}
+                    {!! $product->createInput('owner_detail_1.phone', 'โทรศัพท์มือถือ ไม่มีขีด', true, 10) !!}
                 </div>
             </div>
         </div>
@@ -88,7 +88,7 @@
             <h4>ผู้รับผิดชอบ 2</h4>
             <div class="row">
                 <div class="input-field col s12 m6">
-                    {!! $product->createInput('owner_detail_2.name', 'ชื่อ', true) !!}
+                    {!! $product->createInput('owner_detail_2.name', 'ชื่อ-นามสกุล', true) !!}
                     <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาษาไทย คำนำหน้าติดกับชื่อ</span>
                 </div>
                 <div class="input-field col s12 m6">
@@ -100,7 +100,7 @@
                     {!! $product->createInput('owner_detail_2.line', 'LINE ID') !!}
                 </div>
                 <div class="input-field col s6">
-                    {!! $product->createInput('owner_detail_2.phone', 'โทรศัพท์มือถือ', true, 10) !!}
+                    {!! $product->createInput('owner_detail_2.phone', 'เบอร์โทรศัพท์มือถือ ไม่มีขีด', true, 10) !!}
                 </div>
             </div>
         </div>
@@ -144,7 +144,7 @@
             <div class="row">
                 <div class="input-field col s12 m6">
                     {!! $product->createInput('name', 'ชื่อสินค้า', true) !!}
-                    <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ใส่เฉพาะชื่อสินค้า งดใส่ "หนังสือ" หรือ "by DMC48"</span>
+                    <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ใส่เฉพาะชื่อสินค้าเท่านั้น งดใส่ชื่อประเภทสินค้าหรือชื่อผู้จัดทำ เช่นคำว่า "หนังสือ", "สมุด", "by DMC48", ฯลฯ</span>
                 </div>
                 <div class="input-field col s12 m6">
                     {!! $product->createInput('price', 'ราคา (บาท)', true, 1000, 'number') !!}

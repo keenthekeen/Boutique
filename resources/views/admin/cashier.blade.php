@@ -188,7 +188,7 @@
                 data: {cart: cart, _token: "{{ csrf_token() }}", proceed: proceed, checker: checker},
                 success: function (data) {
                     if (data.status == 'checked') {
-                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว " + data.total + ' บาท</h4>รหัสคำสั่งซื้อ <a target="_blank" href="/admin/find-order?order=' + data.order_id + '">' + data.order_id + "</a> เมื่อ " + data.order_time + '<br /><a class="btn waves-effect pink lighten-3" onclick="clearCart()"><i class="material-icons">clear</i> Clear</a>');
+                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว " + data.total + ' บาท</h4>รหัสคำสั่งซื้อ <a target="_blank" href="/admin/findOrder?order=' + data.order_id + '">' + data.order_id + "</a> เมื่อ " + data.order_time + '<br /><a class="btn waves-effect pink lighten-3" onclick="clearCart()"><i class="material-icons">clear</i> Clear</a>');
                     } else {
                         $("#summary").html("ลดราคาไป " + data.discount + " บาท<br /><h4>ราคารวม " + data.total + " บาท</h4><br /><a class=\"btn waves-effect green fullwidth\" onclick=\"processCart(true)\">PROCEED</a><br/><br/>");
                         checker = data.checker;

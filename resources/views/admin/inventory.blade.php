@@ -28,7 +28,9 @@
             <th>Item ID</th>
             <th>ชื่อ</th>
             <th>ราคา</th>
-            <th>ขายไป</th>
+            <th>รับมา</th>
+            <th>ขายได้</th>
+            <th>คงเหลือ</th>
         </tr>
         @foreach (\App\ProductItem::orderBy('name')->get() as $productItem)
             <tr>
@@ -36,7 +38,13 @@
                 <td>{{ $productItem->id }}</td>
                 <td>{{ $productItem->name }}</td>
                 <td>{{ $productItem->price }}</td>
-                <td class="{{ (($left = $productItem->amount - ($sold = $productItem->orderItems()->sum('quantity'))) > 0) ? 'blue' : 'red' }} lighten-3" title="รับมา {{ $productItem->amount }} / เหลือ {{ $left }}">{{ $sold }}</td>
+                @php
+                    $sold = $productItem->orderItems()->sum('quantity');
+                    $left = $productItem->amount - $sold;
+                @endphp
+                <td>{{ $productItem->amount }}</td>
+                <td>{{ $sold }}</td>
+                <td class="{{ $left > 0 ? 'blue' : 'red' }} lighten-3">{{ $left }}</td>
             </tr>
         @endforeach
     </table>

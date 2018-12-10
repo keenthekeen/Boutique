@@ -20,7 +20,7 @@
             </li>
         </ul>
     @endif
-    <form method="POST" action="/admin/find-order">
+    <form method="POST" action="/admin/findOrder">
         {{ csrf_field() }}
         <div class="row">
             <div class="col s6">
@@ -79,7 +79,7 @@
                 @endphp
                 <div class="sector">
                     <h4>
-                        <a href="/admin/find-order?order={{ $order->id }}">Order {{ $order->id }}</a>
+                        <a href="/admin/findOrder?order={{ $order->id }}">Order {{ $order->id }}</a>
                         <span style="font-size: 0.8em" class="{{ $isPriceMatch ? '' : 'red-text' }}" title="Item price sum: {{ $items->sum('price') }}">({{ $order->price }} บาท)</span>
                     </h4>
                     <p>Status: <span class="{{ $statusColor }}">{{ $order->status }}</span></p>

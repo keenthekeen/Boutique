@@ -36,7 +36,7 @@
             </tr>
             @foreach ($orders as $order)
                 <tr>
-                    <td><a href="/admin/find-order?order={{ $order->id }}">{{ $order->id }}</a></td>
+                    <td><a href="/admin/findOrder?order={{ $order->id }}">{{ $order->id }}</a></td>
                     <td>{{ $order->price }}</td>
                     @if (is_array($note = $order->payment_note))
                     <td>{{ $note['method'] }}</td>

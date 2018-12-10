@@ -48,7 +48,7 @@
             @foreach ($list as $id => $items)
                 <div class="sector">
                     <h4>
-                        <a href="/admin/find-order?order={{ $id }}">Order {{ $id }}</a>
+                        <a href="/admin/findOrder?order={{ $id }}">Order {{ $id }}</a>
                         <span style="font-size: 0.8em">({{ $items['total'] }} บาท)</span>
                         <span style="font-size: 0.6em">{{ $items['time'] }}</span>
                     </h4>

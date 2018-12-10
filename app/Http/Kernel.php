@@ -60,5 +60,7 @@ class Kernel extends HttpKernel {
         
         'cache' => \App\Http\Middleware\ETagMiddleware::class,
         'admin' => \App\Http\Middleware\Admin::class,
+
+        'isShopOpen' => \App\Http\Middleware\IsShopOpen::class
     ];
 }
