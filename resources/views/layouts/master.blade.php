@@ -40,9 +40,9 @@
                     @if (Cart::count() > 0)
                         <li><a href="/cart"><i class="material-icons left">shopping_cart</i> ตะกร้า</a></li>
                     @endif
-                    @if (Auth::user()->is_admin)
+                    @can('admin-action')
                         <li><a class="dropdown-trigger" href="#!" data-target="dropdown-admin">Admin<i class="material-icons right">arrow_drop_down</i></a></li>
-                    @endif
+                    @endcan
                     <li><a href="/logout">ออกจากระบบ</a></li>
                 @elseif (env('NORMAL_LOGIN', false))
                     <li><a href="/login">เข้าสู่ระบบ</a></li>
@@ -55,7 +55,7 @@
                     @if (Cart::count() > 0)
                         <li><a href="/cart"><i class="material-icons">shopping_cart</i> ตะกร้า</a></li>
                     @endif
-                    @if (Auth::user()->is_admin)
+                    @can('admin-action')
                         <li>
                             <div class="divider"></div>
                         </li>
@@ -68,14 +68,14 @@
                         <li>
                             <div class="divider"></div>
                         </li>
-                    @endif
+                    @endcan
                     <li><a href="/logout">ออกจากระบบ</a></li>
                 @elseif (env('NORMAL_LOGIN', false))
                     <li><a href="/login">เข้าสู่ระบบ</a></li>
                 @endif
             </ul>
 
-            @if (Auth::check() AND Auth::user()->is_admin)
+            @can('admin-action')
                 <ul id="dropdown-admin" class="dropdown-content">
                     <li><a href="/admin/cashier">Cashier</a></li>
                     <li><a href="/admin/delivery">Pickup</a></li>
@@ -83,7 +83,7 @@
                     <li><a href="/admin/find-order">Find order</a></li>
                     <li><a href="/admin/paycheck">Payment Verify</a></li>
                 </ul>
-            @endif
+            @endcan
 
             <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         </div>

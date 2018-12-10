@@ -25,20 +25,20 @@ Route::get('login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('login/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('logout', 'Auth\LoginController@logout');
 
-if (!env('SHOP_CLOSED', false) AND !(Auth::check() AND Auth::user()->is_admin)) {
+if (!env('SHOP_CLOSED', false) AND Gate::denies('admin-action')) {
     Route::prefix('merchant')->middleware(['auth'])->group(function () {
         // Merchant
         Route::view('register', 'merchant-register');
         Route::get('edit/{product}', function (\App\Product $product) {
-            if ($product->user_id != Auth::id() AND !Auth::user()->is_admin) {
+            if ($product->user_id != Auth::id() AND Gate::denies('admin-action')) {
                 abort(403);
             }
-            
+
             return view('merchant-register', ['product' => $product]);
         });
         Route::post('register', 'MerchantController@registerProduct');
     });
-    
+
     Route::prefix('cart')->middleware(['auth'])->group(function () {
         // Visitor
         Route::view('/', 'cart.cart');
@@ -53,9 +53,11 @@ if (!env('SHOP_CLOSED', false) AND !(Auth::check() AND Auth::user()->is_admin)) 
                 return response()->view('errors.403', [], 403);
             }
         })->name('cart.order');
-        Route::post('pay', 'VisitorController@pay');
-        Route::post('pay/card', 'VisitorController@payByCard');
-        Route::get('pay/{order}/check', 'VisitorController@checkCardPayment')->name('cart.paycheck');
+        if (env('ENABLE_ONLINE_PAY', false)) {
+            Route::post('pay', 'VisitorController@pay');
+            Route::post('pay/card', 'VisitorController@payByCard');
+            Route::get('pay/{order}/check', 'VisitorController@checkCardPayment')->name('cart.paycheck');
+        }
     });
 }
 

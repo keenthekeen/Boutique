@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Auth;
+use Gate;
 use Illuminate\Http\Request;
 use Log;
 
@@ -37,7 +38,7 @@ class MerchantController extends Controller {
         ]);
         if ($request->has('id')) {
             $product = Product::find($request->input('id'));
-            if ($product->user_id != Auth::id() AND !Auth::user()->is_admin) {
+            if ($product->user_id != Auth::id() AND Gate::denies('admin-action')) {
                 abort(403);
             }
         } else {
