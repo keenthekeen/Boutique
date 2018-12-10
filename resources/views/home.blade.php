@@ -48,7 +48,7 @@
 
 @section('main')
     @if (Auth::check())
-        @if (Auth::user()->is_admin)
+        @can('admin-action')
             <div class="sector red lighten-5">
                 <b>Admin Menu</b>&emsp;
                 <a class="waves-effect waves-light btn teal" href="/admin/cashier">Cashier</a>&emsp;
@@ -56,7 +56,7 @@
                 <a class="waves-effect waves-light btn purple" href="/admin/inventory">Inventory</a>&emsp;
                 <a class="waves-effect waves-light btn lime" href="/admin/findOrder">Find order</a>
             </div>
-        @endif
+        @endcan
 
         @if (!env('SHOP_CLOSED', false))
             @if ($myProducts = Auth::user()->products OR config('app.env') != 'production')

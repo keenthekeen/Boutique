@@ -13,8 +13,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#616161"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css" integrity="sha256-M1RAYWK/tnlEgevvMLr8tbW9WpzWS8earbGXlxgiBaI="
-          crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" integrity="sha256-OweaP/Ic6rsV+lysfyS4h+LM6sRwuO3euTYfr6M124g=" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
     <link href="/css/app.css" rel="stylesheet"/>
@@ -40,9 +39,9 @@
                     @if (Cart::count() > 0)
                         <li><a href="/cart"><i class="material-icons left">shopping_cart</i> ตะกร้า</a></li>
                     @endif
-                    @if (Auth::user()->is_admin)
+                    @can('admin-action')
                         <li><a class="dropdown-trigger" href="#!" data-target="dropdown-admin">Admin<i class="material-icons right">arrow_drop_down</i></a></li>
-                    @endif
+                    @endcan
                     <li><a href="/logout">ออกจากระบบ</a></li>
                 @elseif (env('NORMAL_LOGIN', false))
                     <li><a href="/login">เข้าสู่ระบบ</a></li>
@@ -55,7 +54,7 @@
                     @if (Cart::count() > 0)
                         <li><a href="/cart"><i class="material-icons">shopping_cart</i> ตะกร้า</a></li>
                     @endif
-                    @if (Auth::user()->is_admin)
+                    @can('admin-action')
                         <li>
                             <div class="divider"></div>
                         </li>
@@ -68,14 +67,14 @@
                         <li>
                             <div class="divider"></div>
                         </li>
-                    @endif
+                    @endcan
                     <li><a href="/logout">ออกจากระบบ</a></li>
                 @elseif (env('NORMAL_LOGIN', false))
                     <li><a href="/login">เข้าสู่ระบบ</a></li>
                 @endif
             </ul>
 
-            @if (Auth::check() AND Auth::user()->is_admin)
+            @can('admin-action')
                 <ul id="dropdown-admin" class="dropdown-content">
                     <li><a href="/admin/cashier">Cashier</a></li>
                     <li><a href="/admin/delivery">Pickup</a></li>
@@ -83,7 +82,7 @@
                     <li><a href="/admin/findOrder">Find order</a></li>
                     <li><a href="/admin/paycheck">Payment Verify</a></li>
                 </ul>
-            @endif
+            @endcan
 
             <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         </div>
@@ -115,12 +114,12 @@
 @show
 
 @section('script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js" integrity="sha256-Jq79Dv9shjRhvRMzr71WgDr8gbZxm0AYmeJxx5jLdCU="
-            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" integrity="sha256-U/cHDMTIHCeMcvehBv1xQ052bPSbJtbuiw4QA9cTKz0=" crossorigin="anonymous"></script>
     <script>
-        var navElement = document.querySelector('.sidenav');
-        var sideNav = new M.Sidenav(navElement, {});
-        var dropIns = M.Dropdown.init(document.querySelector('.dropdown-trigger'), {});
+        document.addEventListener('DOMContentLoaded', function() {
+            var sideNav = M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
+            var dropIns = M.Dropdown.init(document.querySelector('.dropdown-trigger'), {});
+        });
         @if (session()->has('notify'))
         M.toast({html: '{!! session('notify') !!}'});
         @endif

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Auth;
 use Closure;
+use Gate;
 
 class Admin {
     /**
@@ -16,7 +17,7 @@ class Admin {
     public function handle($request, Closure $next) {
         if (!Auth::check()) {
             return redirect()->guest('/login');
-        } elseif (empty(Auth::user()->is_admin)) {
+        } elseif (Gate::denies('admin-action')) {
             return response()->view('errors.403', [], 403);
         }
         
