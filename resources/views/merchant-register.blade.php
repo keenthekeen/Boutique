@@ -36,10 +36,10 @@
         - สินค้าจะไม่ถูกจำหน่าย หากไม่มีข้อมูลในระบบ<br/>
         - ข้อมูลของสินค้าจะถูกเผยแพร่ผ่านทางเว็บไซต์ เพื่ออำนวยความสะดวกให้ผู้เข้าชมงานสามารถเลือกดูสินค้าได้ล่วงหน้าโดยไม่ต้องรอดูที่หน้างาน ซึ่งมีคิวจำนวนมาก<br/>
         - สำหรับนักเรียนเตรียมอุดมศึกษา ฝากจำหน่ายสินค้าเท่านั้น โดยรายได้จะถูกหักค่าใช้จ่าย ร้อยละ 10<br/>
-        - ห้ามเผยแพร่ URL หรือภาพหน้าจอเว็บไซต์โดยไม่ได้รับอนุญาต<br/>
+        - <span class="red-text">ห้ามเผยแพร่ URL หรือภาพหน้าจอเว็บไซต์โดยไม่ได้รับอนุญาต</span><br/>
         - ควรดูฟอร์มทั้งหมดก่อนว่าต้องกรอกอะไรบ้าง แล้วเตรียมข้อมูลไว้ให้พร้อมก่อนเริ่มกรอก เนื่องจากต้องกรอกให้เสร็จทั้งหมดจึงจะบันทึกข้อมูลได้<br/>
         - ไม่ควรใช้เวลากรอกข้อมูลเกิน 90 นาทีหลังเปิดหน้าเว็บนี้ เนื่องจากอาจถูกออกจากระบบก่อนกดบันทึกข้อมูล<br />
-        - กรอกฟอร์มหนึ่งครั้ง ต่อหนึ่งสินค้า กรณีหนังสือมีเล่มที่ 1, เล่มที่ 2 แยกขายถือว่าสินค้าคนละอย่างกันเพราะเนื้อหาต่างกันทั้งหมด แต่เสื้อมีหลายไซส์, กระเป๋าหลายสีให้ถือเป็นอย่างเดียวกัน
+        - กรอกฟอร์มหนึ่งครั้ง ต่อหนึ่งสินค้า กรณีหนังสือมีเล่มที่ 1, เล่มที่ 2 แยกขายถือว่าสินค้าคนละอย่างกันเพราะเนื้อหาต่างกันทั้งหมด <span class="blue-text">แต่เสื้อมีหลายไซส์, กระเป๋าหลายสีให้ถือเป็นอย่างเดียวกัน</span>
     </p>
     <form action="/merchant/register" method="POST" enctype="multipart/form-data">
         @php
@@ -68,7 +68,7 @@
             <div class="row">
                 <div class="input-field col s12 m6">
                     {!! $product->createInput('owner_detail_1.name', 'ชื่อ-นามสกุล', true) !!}
-                    <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาษาไทย คำนำหน้าติดกับชื่อ</span>
+                    <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาษาไทย; คำนำหน้าติดกับชื่อ เช่น นายเด็กดี ตั้งใจเรียน</span>
                 </div>
                 <div class="input-field col s12 m6">
                     {!! $product->createInput('owner_detail_1.room', 'ห้อง', true, 3) !!}
@@ -79,7 +79,8 @@
                     {!! $product->createInput('owner_detail_1.line', 'LINE ID') !!}
                 </div>
                 <div class="input-field col s6">
-                    {!! $product->createInput('owner_detail_1.phone', 'โทรศัพท์มือถือ ไม่มีขีด', true, 10) !!}
+                    {!! $product->createInput('owner_detail_1.phone', 'โทรศัพท์มือถือ', true, 10) !!}
+                    <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">เริ่มต้นด้วย 0; ไม่มีขีด</span>
                 </div>
             </div>
         </div>
@@ -89,7 +90,7 @@
             <div class="row">
                 <div class="input-field col s12 m6">
                     {!! $product->createInput('owner_detail_2.name', 'ชื่อ-นามสกุล', true) !!}
-                    <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาษาไทย คำนำหน้าติดกับชื่อ</span>
+                    <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาษาไทย; คำนำหน้าติดกับชื่อ เช่น นายเด็กดี ตั้งใจเรียน</span>
                 </div>
                 <div class="input-field col s12 m6">
                     {!! $product->createInput('owner_detail_2.room', 'ห้อง', true, 3) !!}
@@ -100,7 +101,8 @@
                     {!! $product->createInput('owner_detail_2.line', 'LINE ID') !!}
                 </div>
                 <div class="input-field col s6">
-                    {!! $product->createInput('owner_detail_2.phone', 'เบอร์โทรศัพท์มือถือ ไม่มีขีด', true, 10) !!}
+                    {!! $product->createInput('owner_detail_2.phone', 'เบอร์โทรศัพท์มือถือ', true, 10) !!}
+                    <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">เริ่มต้นด้วย 0; ไม่มีขีด</span>
                 </div>
             </div>
         </div>
@@ -144,7 +146,7 @@
             <div class="row">
                 <div class="input-field col s12 m6">
                     {!! $product->createInput('name', 'ชื่อสินค้า', true) !!}
-                    <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ใส่เฉพาะชื่อสินค้าเท่านั้น งดใส่ชื่อประเภทสินค้าหรือชื่อผู้จัดทำ เช่นคำว่า "หนังสือ", "สมุด", "by DMC48", ฯลฯ</span>
+                    <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ใส่เฉพาะชื่อสินค้าเท่านั้น; งดใส่ชื่อประเภทสินค้าทุกประเภทหรือชื่อผู้จัดทำ เช่นคำว่า "หนังสือ" หรือ "สมุด" หรือ "by BKK24"</span>
                 </div>
                 <div class="input-field col s12 m6">
                     {!! $product->createInput('price', 'ราคา (บาท)', true, 1000, 'number') !!}
@@ -205,6 +207,7 @@
                 - กรณีเสื้อผ้าหรือกระเป๋ามีหลายสีหรือหลายขนาด ให้แจ้งขนาด/สีที่มี พร้อมราคา<br/>
                 - กรณีจัดโปรโมชั่น อธิบายโปรโมชั่น ได้แก่ ซื้ออะไรกับอะไร กี่ชิ้น ลดราคาเท่าไหร่<u>ต่อชิ้น</u> (เนื่องจากระบบต้องแบ่งรายได้ตามสินค้า) เช่น ซื้อ A คู่กับ B แล้ว A ลด 10 บาท และ B ลด 15
                 บาท โดยจะต้องใส่ข้อมูลให้<u>ตรงกันทุกสินค้าที่ร่วมรายการ</u>
+                - หากไม่มี ให้เว้นว่าง
             </p>
             <div class="row">
                 <div class="input-field col s12">
@@ -224,7 +227,7 @@
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
-                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพตัวสินค้า พื้นหลังขาวหรือใส, ไฟล์ JPG ความละเอียด 1-10 Megapixel ขนาดไม่เกิน 1.5 MB</span>
+                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพตัวสินค้า; <span class="blue-text">พื้นหลังขาวหรือใส</span>; ไฟล์ JPG/JPEG ความละเอียดสูง (1-10 Megapixel) ขนาดไม่เกิน 1.5 MB; ควรมีอัตราส่วนความกว้างต่อความยาว เป็น 1:1 (สี่เหลี่ยมจตุรัส) <span class="red-text">อัตราส่วนอื่นอาจทำให้หน้าเว็บบิดเบี้ยวหรือไม่สมบูรณ์</span></span>
                     </div>
                 </div>
             </div>
@@ -253,7 +256,7 @@
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
-                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพโปรโมตสินค้า อาจแสดงสรรพคุณ โปรโมชั่น หรือลักษณะสินค้าก็ได้ (ไม่จำเป็น) ขนาดไม่เกิน 4 MB</span>
+                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพโปรโมตสินค้า; อาจแสดงสรรพคุณ โปรโมชั่น หรือลักษณะสินค้าก็ได้ (ไม่จำเป็น); ไฟล์ JPG/JPEG ความละเอียดสูง (1-10 Megapixel) ขนาดไม่เกิน 4 MB; ควรมีอัตราส่วนความกว้างต่อความยาว เป็น 4:3 <span class="red-text">อัตราส่วนอื่นอาจทำให้หน้าเว็บบิดเบี้ยวหรือไม่สมบูรณ์</span></span>
                     </div>
                 </div>
             </div>
