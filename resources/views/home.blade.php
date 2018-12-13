@@ -59,7 +59,7 @@
         @endcan
 
         @if (!env('SHOP_CLOSED', false))
-            @if ($myProducts = Auth::user()->products OR config('app.env') != 'production')
+            @if (($myProducts = Auth::user()->products)->isNotEmpty())
                 <div class="sector purple lighten-5">
                     <b>Merchant Menu</b>&emsp;
                     @if (config('app.env') == 'production')
