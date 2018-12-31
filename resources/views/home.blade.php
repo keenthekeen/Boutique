@@ -47,6 +47,14 @@
 @endsection
 
 @section('main')
+
+    @if(Session::has('message'))
+        <div class="z-depth-1 card-panel {{ Session::get('message_text_color') }}-text {{ Session::get('message_box_color') }}" style="max-width:1280px; margin: auto auto auto;">
+            {{ Session::get('message') }}
+            <br>
+        </div>
+    @endif
+
     @if (Auth::check())
         @can('admin-action')
             <div class="sector red lighten-5">

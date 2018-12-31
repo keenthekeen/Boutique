@@ -16,7 +16,10 @@ class MyAuth {
      */
     public function handle($request, Closure $next) {
         if (!Auth::check()) {
-            return redirect()->guest('/login');
+            $request->session()->flash('message', 'คุณต้องเข้าสู่ระบบก่อน');
+            $request->session()->flash('message_text_color', 'white');
+            $request->session()->flash('message_box_color', 'red');
+            return redirect()->guest('/');
         }
         
         return $next($request);
