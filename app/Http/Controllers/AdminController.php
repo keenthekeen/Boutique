@@ -158,6 +158,6 @@ class AdminController extends Controller {
         $order->status = 'delivered';
         $order->save();
         
-        return redirect('/admin/delivery');
+        return back()->with('notify', 'Delivered order '.$order->id);
     }
 }

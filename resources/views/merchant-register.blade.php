@@ -227,7 +227,7 @@
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
-                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพตัวสินค้า; <span class="blue-text">พื้นหลังขาวหรือใส</span>; ไฟล์ JPG/JPEG ความละเอียดสูง (1-10 Megapixel) ขนาดไม่เกิน 1.5 MB; ควรมีอัตราส่วนความยาวต่อความกว้างเป็น 1:1 (สี่เหลี่ยมจตุรัส) <span class="red-text">อัตราส่วนอื่นอาจทำให้หน้าเว็บบิดเบี้ยวหรือไม่สมบูรณ์</span></span>
+                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพตัวสินค้า; <span class="blue-text">พื้นหลังขาวหรือใส</span>; ไฟล์ JPG/JPEG ความละเอียดสูง (1-3 Megapixel) ขนาดไม่เกิน 1.5 MB; ควรมีอัตราส่วนความยาวต่อความกว้างเป็น 1:1 (สี่เหลี่ยมจตุรัส) <span class="red-text">อัตราส่วนอื่นอาจทำให้หน้าเว็บบิดเบี้ยวหรือไม่สมบูรณ์</span></span>
                     </div>
                 </div>
             </div>
@@ -256,7 +256,7 @@
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
-                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพโปรโมตสินค้า; อาจแสดงสรรพคุณ โปรโมชั่น หรือลักษณะสินค้าก็ได้ (ไม่จำเป็น); ไฟล์ JPG/JPEG ความละเอียดสูง (1-10 Megapixel) ขนาดไม่เกิน 4 MB; ควรมีอัตราส่วนความยาวต่อความกว้างเป็น 4:3 (สี่เหลี่ยมผืนผ้านอน) <span class="red-text">อัตราส่วนอื่นอาจทำให้หน้าเว็บบิดเบี้ยวหรือไม่สมบูรณ์</span></span>
+                        <span class="helper-text" data-error="ข้อมูลผิดรูปแบบ">ภาพโปรโมตสินค้า; อาจแสดงสรรพคุณ โปรโมชั่น หรือลักษณะสินค้าก็ได้ (ไม่จำเป็น); ไฟล์ JPG/JPEG ความละเอียดสูง (1-3 Megapixel) ขนาดไม่เกิน 4 MB; ควรมีอัตราส่วนความยาวต่อความกว้างเป็น 4:3 (สี่เหลี่ยมผืนผ้านอน) <span class="red-text">อัตราส่วนอื่นอาจทำให้หน้าเว็บบิดเบี้ยวหรือไม่สมบูรณ์</span></span>
                     </div>
                 </div>
             </div>
@@ -300,6 +300,11 @@
                     $("#sectorBook").slideUp();
                 }
             }).change();
+
+            // Search & replace URL field
+            $("#iD5126").keyup(function () {
+                $(this).val($(this).val().replace("m.facebook.com", "facebook.com"));
+            });
         });
     </script>
 @endsection

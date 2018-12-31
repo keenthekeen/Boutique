@@ -43,7 +43,7 @@
 
     @if (count($list) > 0)
         <a href="#footer" class="btn blue waves-effect fullwidth">ลงไปล่างสุด</a><br/>
-        <form method="POST">
+        <form method="POST" action="/admin/delivery">
             {{ csrf_field() }}
             @foreach ($list as $id => $items)
                 <div class="sector">

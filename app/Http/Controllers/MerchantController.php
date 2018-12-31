@@ -18,7 +18,7 @@ class MerchantController extends Controller {
         // User making request to this controller must be authenticated.
         $this->middleware('auth');
     }
-    
+
     public function registerProduct(Request $request) {
         $this->validate($request, [
             'name' => 'required|max:50',
@@ -36,6 +36,8 @@ class MerchantController extends Controller {
             'owner_detail_2' => 'required|array',
             'payment' => 'required|array'
         ]);
+
+        // Get product object by retrieving existing one or create a new one
         if ($request->has('id')) {
             $product = Product::find($request->input('id'));
             if ($product->user_id != Auth::id() AND Gate::denies('admin-action')) {
@@ -46,18 +48,24 @@ class MerchantController extends Controller {
             $product->user_id = Auth::user()->id;
             $product->status = 'PENDING';
         }
-        $product->fill(($request->input('type') == 'หนังสือ') ? $request->all() : $request->except(['book_type', 'book_subject']))->save();
+
+        // Fill data and save
+        $product->fill(($request->input('type') == 'หนังสือ') ? $request->all() : $request->except(['book_type', 'book_subject']));
+        $product->save();
+
+        // Save uploaded photo
         if (!$request->hasFile('picture') AND empty($product->picture)) {
             return back()->withErrors('ต้องแนบรูปภาพสินค้า');
         }
         foreach (['picture', 'poster', 'book_example'] as $thing) {
             if ($request->hasFile($thing)) {
-                $product->$thing = $request->file($thing)->storePubliclyAs('product', $product->id . '-' . $thing.'.'.$request->file($thing)->extension(), 'public');
+                $product->$thing = $request->file($thing)->storePubliclyAs('product', $product->id . '-' . $thing . '.' . $request->file($thing)->extension(), 'public');
             }
         }
         $product->save();
-        Log::info('User '.Auth::id().' has edited product '.$product->id.': '.$product->name);
-        
-        return redirect('/product/'.$product->id);
+
+        Log::info('User ' . Auth::id() . ' has edited product ' . $product->id . ': ' . $product->name);
+
+        return redirect('/product/' . $product->id);
     }
 }
