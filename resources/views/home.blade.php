@@ -53,12 +53,6 @@
             {{ Session::get('message') }}
             <br>
         </div>
-
-        @php
-            Session::remove('message');
-            Session::remove('message_box_color');
-            Session::remove('message_text_color');
-        @endphp
     @endif
 
     @if (Auth::check())
