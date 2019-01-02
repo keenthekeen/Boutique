@@ -39,7 +39,7 @@
                         @foreach(['หนังสือ','กระเป๋า','สมุด','ริสแบนด์','เสื้อ','แฟ้ม','พวงกุญแจ'] as $type)
                             <optgroup label="{{ $type }}">
                                 @foreach(\App\Product::where('type', $type)->get() as $product)
-                                    <option value="{{ $product->id }}">{{ $product->name }} ({{ $product->authur }})</option>
+                                    <option value="{{ $product->id }}">{{ $product->name }} ({{ $product->author }})</option>
                                 @endforeach
                             </optgroup>
                         @endforeach
