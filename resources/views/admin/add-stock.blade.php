@@ -51,7 +51,7 @@
                     <label for="name">ชื่อแบบ</label>
                 </div>
                 <div class="input-field col s12">
-                    <input id="amount" type="number" class="validate" name="number">
+                    <input id="amount" type="number" class="validate" name="amount">
                     <label for="amount">จำนวน</label>
                 </div>
                 <div class="input-field col s12">
