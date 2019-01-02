@@ -76,8 +76,8 @@
                 <a class="waves-effect waves-light btn teal" href="/admin/cashier">Cashier</a>&emsp;
                 <a class="waves-effect waves-light btn orange" href="/admin/delivery">Pickup</a>&emsp;
                 <a class="waves-effect waves-light btn purple" href="/admin/inventory">Inventory</a>&emsp;
-                <a class="waves-effect waves-light btn lime" href="/admin/findOrder">Find order</a>
-                <a class="waves-effect waves-light btn brown" href="/admin/addStock">Add stock</a>
+                <a class="waves-effect waves-light btn lime" href="/admin/findOrder">Find Order</a>
+                <a class="waves-effect waves-light btn brown" href="/admin/addStock">Add Stock</a>
             </div>
         @endcan
 

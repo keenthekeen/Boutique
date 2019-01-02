@@ -62,8 +62,8 @@
                         <li><a href="/admin/cashier">Cashier</a></li>
                         <li><a href="/admin/delivery">Pickup</a></li>
                         <li><a href="/admin/inventory">Inventory</a></li>
-                        <li><a href="/admin/findOrder">Find order</a></li>
-                        <li><a href="/admin/addStock">Add stock</a></li>
+                        <li><a href="/admin/findOrder">Find Order</a></li>
+                        <li><a href="/admin/addStock">Add Stock</a></li>
                         <li><a href="/admin/paycheck">Payment Verify</a></li>
                         <li>
                             <div class="divider"></div>
@@ -80,7 +80,8 @@
                     <li><a href="/admin/cashier">Cashier</a></li>
                     <li><a href="/admin/delivery">Pickup</a></li>
                     <li><a href="/admin/inventory">Inventory</a></li>
-                    <li><a href="/admin/findOrder">Find order</a></li>
+                    <li><a href="/admin/findOrder">Find Order</a></li>
+                    <li><a href="/admin/addStock">Add Stock</a></li>
                     <li><a href="/admin/paycheck">Payment Verify</a></li>
                 </ul>
             @endcan
