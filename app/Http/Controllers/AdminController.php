@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\OrderItem;
 use App\Product;
+use App\ProductItem;
 use Auth;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\CartItem;
@@ -157,7 +158,38 @@ class AdminController extends Controller {
         $order = Order::findOrFail($request->input('order'));
         $order->status = 'delivered';
         $order->save();
-        
+
         return back()->with('notify', 'Delivered order '.$order->id);
+    }
+
+    public function addStock(Request $request) {
+        $this->validate($request, [
+            'id' => 'required|numeric',
+            'name' => 'required',
+            'amount' => 'required|numeric',
+            'price' => 'required|numeric'
+        ]);
+
+
+        $productItem = ProductItem::where('product_id', $request->get('id'))
+            ->where('name', $request->get('name'))->first();
+
+        if (is_null($productItem)) {
+            $productItem = new ProductItem();
+            $productItem->product_id = $request->get('id');
+            $productItem->name = $request->get('name');
+            $productItem->amount = $request->get('amount');
+            $productItem->price = $request->get('price');
+        }
+        else{
+            $productItem->price = $request->get('price');
+            $productItem->amount += $request->get('amount');
+        }
+
+        $productItem->save();
+
+        $request->session()->flash('succeed', true);
+
+        return back();
     }
 }

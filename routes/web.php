@@ -43,6 +43,10 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin'], fu
     Route::any('findOrder', function () {
         return view('admin.find-order');
     });
+    Route::get('addStock', function(){
+        return view('admin.add-stock');
+    });
+    Route::post('addStock', 'AdminController@addStock');
     Route::view('paycheck', 'admin.paycheck');
 });
 
