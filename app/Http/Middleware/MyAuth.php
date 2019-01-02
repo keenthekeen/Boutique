@@ -21,7 +21,7 @@ class MyAuth {
             $request->session()->flash('message_box_color', 'red');
 
             if ($request->is('merchant/register')){
-                $request->session()->flash('is_merchant', true);
+                $request->session()->put('is_merchant', true);
             }
 
             return redirect('/');

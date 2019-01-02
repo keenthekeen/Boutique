@@ -65,6 +65,9 @@
                     <a href="/merchant/register" class="btn waves-effect waves-light orange white-text">ไปหน้าลงทะเบียนข้อมูลสินค้า</a>
                 </div>
             </div>
+            @php
+                Session::remove('is_merchant');
+            @endphp
         @endif
 
         @can('admin-action')
