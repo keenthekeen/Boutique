@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>Add stock - TUOPH Shop</title>
+    <title>Add Stock - TUOPH Shop</title>
 @endsection
 
 @section('beforemain')

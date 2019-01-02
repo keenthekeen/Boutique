@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>Find order - TUOPH Shop</title>
+    <title>Find Order - TUOPH Shop</title>
 @endsection
 
 @section('beforemain')
