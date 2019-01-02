@@ -19,6 +19,11 @@ class MyAuth {
             $request->session()->flash('message', 'คุณต้องเข้าสู่ระบบก่อน');
             $request->session()->flash('message_text_color', 'white');
             $request->session()->flash('message_box_color', 'red');
+
+            if ($request->is('merchant/register')){
+                $request->session()->flash('is_merchant', true);
+            }
+
             return redirect('/');
         }
         

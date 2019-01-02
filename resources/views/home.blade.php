@@ -55,6 +55,16 @@
         </div>
     @endif
 
+    @if(Session::has('is_merchant') && Session::get('is_merchant', false))
+        <div class="z-depth-1 card-panel white-text grey darken-3" style="max-width:1280px; margin: auto auto auto;">
+            ระบบกำลังเปิดให้ลงทะเบียนข้อมูลสินค้า
+            <br>
+            <div style="text-align: right !important;">
+                <a href="/merchant/register" class="btn waves-effect waves-light orange white-text">ไปหน้าลงทะเบียนข้อมูลสินค้า</a>
+            </div>
+        </div>
+    @endif
+
     @if (Auth::check())
         @can('admin-action')
             <div class="sector red lighten-5">
