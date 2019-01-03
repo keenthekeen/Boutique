@@ -54,7 +54,7 @@ Route::group(['middleware' => ['web', 'auth', 'isShopOpen'], 'prefix' => 'mercha
 
     // Merchant
     Route::get('register', function(){
-        if (env('ENABLE_MERCHANT_REGISTER')){
+        if (env('ENABLE_MERCHANT_REGISTER', false)){
             return view('merchant-register');
         }
 

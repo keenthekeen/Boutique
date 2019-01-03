@@ -15,7 +15,7 @@ class IsShopOpen {
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = NULL) {
-        if (!env('SHOP_CLOSED', false) AND !(Auth::check() AND Auth::user()->is_admin)) {
+        if (env('SHOP_CLOSED', false) AND !(Auth::check() AND Auth::user()->is_admin)) {
             return redirect('/');
         }
         
