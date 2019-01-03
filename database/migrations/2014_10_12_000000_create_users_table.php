@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('avatar', 200);
             $table->boolean('is_admin')->default(false);
+            $table->boolean('is_merchant')->default(false);
             $table->timestamps();
             $table->primary('id');
         });

@@ -57,7 +57,7 @@
 
     @if (Auth::check())
 
-        @if(Session::has('is_merchant') && Session::get('is_merchant', false))
+        @if((Session::has('is_merchant') or Auth::user()->is_merchant) and env('ENABLE_MERCHANT_REGISTER'))
             <div class="z-depth-1 card-panel white-text grey darken-3" style="max-width:1280px; margin: auto auto auto;">
                 ระบบกำลังเปิดให้ลงทะเบียนข้อมูลสินค้า
                 <br>
@@ -65,9 +65,6 @@
                     <a href="/merchant/register" class="btn waves-effect waves-light orange white-text">ไปหน้าลงทะเบียนข้อมูลสินค้า</a>
                 </div>
             </div>
-            @php
-                Session::remove('is_merchant');
-            @endphp
         @endif
 
         @can('admin-action')

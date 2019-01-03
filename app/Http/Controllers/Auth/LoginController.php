@@ -81,6 +81,14 @@ class LoginController extends Controller {
             ]);
         }
         Auth::login($user);
+
+        if ($request->session()->has('is_merchant')){
+            $request->session()->remove('is_merchant');
+
+            $user->is_merchant = true;
+            $user->save();
+        }
+
         Log::info('User '.$socialUser->getId(). ' ('.$socialUser->getName().') logged in from '.$request->ip());
         
         return redirect()->intended();

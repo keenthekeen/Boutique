@@ -53,7 +53,17 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin'], fu
 Route::group(['middleware' => ['web', 'auth', 'isShopOpen'], 'prefix' => 'merchant'], function () {
 
     // Merchant
-    Route::view('register', 'merchant-register');
+    Route::get('register', function(){
+        if (env('ENABLE_MERCHANT_REGISTER')){
+            return view('merchant-register');
+        }
+
+        session()->flash('message', 'ระบบปิดการลงข้อมูลสินค้าแล้ว');
+        session()->flash('message_text_color', 'white');
+        session()->flash('message_box_color', 'red');
+
+        return redirect('/');
+    });
     Route::get('edit/{product}', function (\App\Product $product) {
         if ($product->user_id != Auth::id() AND !Auth::user()->is_admin) {
             abort(403);

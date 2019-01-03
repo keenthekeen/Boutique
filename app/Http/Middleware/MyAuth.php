@@ -15,6 +15,7 @@ class MyAuth {
      * @return mixed
      */
     public function handle($request, Closure $next) {
+
         if (!Auth::check()) {
             $request->session()->flash('message', 'คุณต้องเข้าสู่ระบบก่อน');
             $request->session()->flash('message_text_color', 'white');
@@ -25,6 +26,9 @@ class MyAuth {
             }
 
             return redirect('/');
+        } elseif ($request->is('merchant/register')){
+            Auth::user()->is_merchant = true;
+            Auth::user()->save();
         }
         
         return $next($request);
