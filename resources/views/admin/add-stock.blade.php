@@ -35,7 +35,7 @@
             <h4>ข้อมูลสินค้า</h4>
             <div class="row">
                 <div class="input-field col s12">
-                    <select name="id">
+                    <select name="id" id="id">
                         @foreach(['หนังสือ','กระเป๋า','สมุด','ริสแบนด์','เสื้อ','แฟ้ม','พวงกุญแจ'] as $type)
                             <optgroup label="{{ $type }}">
                                 @foreach(\App\Product::where('type', $type)->get() as $product)
@@ -72,6 +72,10 @@
     <script>
         $(document).ready(function(){
             $('select').formSelect();
+        });
+
+        $('#id').on('change', function() {
+            $('#name').attr('value', $(this).val());
         });
     </script>
 @endsection
