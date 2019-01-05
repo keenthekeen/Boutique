@@ -75,7 +75,7 @@
         });
 
         $('#id').on('change', function() {
-            $('#name').attr('value', $(this).val());
+            $('#name').attr('value', $('#id option:selected').text());
         });
     </script>
 @endsection
