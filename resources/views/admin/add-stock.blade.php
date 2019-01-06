@@ -39,7 +39,7 @@
                         @foreach(['หนังสือ','กระเป๋า','สมุด','ริสแบนด์','เสื้อ','แฟ้ม','พวงกุญแจ'] as $type)
                             <optgroup label="{{ $type }}">
                                 @foreach(\App\Product::where('type', $type)->get() as $product)
-                                    <option value="{{ $product->id }}">{{ $product->name }} ({{ $product->author }})</option>
+                                    <option value="{{ $product->id }}" templateName="{{ $type . ' ' . $product->name }}">{{ $product->name }} ({{ $product->author }})</option>
                                 @endforeach
                             </optgroup>
                         @endforeach
@@ -75,7 +75,7 @@
         });
 
         $('#id').on('change', function() {
-            $('#name').attr('value', $('#id option:selected').text());
+            $('#name').attr('value', $('#id option:selected').attr('templateName'));
         });
     </script>
 @endsection
