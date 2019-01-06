@@ -71,7 +71,7 @@
         function addStock(){
             $.ajax({
                 type: "POST",
-                url: url('/admin/addStock'),
+                url: '/admin/addStock',
                 data: jQuery.param({
                     id: $('#id').val(),
                     name: $('#name').val(),
