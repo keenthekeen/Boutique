@@ -76,7 +76,8 @@
                     id: $('#id').val(),
                     name: $('#name').val(),
                     amount: $('#amount').val(),
-                    price: $('#price').val()
+                    price: $('#price').val(),
+                    _token: '{{ csrf_token() }}'
                 }),
                 success: function(data) {
                     if (data.code == 200){
