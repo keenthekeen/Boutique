@@ -21,49 +21,38 @@
         </div>
     @endif
 
-    @if (count($errors) > 0)
-        <ul class="collection white-text">
-            <li class="collection-item red darken-1">เกิดข้อผิดพลาดในข้อมูล
-                ({{ implode(', ', $errors->all()) }})
-            </li>
-        </ul>
-    @endif
-
-    <form method="POST" action="/admin/addStock">
-        {{ csrf_field() }}
-        <div class="sector">
-            <h4>ข้อมูลสินค้า</h4>
-            <div class="row">
-                <div class="input-field col s12">
-                    <select name="id" id="id">
-                        @foreach(['หนังสือ','กระเป๋า','สมุด','ริสแบนด์','เสื้อ','แฟ้ม','พวงกุญแจ'] as $type)
-                            <optgroup label="{{ $type }}">
-                                @foreach(\App\Product::where('type', $type)->get() as $product)
-                                    <option value="{{ $product->id }}" templateName="{{ $type . ' ' . $product->name }}" price="{{ $product->price }}">{{ $product->name }} ({{ $product->author }})</option>
-                                @endforeach
-                            </optgroup>
-                        @endforeach
-                    </select>
-                    <label>สินค้า</label>
-                </div>
-                <div class="input-field col s12">
-                    <input id="name" type="text" class="validate" name="name">
-                    <label for="name">ชื่อแบบ</label>
-                </div>
-                <div class="input-field col s12">
-                    <input id="amount" type="number" class="validate" name="amount">
-                    <label for="amount">จำนวน</label>
-                </div>
-                <div class="input-field col s12">
-                    <input id="price" type="number" class="validate" name="price">
-                    <label for="price">ราคา</label>
-                </div>
-                <button class="btn waves-effect waves-light fullwidth blue" type="submit" id="btn-submit">เพิ่ม
-                    <i class="material-icons left">add</i>
-                </button>
+    <div class="sector">
+        <h4>ข้อมูลสินค้า</h4>
+        <div class="row">
+            <div class="input-field col s12">
+                <select name="id" id="id">
+                    @foreach(['หนังสือ','กระเป๋า','สมุด','ริสแบนด์','เสื้อ','แฟ้ม','พวงกุญแจ'] as $type)
+                        <optgroup label="{{ $type }}">
+                            @foreach(\App\Product::where('type', $type)->get() as $product)
+                                <option value="{{ $product->id }}" templateName="{{ $type . ' ' . $product->name }}" price="{{ $product->price }}">{{ $product->name }} ({{ $product->author }})</option>
+                            @endforeach
+                        </optgroup>
+                    @endforeach
+                </select>
+                <label>สินค้า</label>
             </div>
+            <div class="input-field col s12">
+                <input id="name" type="text" class="validate" name="name">
+                <label for="name">ชื่อแบบ</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="amount" type="number" class="validate" name="amount">
+                <label for="amount">จำนวน</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="price" type="number" class="validate" name="price">
+                <label for="price">ราคา</label>
+            </div>
+            <button class="btn waves-effect waves-light fullwidth blue" onclick="addStock();" id="btn-submit">เพิ่ม
+                <i class="material-icons left">add</i>
+            </button>
         </div>
-    </form>
+    </div>
 @endsection
 
 @section('script')
@@ -78,5 +67,30 @@
             $('#name').attr('value', $('#id option:selected').attr('templateName'));
             $('#price').attr('value', $('#id option:selected').attr('price'));
         });
+
+        function addStock(){
+            $.ajax({
+                type: "POST",
+                url: url('/admin/addStock'),
+                data: jQuery.param({
+                    id: $('#id').val(),
+                    name: $('#name').val(),
+                    amount: $('#amount').val(),
+                    price: $('#price').val()
+                }),
+                success: function(data) {
+                    if (data.code == 200){
+                        M.toast({html: 'สำเร็จ!'});
+                    }
+                    else{
+                        M.toast({html: 'มีข้อผิดพลาดเกิดขึ้น'});
+                    }
+                },
+                error: function(error){
+                    M.toast({html: 'มีข้อผิดพลาดเกิดขึ้น'});
+                },
+                dataType: 'json'
+            });
+        }
     </script>
 @endsection

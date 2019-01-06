@@ -10,6 +10,7 @@ use Auth;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
+use Validator;
 
 class AdminController extends Controller {
     public function getProductList() {
@@ -163,13 +164,17 @@ class AdminController extends Controller {
     }
 
     public function addStock(Request $request) {
-        $this->validate($request, [
+
+        $validator = Validator::make($request->all(), [
             'id' => 'required|numeric',
             'name' => 'required',
             'amount' => 'required|numeric',
             'price' => 'required|numeric'
         ]);
 
+        if ($validator->fails()) {
+            return response()->json(['code' => 100]);
+        }
 
         $productItem = ProductItem::where('product_id', $request->get('id'))
             ->where('name', $request->get('name'))->first();
@@ -188,8 +193,6 @@ class AdminController extends Controller {
 
         $productItem->save();
 
-        $request->session()->flash('succeed', true);
-
-        return back();
+        return response()->json(['code' => 200]);
     }
 }
