@@ -54,25 +54,12 @@
         <div class="sector red lighten-4">
             สินค้าหมด โปรดติดต่อจุดจำหน่ายสินค้า
         </div>
-    @elseif (!Auth::check())
-        @if (!env('SHOP_CLOSED') AND env('NORMAL_LOGIN'))
-            <div class="sector amber lighten-5">
-                กรุณา<a href="/login">เข้าสู่ระบบ</a>เพื่อสั่งซื้อ
-            </div>
-        @endif
     @elseif ($items = $product->items AND $items->count() > 0)
         <div class="sector blue lighten-5">
             @foreach ($items as $item)
                 <div class="row">
-                    <div class="col s12 m8 l9">
-                        ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท
-                        @can('admin-action')
-                            <span class="purple-text"
-                                  title="รับมา {{ $item->amount }} / เหลือ {{ $item->amount - ($sold = $item->orderItems()->sum('quantity')) }}"> ขายไป {{ $sold }}</span>
-                        @endcan
-                    </div>
-                    <div class="col s12 m4 l3">
-                        <a class="waves-effect waves-light btn fullwidth disabled" href="/cart/add/{{ $item->id }}"><i class="material-icons left">add_shopping_cart</i>เพิ่มในตะกร้า</a>
+                    <div class="col s12">
+                        ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท เหลือ {{ $item->amount - ($sold = $item->orderItems()->sum('quantity')) }} {{ $item->getUnitName() }}
                     </div>
                 </div>
             @endforeach

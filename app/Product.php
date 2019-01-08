@@ -190,4 +190,17 @@ class Product extends Model {
         
         return parent::getAttribute($key);
     }
+
+    public function getUnitName() {
+        switch($this->type){
+            case 'หนังสือ': return 'เล่ม';
+            case 'กระเป๋า': return 'ใบ';
+            case 'สมุด': return 'เล่ม';
+            case 'ริสแบนด์': return 'อัน';
+            case 'เสื้อ': return 'ตัว';
+            case 'แฟ้ม': return 'อัน';
+            case 'พวงกุญแจ': return 'พวง';
+            default: return 'อัน';
+        }
+    }
 }
