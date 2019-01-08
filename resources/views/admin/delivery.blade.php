@@ -51,11 +51,13 @@
                         <a href="/admin/findOrder?order={{ $id }}">Order {{ $id }}</a>
                         <span style="font-size: 0.8em">({{ $items['total'] }} บาท)</span>
                         <span style="font-size: 0.6em">{{ $items['time'] }}</span>
+                        <span style="font-size: 0.4em">{{ json_decode($items['payment_note'])['method'] }}</span>
                     </h4>
                     @foreach ($items['items'] as $item)
                         - {{ $item['id'] }}: <b>{{ $item['name'] }}</b> x {{ $item['quantity'] }} <span class="{{ $items['isPriceMatch'] ? 'grey-text' : 'red-text' }}">({{ $item['price'] }}
                             บาท)</span><br/>
                     @endforeach
+                    <br/>
                     <button type="submit" name="order" value="{{ $id }}" class="btn orange waves-effect fullwidth"
                             onclick="return confirm('แน่ใจหรือที่จะทำเครื่องหมายการสั่งซื้อ {{ $id }} ว่าส่งแล้ว?')">Mark
                         as delivered
