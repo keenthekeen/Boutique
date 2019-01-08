@@ -195,7 +195,7 @@
                             "ลดราคาไป " + data.discount + " บาท<br/>" +
                             "<h4>ราคารวม " + data.total + " บาท</h4>" +
                             "<br/>" +
-                            "<img src='https://promptpay.io/{{ env('PROMPTPAY_NUMBER', '0819010182') }}/' + data.total + '.png'/>" +
+                            "<img src='https://promptpay.io/{{ env('PROMPTPAY_NUMBER', '0819010182') }}/" + data.total + ".png'/>" +
                             "<br/>" +
                             "<br/>" +
                             "<a class=\"btn waves-effect green fullwidth\" onclick=\"processCart(true, 'cash')\">PROCEED WITH CASH</a>" +
