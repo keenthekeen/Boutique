@@ -59,7 +59,7 @@
             @foreach ($items as $item)
                 <div class="row">
                     <div class="col s12">
-                        ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท เหลือ {{ $item->amount - ($sold = $item->orderItems()->sum('quantity')) }} {{ $item->getUnitName() }}
+                        ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท เหลือ {{ $item->amount - ($sold = $item->orderItems()->sum('quantity')) }} {{ $item->product->getUnitName() }}
                     </div>
                 </div>
             @endforeach
