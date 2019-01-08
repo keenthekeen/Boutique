@@ -57,8 +57,11 @@ class AdminController extends Controller {
                     }
                 }
             }
+
+            $method = $request->get('method', 'cash');
+
             $order = new Order();
-            $order->type = 'cash';
+            $order->type = $method;
             $order->status = 'paid';
             $order->price = $total;
             $order->promotion = $appliedPromotions->map(function ($i) {
@@ -67,7 +70,7 @@ class AdminController extends Controller {
                 return $i;
             });
             $order->payment_note = [
-                'method' => 'CASH',
+                'method' => $method == 'cash' ? 'CASH' : $method == 'promptpay' ? 'PROMPTPAY' : 'UNKNOWN',
                 'customer_type' => 'walkin',
                 'cashier' => Auth::id(),
                 'paid_time' => date(DATE_ISO8601),

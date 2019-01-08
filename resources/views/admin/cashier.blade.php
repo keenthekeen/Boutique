@@ -178,19 +178,32 @@
             renderTable();
         }
 
-        function processCart(proceed) {
+        function processCart(proceed, method = 'cash') {
             if (proceed && !confirm('แน่ใจหรือ?')) {
                 return;
             }
             $.ajax({
                 type: "POST",
                 url: '/admin/cashier',
-                data: {cart: cart, _token: "{{ csrf_token() }}", proceed: proceed, checker: checker},
+                data: {cart: cart, _token: "{{ csrf_token() }}", proceed: proceed, checker: checker, method: method},
                 success: function (data) {
                     if (data.status == 'checked') {
-                        $("#summary").html("<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว " + data.total + ' บาท</h4>รหัสคำสั่งซื้อ <a target="_blank" href="/admin/findOrder?order=' + data.order_id + '">' + data.order_id + "</a> เมื่อ " + data.order_time + '<br /><a class="btn waves-effect pink lighten-3" onclick="clearCart()"><i class="material-icons">clear</i> Clear</a>');
+                        $("#summary").html(
+                            "<h4>บันทึกคำสั่งซื้อและรับเงินแล้ว " + data.total + ' บาท</h4>รหัสคำสั่งซื้อ <a target="_blank" href="/admin/findOrder?order=' + data.order_id + '">' + data.order_id + "</a> เมื่อ " + data.order_time + '<br /><a class="btn waves-effect pink lighten-3" onclick="clearCart()"><i class="material-icons">clear</i> Clear</a>');
                     } else {
-                        $("#summary").html("ลดราคาไป " + data.discount + " บาท<br /><h4>ราคารวม " + data.total + " บาท</h4><br /><a class=\"btn waves-effect green fullwidth\" onclick=\"processCart(true)\">PROCEED</a><br/><br/>");
+                        $("#summary").html(
+                            "ลดราคาไป " + data.discount + " บาท<br/>" +
+                            "<h4>ราคารวม " + data.total + " บาท</h4>" +
+                            "<br/>" +
+                            "<img src='https://promptpay.io/{{ env('PROMPTPAY_NUMBER', '0819010182') }}/' + data.total + '.png'/>" +
+                            "<br/>" +
+                            "<br/>" +
+                            "<a class=\"btn waves-effect green fullwidth\" onclick=\"processCart(true, 'cash')\">PROCEED WITH CASH</a>" +
+                            "<br/>" +
+                            "<br/>" +
+                            "<a class=\"btn waves-effect blue fullwidth\" onclick=\"processCart(true, 'promptpay')\">PROCEED WITH PROMPTPAY</a>" +
+                            "<br/>" +
+                            "<br/>");
                         checker = data.checker;
                     }
                 },
