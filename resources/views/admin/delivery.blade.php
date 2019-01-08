@@ -51,7 +51,7 @@
                         <a href="/admin/findOrder?order={{ $id }}">Order {{ $id }}</a>
                         <span style="font-size: 0.8em">({{ $items['total'] }} บาท)</span>
                         <span style="font-size: 0.6em">{{ $items['time'] }}</span>
-                        <span style="font-size: 0.4em">{{ json_decode($items['payment_note'], true)['method'] }}</span>
+                        <span style="font-size: 0.4em">{{ $items['payment_note']['method'] }}</span>
                     </h4>
                     @foreach ($items['items'] as $item)
                         - {{ $item['id'] }}: <b>{{ $item['name'] }}</b> x {{ $item['quantity'] }} <span class="{{ $items['isPriceMatch'] ? 'grey-text' : 'red-text' }}">({{ $item['price'] }}
