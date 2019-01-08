@@ -149,7 +149,8 @@ class AdminController extends Controller {
                     return ['id' => $pI->product_id, 'name' => $pI->name, 'quantity' => $item->quantity, 'price' => $item->price];
                 })->all(),
                 'total' => $undeliver->price,
-                'isPriceMatch' => $undeliver->price == $orderSum
+                'isPriceMatch' => $undeliver->price == $orderSum,
+                'method' => $undeliver->payment_note['method']
             ];
         }
         
