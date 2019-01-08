@@ -81,7 +81,7 @@
                     <h4>
                         <a href="/admin/findOrder?order={{ $order->id }}">Order {{ $order->id }}</a>
                         <span style="font-size: 0.8em" class="{{ $isPriceMatch ? '' : 'red-text' }}" title="Item price sum: {{ $items->sum('price') }}">({{ $order->price }} บาท)</span>
-                        <span style="font-size: 0.6em">{{ json_decode($orders->payment_note)['method'] }}</span>
+                        <span style="font-size: 0.6em">{{ json_decode($orders->payment_note, true)['method'] }}</span>
                     </h4>
                     <p>Status: <span class="{{ $statusColor }}">{{ $order->status }}</span></p>
                     @foreach ($items as $item)
