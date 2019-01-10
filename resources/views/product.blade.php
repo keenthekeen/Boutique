@@ -54,7 +54,7 @@
         <div class="sector red lighten-4">
             สินค้าหมด โปรดติดต่อจุดจำหน่ายสินค้า
         </div>
-    @elseif ($items = $product->items AND $items->count() > 0)
+    @elseif ($items = $product->items->where('type', 'NORMAL') AND $items->count() > 0)
         <div class="sector blue lighten-5">
             @foreach ($items as $item)
                 <div class="row">

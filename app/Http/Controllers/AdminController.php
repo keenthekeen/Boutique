@@ -171,6 +171,7 @@ class AdminController extends Controller {
 
         $validator = Validator::make($request->all(), [
             'id' => 'required|numeric',
+            'type' => 'required|in:NORMAL,PROMOTION',
             'name' => 'required',
             'amount' => 'required|numeric',
             'price' => 'required|numeric'
@@ -189,6 +190,7 @@ class AdminController extends Controller {
             $productItem->name = $request->get('name');
             $productItem->amount = $request->get('amount');
             $productItem->price = $request->get('price');
+            $productItem->type = $request->get('type');
         }
         else{
             $productItem->price = $request->get('price');

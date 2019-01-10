@@ -41,6 +41,13 @@
                 <label for="name">ชื่อแบบ</label>
             </div>
             <div class="input-field col s12">
+                <select name="type" id="type">
+                    <option value="NORMAL">สินค้า</option>
+                    <option value="PROMOTION">โปรโมชั่น</option>
+                </select>
+                <label>ประเภท</label>
+            </div>
+            <div class="input-field col s12">
                 <input id="amount" type="number" class="validate" name="amount">
                 <label for="amount">จำนวน</label>
             </div>
@@ -77,6 +84,7 @@
                     name: $('#name').val(),
                     amount: $('#amount').val(),
                     price: $('#price').val(),
+                    type: $('#type').val(),
                     _token: '{{ csrf_token() }}'
                 }),
                 success: function(data) {

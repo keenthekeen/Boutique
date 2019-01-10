@@ -16,6 +16,7 @@ class CreateProductItemsTable extends Migration
         Schema::create('product_items', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id');
+            $table->enum('type', ['NORMAL', 'PROMOTION'])->default('NORMAL');
             $table->string('name');
             $table->decimal('price', 3,0);
             $table->integer('amount');
