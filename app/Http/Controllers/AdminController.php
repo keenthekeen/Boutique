@@ -70,7 +70,7 @@ class AdminController extends Controller {
                 return $i;
             });
             $order->payment_note = [
-                'method' => $method == 'cash' ? 'CASH' : $method == 'promptpay' ? 'PROMPTPAY' : 'UNKNOWN',
+                'method' => ($method == 'cash') ? 'CASH' : (($method == 'promptpay') ? 'PROMPTPAY' : 'UNKNOWN'),
                 'customer_type' => 'walkin',
                 'cashier' => Auth::id(),
                 'paid_time' => date(DATE_ISO8601),
