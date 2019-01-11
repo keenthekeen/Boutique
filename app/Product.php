@@ -92,7 +92,7 @@ class Product extends Model {
      */
     public function inStock(): bool {
         // @TODO implement this!
-        return $this->items->map(function ($item) {
+        return $this->items->where('type', 'NORMAL')->map(function ($item) {
             /** @var $item ProductItem */
             $item->amountLeft = $item->getAmountLeft();
             return $item;

@@ -61,8 +61,12 @@
                 <div class="row">
                     <div class="col s12">
                         ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท
-                        @if(($amountLeft = $item->amount - ($sold = $item->getAmountSold())) AND $amountLeft < 20)
-                            เหลือ {{ $amountLeft }} {{ $item->product->getUnitName() }}
+                        @if(($amountLeft = $item->amount - ($sold = $item->getAmountSold())))
+                            @if ($amountLeft <= 0)
+                                <b>หมด</b>
+                            @elseif ($amountLeft <= 20)
+                                เหลือ {{ $amountLeft }} {{ $item->product->getUnitName() }}
+                            @endif
                         @endif
                     </div>
                 </div>
