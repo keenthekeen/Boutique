@@ -39,7 +39,7 @@
                 <td>{{ $productItem->name }}</td>
                 <td>{{ $productItem->price }}</td>
                 @php
-                    $sold = $productItem->orderItems()->sum('quantity');
+                    $sold = $productItem->getAmountSold();
                     $left = $productItem->amount - $sold;
                 @endphp
                 <td>{{ $productItem->amount }}</td>

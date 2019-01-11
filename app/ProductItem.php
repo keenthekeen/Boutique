@@ -28,6 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ProductItem extends Model implements Buyable {
     protected $guarded = ['updated_at'];
+    public $amountLeft = NULL;
+    
     public function product() {
         return $this->belongsTo('App\Product');
     }
@@ -40,11 +42,14 @@ class ProductItem extends Model implements Buyable {
         return Helper::materialColor($this->id);
     }
     
-    public function getAmountLeft() {
-        // @todo Check order status
-        return $this->amount - $this->orderItems()->whereHas('order', function ($query) {
+    public function getAmountSold() {
+        return $this->orderItems()->whereHas('order', function ($query) {
             $query->where('status', '!=', 'unpaid');
         })->sum('quantity');
+    }
+    
+    public function getAmountLeft() {
+        return $this->amount - $this->getAmountSold();
     }
     
     // Implements Cart's Buyable
