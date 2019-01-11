@@ -18,6 +18,11 @@ class AdminController extends Controller {
             $product->name = $product->type . ' ' . $product->name . ($product->inStock() ? '' : '[หมด]');
             // Mutate required attribute
             $product->picture = $product->picture;
+            $product->items->transform(function ($item) {
+                /** @var $item ProductItem */
+                $item->name = $item->name . (($item->getAmountLeft() > 0) ? '' : '[หมด]');
+                return $item;
+            });
             
             return $product;
         });

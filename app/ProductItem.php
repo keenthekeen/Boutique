@@ -40,6 +40,13 @@ class ProductItem extends Model implements Buyable {
         return Helper::materialColor($this->id);
     }
     
+    public function getAmountLeft() {
+        // @todo Check order status
+        return $this->amount - $this->orderItems()->whereHas('order', function ($query) {
+            $query->where('status', '!=', 'unpaid');
+        })->sum('quantity');
+    }
+    
     // Implements Cart's Buyable
     
     /**
