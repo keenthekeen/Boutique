@@ -131,7 +131,7 @@ class AdminController extends Controller {
     public function viewDeliver(Request $request, $mode = 'all') {
         $undelivers = Order::with('items')->where('status', 'paid');
         if ($mode == 'latest') {
-            $undelivers = $undelivers->whereRaw('updated_at >= DATE_SUB(NOW(),INTERVAL 1 HOUR)')->get();
+            $undelivers = $undelivers->whereRaw('updated_at >= DATE_SUB(NOW(),INTERVAL 30 MINUTE)')->get();
         } else {
             $undelivers = $undelivers->paginate(30);
             $links = $undelivers->links();

@@ -78,7 +78,7 @@
             @can('admin-action')
                 <ul id="dropdown-admin" class="dropdown-content">
                     <li><a href="/admin/cashier">Cashier</a></li>
-                    <li><a href="/admin/delivery">Pickup</a></li>
+                    <li><a href="/admin/delivery/latest">Pickup</a></li>
                     <li><a href="/admin/inventory">Inventory</a></li>
                     <li><a href="/admin/findOrder">Find Order</a></li>
                     <li><a href="/admin/addStock">Add Stock</a></li>

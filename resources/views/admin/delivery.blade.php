@@ -34,9 +34,9 @@
         </div>
         <div class="col s6">
             @if ($mode == 'latest')
-                กำลังดู 1 ชั่วโมงล่าสุด
+                กำลังดูครึ่งชั่วโมงล่าสุด
             @else
-                <a href="/admin/delivery/latest" class="btn waves-effect cyan fullwidth">ดู 1 ชั่วโมงล่าสุด</a>
+                <a href="/admin/delivery/latest" class="btn waves-effect cyan fullwidth">ดูครึ่งชั่วโมงล่าสุด</a>
             @endif
         </div>
     </div>
