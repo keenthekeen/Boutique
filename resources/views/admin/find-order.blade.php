@@ -104,15 +104,16 @@
                         <div class="sector">
                             <b>Payment Details</b><br/>
                             @foreach($order->payment_note as $key => $value)
-                                <u>{{ ucwords(str_replace('_', ' ',$key)) }}</u> {{ $value }}
+                                <u>{{ ucwords(str_replace('_', ' ',$key)) }}</u>
                                 @if ($key == 'status' AND $value == 'unverified')
-                                &emsp;
+                                {{ $value }} &emsp;
                                 <button type="submit" class="btn waves-effect cyan" name="payment_verify" value="verified">Mark as verified</button>&emsp;
                                 &emsp;
                                 <button type="submit" class="btn waves-effect red" name="payment_verify" value="cancel">Cancel</button>&emsp;
-                                @endif
-                                @if ($key == 'cashier' AND is_numeric($value))
-                                    <a href="https://facebook.com/{{ $value }}" target="_blank"><img src="https://graph.facebook.com/{{ $value }}/picture?type=small" style="height: 1.5rem"/></a>
+                                @elseif ($key == 'cashier' AND is_numeric($value) AND $user = \App\User::find($value))
+                                    {{ $user->name }} <img src="{{ $user->avatar }}" style="height: 1.5rem"/>
+                                @else
+                                    {{ $value }}
                                 @endif
                                 <br/>
                             @endforeach
