@@ -212,8 +212,8 @@
         }
 
         function clearCart() {
-            // If page has been loaded from more than 1 hour ago, refresh
-            if ((new Date()).getTime() - loadTime > 3600000) {
+            // If page has been loaded from more than 15 minutes ago, refresh
+            if ((new Date()).getTime() - loadTime > 900000) {
                 window.location.reload();
             } else {
                 cart = [];

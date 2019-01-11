@@ -15,7 +15,7 @@ use Validator;
 class AdminController extends Controller {
     public function getProductList() {
         $products = Product::with('items')->select('id', 'name', 'author', 'type', 'picture')->orderBy('type')->orderBy('name')->get()->map(function (Product $product) {
-            $product->name = $product->type . ' ' . $product->name;
+            $product->name = $product->type . ' ' . $product->name . ($product->inStock() ? '' : '[หมด]');
             // Mutate required attribute
             $product->picture = $product->picture;
             
