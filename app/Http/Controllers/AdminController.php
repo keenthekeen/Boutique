@@ -150,7 +150,7 @@ class AdminController extends Controller {
             $pending[$undeliver->id] = [
                 'time' => ($undeliver->created_at ?? Carbon::create())->toDateTimeString(),
                 'items' => $items->map(function (OrderItem $item) use ($orderSum) {
-                    $pI = $item->productItem;
+                    $pI = $item->productItem ?? new ProductItem(['product_id' => '?', 'name' => 'N/A']);
                     return ['id' => $pI->product_id, 'name' => $pI->name, 'quantity' => $item->quantity, 'price' => $item->price];
                 })->all(),
                 'total' => $undeliver->price,
