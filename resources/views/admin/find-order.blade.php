@@ -85,7 +85,7 @@
                     </h4>
                     <p>Status: <span class="{{ $statusColor }}">{{ $order->status }}</span></p>
                     @foreach ($items as $item)
-                        - <b title="OrderItem ID {{ $item->id }}, ProductItem ID {{ $item->product_item_id }}">{{ ($productItem = $item->productItem ?? new ProductItem(['product_id' => '?', 'name' => 'N/A', 'price' => 0]))->name }}</b> x {{ $item->quantity }} <span
+                        - <b title="OrderItem ID {{ $item->id }}, ProductItem ID {{ $item->product_item_id }}">{{ ($productItem = $item->productItem ?? new \App\ProductItem(['product_id' => '?', 'name' => 'N/A', 'price' => 0]))->name }}</b> x {{ $item->quantity }} <span
                                 class="{{ (($productItem->price * $item->quantity) == $item->price) ? 'grey-text' : 'red-text' }}">({{ $item->price }} บาท)</span><br/>
                     @endforeach<br/>
                     <button type="submit" class="btn waves-effect red" name="status" value="unpaid">Mark as unpaid</button>&emsp;
