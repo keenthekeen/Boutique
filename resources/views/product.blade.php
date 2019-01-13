@@ -60,12 +60,12 @@
             @foreach ($items as $item)
                 <div class="row">
                     <div class="col s12">
-                        ซื้อ {{ $item->name }} ในราคา {{ $item->price }} บาท
+                        ซื้อ{{ $item->name }} ในราคา {{ $item->price }} บาท
                         @if(($amountLeft = $item->amount - ($sold = $item->getAmountSold())))
                             @if ($amountLeft <= 0)
                                 <b>หมด</b>
-                            @elseif ($amountLeft <= 20)
-                                เหลือ {{ $amountLeft }} {{ $item->product->getUnitName() }}
+                            @elseif ($amountLeft <= 15 AND !env('SHOP_CLOSED', false))
+                                เหลือเพียง {{ $amountLeft }} {{ $item->product->getUnitName() }}
                             @endif
                         @endif
                     </div>
