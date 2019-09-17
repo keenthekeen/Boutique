@@ -48,6 +48,7 @@ Route::group(['middleware' => ['web', 'auth', 'admin'], 'prefix' => 'admin'], fu
     });
     Route::post('addStock', 'AdminController@addStock');
     Route::view('paycheck', 'admin.paycheck');
+    Route::view('transactions', 'admin.transactions');
 });
 
 Route::group(['middleware' => ['web', 'auth', 'isShopOpen'], 'prefix' => 'merchant'], function () {

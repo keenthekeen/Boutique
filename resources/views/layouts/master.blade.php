@@ -64,6 +64,7 @@
                         <li><a href="/admin/findOrder">Find Order</a></li>
                         <li><a href="/admin/addStock">Add Stock</a></li>
                         <li><a href="/admin/paycheck">Payment Verify</a></li>
+                        <li><a href="/admin/transactions">Transactions</a></li>
                         <li>
                             <div class="divider"></div>
                         </li>
@@ -81,6 +82,7 @@
                     <li><a href="/admin/findOrder">Find Order</a></li>
                     <li><a href="/admin/addStock">Add Stock</a></li>
                     <li><a href="/admin/paycheck">Payment Verify</a></li>
+                    <li><a href="/admin/transactions">Transactions</a></li>
                 </ul>
             @endcan
 
