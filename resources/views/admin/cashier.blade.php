@@ -98,7 +98,7 @@
                         products = productList[$(this).val()];
                         var options = '';
                         for (var i in products) {
-                            options += '<option value="' + products[i].id + '" data-order="' + i + '">' + products[i].name + '</option>';
+                            options += '<option value="' + products[i].id + '" data-order="' + i + '">' + i + '.' + products[i].name + '</option>';
                         }
                         selectedType = $(this).val();
                         $("#iProduct").html(options).change();
