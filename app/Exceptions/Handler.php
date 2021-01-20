@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 
@@ -30,27 +30,28 @@ class Handler extends ExceptionHandler {
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception $exception
+     * @param  Throwable $e
      * @return void
-     * @throws Exception
+     * @throws Throwable
      */
-    public function report(Exception $exception) {
+    public function report(Throwable $e) {
     
-        parent::report($exception);
+        parent::report($e);
     }
     
     /**
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \Exception               $exception
+     * @param  Throwable               $e
      * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
+     * @throws Throwable
      */
-    public function render($request, Exception $exception) {
-        if ($exception instanceof PostTooLargeException) {
+    public function render($request, Throwable $e) {
+        if ($e instanceof PostTooLargeException) {
             return response()->view('errors.custom', ['title' => 'Too Large Request', 'description' => 'ไฟล์ที่อัพโหลดขนาดใหญ่เกินไป']);
         }
         
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 }

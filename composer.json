@@ -1,30 +1,33 @@
 {
-    "name": "keenthekeen/Boutique",
+    "name": "keenthekeen/boutique",
     "description": "TUOPH Souvenirs Shop System",
     "keywords": [],
     "license": "proprietary",
     "type": "project",
     "require": {
-        "php": ">=7.2",
-        "fideloper/proxy": "^4.0",
-        "laravel/framework": "^5.7",
-        "laravel/tinker": "^1.0",
-        "laravel/socialite": "^4.1",
+        "php": "^7.3|^8.0",
+        "fideloper/proxy": "^4.4",
+        "fruitcake/laravel-cors": "^2.0",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "laravel/framework": "^8.12",
+        "laravel/tinker": "^2.5",
+        "laravel/socialite": "^5.0",
         "ext-fileinfo": "*",
-        "gloudemans/shoppingcart": "^2.6",
+        "bumbummen99/shoppingcart": "^3.2",
         "omise/omise-php": "^2.9",
-        "sentry/sentry-laravel": "^1.1.1"
+        "sentry/sentry-laravel": "^2.3"
     },
     "require-dev": {
-        "filp/whoops": "^2.0",
-        "fzaninotto/faker": "^1.4",
-        "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^8.0",
-        "barryvdh/laravel-debugbar": "^3.2",
-        "barryvdh/laravel-ide-helper": "^2.6",
-        "doctrine/dbal": "^2.9",
-        "andrey-helldar/laravel-lang-publisher": "^1.6"
+        "facade/ignition": "^2.5",
+        "fakerphp/faker": "^1.9.1",
+        "laravel/sail": "^1.0.1",
+        "mockery/mockery": "^1.4.2",
+        "nunomaduro/collision": "^5.0",
+        "phpunit/phpunit": "^9.3.3",
+        "barryvdh/laravel-debugbar": "^3.5",
+        "barryvdh/laravel-ide-helper": "^2.9",
+        "doctrine/dbal": "^2.12",
+        "andrey-helldar/laravel-lang-publisher": "^8.1"
     },
     "autoload": {
         "classmap": [

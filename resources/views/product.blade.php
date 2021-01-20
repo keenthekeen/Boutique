@@ -29,7 +29,7 @@
             <label style="margin-top:0.8rem">ข้อมูลสินค้า</label><br/>
             @if ($product->type == 'หนังสือ')
                 หนังสือ{{ $product->book_type }}
-                วิชา{{ implode(' ', $product->book_subject) }} {{ !is_null($product->detail['page']) ? $product->detail['page'] . ' หน้า' : '' }} {{ str_contains($product->book_type, 'โจทย์') && !is_null($product->detail['question']) ? 'มีโจทย์ ' . $product->detail['question'] . ' ข้อ' : '' }}
+                วิชา{{ implode(' ', $product->book_subject) }} {{ !is_null($product->detail['page']) ? $product->detail['page'] . ' หน้า' : '' }} {{ \Illuminate\Support\Str::contains($product->book_type, 'โจทย์') && !is_null($product->detail['question']) ? 'มีโจทย์ ' . $product->detail['question'] . ' ข้อ' : '' }}
             @else
                 {{ $product->type }}
             @endif

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 /**
  * App\Product
@@ -152,7 +153,7 @@ class Product extends Model {
     }
     
     public function getAttributeAsString ($id) {
-        if (str_contains($id, '.')) {
+        if (Str::contains($id, '.')) {
             $separatedId = explode('.', $id);
             $val = $this->{$separatedId[0]} ?? array();
             foreach ($separatedId as $key => $value) {

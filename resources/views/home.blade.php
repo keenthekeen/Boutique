@@ -122,7 +122,7 @@
     @endif
 
     @php
-        $isMobile = str_contains(Request::userAgent(), ['Android', 'Mobile Safari']) AND !Request::has('desktop');
+        $isMobile = \Illuminate\Support\Str::contains(Request::userAgent(), ['Android', 'Mobile Safari']) AND !Request::has('desktop');
         $rowMember = $isMobile ? 2 : 4;
         $rowCut = 0;
         $products = App\Product::select('id', 'picture', 'name', 'author', 'type', 'detail', 'book_type', 'book_subject', 'price')->with('items')->orderBy('type');
