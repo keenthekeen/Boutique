@@ -8,12 +8,16 @@ use App\Product;
 use App\ProductItem;
 use Auth;
 use Carbon\Carbon;
+use Exception;
 use Gloudemans\Shoppingcart\CartItem;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Validator;
 
 class AdminController extends Controller {
-    public function getProductList() {
+    public function getProductList(): JsonResponse {
         $products = Product::with('items')->select('id', 'name', 'author', 'type', 'picture')->orderBy('type')->orderBy('name')->get()->map(function (Product $product) {
             $product->name = $product->type . ' ' . $product->name . ($product->inStock() ? '' : ' [หมด]');
             // Mutate required attribute
@@ -84,11 +88,11 @@ class AdminController extends Controller {
             try {
                 $order->addItems($cartContent);
                 $order->save();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $order->items()->delete();
                 try {
                     $order->delete();
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     return response(json_encode([
                         'status' => 'calculated',
                         'cart' => $request->input('cart'),
@@ -133,7 +137,7 @@ class AdminController extends Controller {
         }
     }
     
-    public function viewDeliver(Request $request, $mode = 'all') {
+    public function viewDeliver($mode = 'all'): Response {
         $undelivers = Order::with('items')->where('status', 'paid');
         if ($mode == 'latest') {
             $undelivers = $undelivers->whereRaw('updated_at >= DATE_SUB(NOW(),INTERVAL 30 MINUTE)')->get();
@@ -162,7 +166,7 @@ class AdminController extends Controller {
         return response()->view('admin.delivery', ['list' => $pending, 'mode' => $mode, 'links' => $links ?? '']);
     }
     
-    public function deliverOrder(Request $request) {
+    public function deliverOrder(Request $request): RedirectResponse {
         $this->validate($request, ['order' => 'required']);
         /** @var Order $order */
         $order = Order::findOrFail($request->input('order'));
@@ -172,7 +176,7 @@ class AdminController extends Controller {
         return back()->with('notify', 'Delivered order '.$order->id);
     }
 
-    public function addStock(Request $request) {
+    public function addStock(Request $request): JsonResponse {
 
         $validator = Validator::make($request->all(), [
             'id' => 'required|numeric',
@@ -196,8 +200,7 @@ class AdminController extends Controller {
             $productItem->amount = $request->get('amount');
             $productItem->price = $request->get('price');
             $productItem->type = $request->get('type');
-        }
-        else{
+        } else {
             $productItem->price = $request->get('price');
             $productItem->amount += $request->get('amount');
         }

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int                         $id
  * @property int                         $product_id
+ * @property string                      $type
  * @property string                      $name
  * @property float                       $price
  * @property int                         $amount

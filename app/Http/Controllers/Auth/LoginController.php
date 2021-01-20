@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
+use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Log;
 use Socialite;
 
@@ -43,22 +46,23 @@ class LoginController extends Controller {
     /**
      * Redirect the user to the GitHub authentication page.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function redirectToProvider() {
+    public function redirectToProvider(): Response {
         return Socialite::driver('facebook')->setScopes(['email'])->redirect();
     }
     
     /**
      * Obtain the user information from GitHub.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
     public function handleProviderCallback(Request $request) {
         try {
             $socialUser = Socialite::driver('facebook')->user();
-        } catch (\Exception $e) {
-            \Log::error('User cannot be logged in: ' . get_class($e) . ' (' . $e->getMessage() . ')');
+        } catch (Exception $e) {
+            Log::error('User cannot be logged in: ' . get_class($e) . ' (' . $e->getMessage() . ')');
             
             return response()->view('errors.custom', [
                 'title' => 'Error while logging in',
@@ -94,7 +98,7 @@ class LoginController extends Controller {
         return redirect()->intended();
     }
     
-    public function logout(Request $request) {
+    public function logout(Request $request): RedirectResponse {
         $request->session()->invalidate();
         
         return redirect()->home();

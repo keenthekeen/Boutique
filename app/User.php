@@ -20,6 +20,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string                                                     $email
  * @property string                                                     $avatar
  * @property bool                                                       $is_admin
+ * @property bool                                                       $is_merchant
  * @property Carbon|null                                                $created_at
  * @property Carbon|null                                                $updated_at
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications

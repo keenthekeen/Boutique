@@ -104,7 +104,7 @@ class Product extends Model {
         })->sum('amountLeft') > 0;
     }
     
-    public function getShortNote() {
+    public function getShortNote(): string {
         $separated = explode('/', $this->note);
         
         return $separated[0];

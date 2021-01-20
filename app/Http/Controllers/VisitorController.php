@@ -8,6 +8,7 @@ use App\ProductItem;
 use Auth;
 use Gloudemans\Shoppingcart\Cart;
 use Gloudemans\Shoppingcart\CartItem;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use OmiseUsedTokenException;
 
@@ -24,13 +25,13 @@ class VisitorController extends Controller {
         return redirect('/cart')->with('notify', '<span>เพิ่มในตะกร้าแล้ว</span><a class="btn-flat toast-action" href="/">ดูสินค้าอื่นๆ</a>');
     }
     
-    public function removeFromCart($rowId) {
+    public function removeFromCart($rowId): RedirectResponse {
         $this->cart->remove($rowId);
         
         return back()->with('notify', 'ลบจากตะกร้าแล้ว');
     }
     
-    public function updateCart($rowId, $quantity) {
+    public function updateCart($rowId, $quantity): RedirectResponse {
         $this->cart->update($rowId, $quantity);
         
         return back()->with('notify', 'ปรับจำนวนสินค้าแล้ว');
@@ -126,7 +127,7 @@ class VisitorController extends Controller {
         }
     }
     
-    public function checkCardPayment(Request $request, Order $order) {
+    public function checkCardPayment(Order $order) {
         // Note: User ID will not be matched with Order.
         if ($order->status != 'delivered' AND !empty($order->payment_note['charge_id'])) {
             $charge = OmiseCharge::retrieve($order->payment_note['charge_id']);
