@@ -2,29 +2,33 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Eloquent;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\ProductItem
  *
- * @property int                                                            $id
- * @property int                                                            $product_id
- * @property string                                                         $name
- * @property float                                                          $price
- * @property int                                                            $amount
- * @property \Carbon\Carbon|null                                            $created_at
- * @property \Carbon\Carbon|null                                            $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\OrderItem[] $orderItems
- * @property-read \App\Product                                              $product
- * @method static \Illuminate\Database\Eloquent\Builder|\App\ProductItem whereAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\ProductItem whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\ProductItem whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\ProductItem whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\ProductItem wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\ProductItem whereProductId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\ProductItem whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property int                         $id
+ * @property int                         $product_id
+ * @property string                      $name
+ * @property float                       $price
+ * @property int                         $amount
+ * @property Carbon|null                 $created_at
+ * @property Carbon|null                 $updated_at
+ * @property-read Collection|OrderItem[] $orderItems
+ * @property-read Product                $product
+ * @method static Builder|ProductItem whereAmount($value)
+ * @method static Builder|ProductItem whereCreatedAt($value)
+ * @method static Builder|ProductItem whereId($value)
+ * @method static Builder|ProductItem whereName($value)
+ * @method static Builder|ProductItem wherePrice($value)
+ * @method static Builder|ProductItem whereProductId($value)
+ * @method static Builder|ProductItem whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class ProductItem extends Model implements Buyable {
     protected $guarded = ['updated_at'];
@@ -38,17 +42,17 @@ class ProductItem extends Model implements Buyable {
         return $this->hasMany('App\OrderItem');
     }
     
-    public function colorCode() {
+    public function colorCode(): string {
         return Helper::materialColor($this->id);
     }
     
-    public function getAmountSold() {
+    public function getAmountSold(): int {
         return $this->orderItems()->whereHas('order', function ($query) {
             $query->where('status', '!=', 'unpaid');
         })->sum('quantity');
     }
     
-    public function getAmountLeft() {
+    public function getAmountLeft(): int {
         return $this->amount - $this->getAmountSold();
     }
     
@@ -60,7 +64,7 @@ class ProductItem extends Model implements Buyable {
      * @param null $options
      * @return int|string
      */
-    public function getBuyableIdentifier($options = NULL) {
+    public function getBuyableIdentifier($options = NULL): int {
         return $this->id;
     }
     
@@ -70,7 +74,7 @@ class ProductItem extends Model implements Buyable {
      * @param null $options
      * @return string
      */
-    public function getBuyableDescription($options = NULL) {
+    public function getBuyableDescription($options = NULL): string {
         return $this->name;
     }
     
@@ -80,7 +84,17 @@ class ProductItem extends Model implements Buyable {
      * @param null $options
      * @return float
      */
-    public function getBuyablePrice($options = NULL) {
+    public function getBuyablePrice($options = NULL): float {
         return $this->price;
+    }
+    
+    /**
+     * Get the weight of the Buyable item.
+     *
+     * @param null $options
+     * @return float
+     */
+    public function getBuyableWeight($options = null): float {
+        return 1;
     }
 }
