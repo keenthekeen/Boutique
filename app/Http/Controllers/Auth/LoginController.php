@@ -7,11 +7,10 @@ use App\User;
 use Auth;
 use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Log;
 use Socialite;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller {
     /*
@@ -56,9 +55,9 @@ class LoginController extends Controller {
      * Obtain the user information from GitHub.
      *
      * @param Request $request
-     * @return RedirectResponse|Response
+     * @return Response
      */
-    public function handleProviderCallback(Request $request) {
+    public function handleProviderCallback(Request $request): Response {
         try {
             $socialUser = Socialite::driver('facebook')->user();
         } catch (Exception $e) {
@@ -98,7 +97,8 @@ class LoginController extends Controller {
         return redirect()->intended();
     }
     
-    public function logout(Request $request): RedirectResponse {
+    public function logout(Request $request): Response
+    {
         $request->session()->invalidate();
         
         return redirect()->home();
